@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class Notebook(db.Model):
+class Pattern(db.Model):
     __tablename__="patterns"
 
     if environment == "production":
@@ -30,7 +30,7 @@ class Notebook(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id
+            'user_id': self.user_id,
             'title': self.title,
             'difficulty': self.difficulty,
             'time': self.time,
