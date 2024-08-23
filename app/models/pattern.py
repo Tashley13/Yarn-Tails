@@ -36,6 +36,10 @@ class Pattern(db.Model):
             'time': self.time,
             'time_limit': self.time_limit,
             'description': self.description,
+            'materials_instrument': self.materials_instrument,
+            'materials_instrument_size': self.materials_instrument_size,
+            'materials_yarn_weight': self.materials_yarn_weight,
+            'materials_yardage': self.materials_yardage,
             'pattern': self.pattern,
             'created_at': self.created_at,
             'updated_at': self.updated_at
