@@ -10,6 +10,7 @@ class Pattern(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     title=db.Column(db.String(100), nullable=False)
+    tile_image=db.Column(db.String, nullable=False)
     difficulty=db.Column(db.String, nullable=False)
     time=db.Column(db.String, nullable=False)
     time_limit=db.Column(db.String, nullable=False)

@@ -1,8 +1,8 @@
-"""create pattern table
+"""empty message
 
-Revision ID: 3ec3a663da96
+Revision ID: 4790ace6d7db
 Revises: 
-Create Date: 2024-08-22 18:49:26.565313
+Create Date: 2024-08-23 20:16:26.174794
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3ec3a663da96'
+revision = '4790ace6d7db'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,6 +31,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
+    sa.Column('tile_image', sa.String(), nullable=False),
     sa.Column('difficulty', sa.String(), nullable=False),
     sa.Column('time', sa.String(), nullable=False),
     sa.Column('time_limit', sa.String(), nullable=False),
