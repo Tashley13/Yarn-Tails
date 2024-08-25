@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Pattern, db
+from app.forms import CreatePatternForm
 
 pattern_routes = Blueprint('patterns', __name__)
 
@@ -58,6 +59,32 @@ def user_patterns(id):
 # @login_required
 def read_user_pattern(id):
     view_pattern = Pattern.query.get(id)
+    #look into grabbing the username through User
+    #grab the testers as well through Tester
     if not view_pattern:
         return {"message" : "No pattern to view here"}, 404
     return jsonify(view_pattern.to_dict())
+
+
+#create a pattern
+@pattern_routes.route('', methods=["POST"])
+# @login_required
+def create_pattern():
+    pattern=CreatePatternForm()
+    if pattern.validate_on_submit:
+        new_pattern= Pattern(
+            userId=current_user.id,
+            title=pattern.data['title'],
+            tile_image=pattern.data['tile_image'],
+            difficulty=pattern.data['difficulty'],
+            time=pattern.time['time'],
+            time_limit=pattern.data['time_limit'],
+            description=pattern.data['description'],
+            materials_instrument=pattern.data['materials_instrument'],
+            materials_instrument_size=pattern.data['instrument_size'],
+            materials_yardage=pattern.data['materials_yardage'],
+            pattern=pattern.data['pattern']
+        )
+    db.session.add(new_pattern)
+    db.session.commit()
+    return  jsonify(new_pattern.to_dict)
