@@ -44,5 +44,5 @@ class CreatePatternForm(FlaskForm):
         '3.5mm', '3.75mm', '4mm', '4.25mm', '4.5mm', '5.0mm', '5.25mm', '5.5mm',
         '6.0mm', '6.5mm', '7.0mm', '7.5mm', '8.0mm', '9.0mm', '10.0mm'
     ], validators=[InputRequired()])
-    materials_yardage=IntegerField('materials_yardage', validators=[InputRequired()], Length(min=0, max=9999))
-    pattern=TextAreaField('pattern', validators=[InputRequired()], Length(25000))
+    materials_yardage=IntegerField('materials_yardage', validators=[InputRequired(), Length(min=0, max=9999)])
+    pattern=TextAreaField('pattern', validators=[InputRequired(), Length(25000)])
