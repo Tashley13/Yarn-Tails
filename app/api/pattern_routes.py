@@ -3,10 +3,10 @@ from flask_login import login_required, current_user
 from app.models import Pattern, db
 from app.forms import CreatePatternForm
 
-pattern_routes = Blueprint('patterns', __name__)
+pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 
 #get all patterns (limit 25?)
-@pattern_routes.route('/')
+@pattern_routes.route('')
 def all_patterns():
     patterns=Pattern.query.limit(25).all()
     if not patterns:
@@ -27,7 +27,7 @@ def all_patterns():
     }
 
 #get all patterns of current user
-@pattern_routes.route('/<int:id>')
+@pattern_routes.route('/<int:id>/current')
 # @login_required
 def user_patterns(id):
     user_patterns=Pattern.query.filter_by(user_id=id).all()
@@ -67,24 +67,80 @@ def read_user_pattern(id):
 
 
 #create a pattern
-@pattern_routes.route('', methods=["POST"])
+@pattern_routes.route('/new', methods=["POST"])
 # @login_required
 def create_pattern():
-    pattern=CreatePatternForm()
-    if pattern.validate_on_submit:
-        new_pattern= Pattern(
-            userId=current_user.id,
-            title=pattern.data['title'],
-            tile_image=pattern.data['tile_image'],
-            difficulty=pattern.data['difficulty'],
-            time=pattern.time['time'],
-            time_limit=pattern.data['time_limit'],
-            description=pattern.data['description'],
-            materials_instrument=pattern.data['materials_instrument'],
-            materials_instrument_size=pattern.data['instrument_size'],
-            materials_yardage=pattern.data['materials_yardage'],
-            pattern=pattern.data['pattern']
-        )
+    user_id=current_user.id
+    data=request.get_json()
+    # pattern=CreatePatternForm(request.form)
+    # if pattern.validate_on_submit():
+    #     new_pattern= Pattern(
+    #         user_id=current_user.id,
+    #         title=form.title.data,
+    #         tile_image=form.data.tile_image,
+    #         difficulty=form.data.difficulty,
+    #         time=form.data.time,
+    #         time_limit=form.data.time_limit,
+    #         description=form.data.description,
+    #         materials_instrument=form.data.materials_instrument,
+    #         materials_instrument_size=form.data.materials_instrument_size,
+    #         materials_yarn_weight=form.data.materials_yarn_weight,
+    #         materials_yardage=form.data.materials_yardage,
+    #         pattern=form.data.pattern
+    #     )
+    new_pattern= Pattern(
+        user_id=user_id,
+        title=data.get('title'),
+        tile_image=data.get('tile_image'),
+        difficulty=data.get('difficulty'),
+        time=data.get('time'),
+        time_limit=data.get('time_limit'),
+        description=data.get('description'),
+        materials_instrument=data.get('materials_instrument'),
+        materials_instrument_size=data.get('materials_instrument_size'),
+        materials_yarn_weight=data.get('materials_yarn_weight'),
+        materials_yardage=data.get('materials_yardage'),
+        pattern=data.get('pattern')
+
+    )
+    # print("PATTERN: ", new_pattern)
     db.session.add(new_pattern)
     db.session.commit()
-    return  jsonify(new_pattern.to_dict)
+    return  jsonify(new_pattern.to_dict())
+    # else:
+    #     return jsonify({"message" : "Bad Request"}), 400
+
+
+#update a pattern
+@pattern_routes.route('/<int:id>/edit', methods=["PUT"])
+# @login_required
+def update_pattern(id):
+    pattern_to_edit=Pattern.query.get(id)
+    pattern_data=request.get_json()
+    if not pattern_to_edit or pattern_to_edit.user_id != current_user.id:
+        return jsonify({"message" : "No pattern to edit"})
+    pattern_to_edit.title=pattern_data.get('title')
+    pattern_to_edit.tile_image=pattern_data.get('tile_image')
+    pattern_to_edit.difficulty=pattern_data.get('difficulty')
+    pattern_to_edit.time=pattern_data.get('time')
+    pattern_to_edit.description=pattern_data.get('description')
+    pattern_to_edit.materials_instrument=pattern_data.get('materials_instrument')
+    pattern_to_edit.materials_instrument_size=pattern_data.get('materials_instrument_size')
+    pattern_to_edit.materials_yarn_weight=pattern_data.get('materials_yarn_weight')
+    pattern_to_edit.materials_yardage=pattern_data.get('materials_yardage')
+    pattern_to_edit.pattern=pattern_data.get('pattern')
+    pattern_to_edit.updated_at= datetime.utcnow()
+
+    db.session.commit()
+    return jsonify(pattern_to_edit.to_dict())
+
+#delete a pattern
+@pattern_routes.route('/<int:id>/delete', methods=["DELETE"])
+# @login_required
+def delete_pattern(id):
+    pattern_to_delete=Pattern.query.get(id)
+    if not pattern_to_delete or pattern_to_delete.user_id != current_user.id:
+        return jsonify({"message": "No pattern to delete"})
+    db.session.delete(pattern_to_delete)
+    db.session.commit()
+    return jsonify({"message": "Pattern successfully deleted"})

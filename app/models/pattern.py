@@ -24,7 +24,7 @@ class Pattern(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     user= db.relationship('User', back_populates='patterns')
-    pattern_images= db.relationship('PatternImage', back_populates='patterns')
+    pattern_images= db.relationship('PatternImage', back_populates='pattern')
 
     def __repr__(self):
         return f'Pattern {self.title}'
@@ -42,7 +42,7 @@ class Pattern(db.Model):
             'materials_instrument_size': self.materials_instrument_size,
             'materials_yarn_weight': self.materials_yarn_weight,
             'materials_yardage': self.materials_yardage,
-            'pattern_images': {image.id: image.to_dict() for image in self.pattern_images},
+            # 'pattern_images': {image.id: image.to_dict() for image in self.pattern_images},
             'pattern': self.pattern,
             'created_at': self.created_at,
             'updated_at': self.updated_at
