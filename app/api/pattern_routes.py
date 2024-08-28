@@ -40,7 +40,7 @@ def user_patterns(id):
             'user_id' : pattern.user_id,
             'title' : pattern.title,
             'tile_image' : pattern.tile_image,
-            #eventually pull all the reviews of the pattern to display
+            #eventually pull all the reviews and images of the pattern to display
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
