@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Pattern, db
 from app.forms import CreatePatternForm
+from datetime import datetime, timezone
 
 pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 
@@ -27,7 +28,7 @@ def all_patterns():
     }
 
 #get all patterns of current user
-@pattern_routes.route('/<int:id>/current')
+@pattern_routes.route('/current/<int:id>')
 # @login_required
 def user_patterns(id):
     user_patterns=Pattern.query.filter_by(user_id=id).all()
