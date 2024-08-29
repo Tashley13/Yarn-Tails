@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+import './AllPatterns.css'
 
 const AllPatterns = () => {
     const {userId} = useParams();
@@ -45,7 +46,10 @@ const AllPatterns = () => {
                         <div className="pattern-difficulty">
                             {pattern.difficulty}
                         </div>
-
+                        <div className="pattern-times">
+                            <ul>Time: {pattern.time}</ul>
+                            <ul>Testing Time: {pattern.time_limit}</ul>
+                        </div>
                     </div>
                 ))
             ): ''}

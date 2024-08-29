@@ -1,0 +1,18 @@
+.pattern-display {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background-color: blue;
+    overflow: hidden;
+}
+
+.pattern-times {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+}
+
+.pattern-display:hover .pattern-times {
+    opacity: 1;
+}
