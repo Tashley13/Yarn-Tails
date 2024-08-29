@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+
 import './AllPatterns.css'
 
 const AllPatterns = () => {
-    const {userId} = useParams();
+    // const {userId} = useParams();
     const dispatch= useDispatch();
     const navigate= useNavigate();
 
@@ -45,6 +46,9 @@ const AllPatterns = () => {
                         </div>
                         <div className="pattern-difficulty">
                             {pattern.difficulty}
+                        </div>
+                        <div className='pattern-username'>
+                            Created by: {pattern.username}
                         </div>
                         <div className="pattern-times">
                             <ul>Time: {pattern.time}</ul>

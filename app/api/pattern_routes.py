@@ -1,21 +1,24 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Pattern, db
+from app.models import Pattern, db, User
 from app.forms import CreatePatternForm
 from datetime import datetime, timezone
+from sqlalchemy.orm import selectinload
 
 pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 
 #get all patterns (limit 25?)
 @pattern_routes.route('')
 def all_patterns():
-    patterns=Pattern.query.limit(25).all()
+    patterns=Pattern.query.options(selectinload(Pattern.user)).limit(25).all()
+    print("PATTERNS: ", patterns)
     if not patterns:
         return {"message" : "no patterns to test!"}
     return {'patterns' : [
         {
             'id': pattern.id,
             'user_id' : pattern.user_id,
+            'username' : pattern.user.username,
             'title' : pattern.title,
             'tile_image' : pattern.tile_image,
             'difficulty' : pattern.difficulty,

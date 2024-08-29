@@ -86,6 +86,20 @@ export const getAllPatterns = () => async (dispatch) => {
     }
 }
 
+export const getUserPatterns = (userId) => async (dispatch) => {
+    const response = await fetch(`/api/current/${+userId}`)
+
+    if (response.ok) {
+        const data = await response.json()
+
+        if (data.errors) {
+            return;
+        }
+        dispatch(userPatterns(data))
+        return data
+    }
+}
+
 //reducer
 
 const initialState = {
@@ -97,6 +111,9 @@ const patternReducer = (state = initialState, action ) => {
     switch (action.type) {
         case ALL_PATTERNS: {
             // console.log("STATE: ", state)
+            return {...state, allPatterns: {...action.patterns}}
+        }
+        case USER_PATTERNS: {
             return {...state, allPatterns: {...action.patterns}}
         }
         default: {
