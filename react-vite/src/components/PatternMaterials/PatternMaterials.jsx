@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
-// import PatternMaterials from "../PatternMaterials/PatternMaterials";
 
-import './UserPatterns.css'
+import './PatternMaterials.css'
 
-const UserPatterns = () => {
+const PatternMaterials = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -37,30 +36,24 @@ const UserPatterns = () => {
     }
 
     return (
-        <div className='user-pattern-display'>
+        <div className='user-material-display'>
             <ul>
                 {patterns?.length > 0 ? (
                     patterns.map((pattern, key) => (
-                        <div key={key} className='user-patterns'>
-                            <div className='user-title'>
-                                {pattern.title}
+                        <div key={key} className='user-materials'>
+                            <div className='user-instrument'>
+                                {pattern.materials_instrument}
                             </div>
-                            <div className="user-image">
-                                {pattern.tile_image}
+                            <div className="user-instrument_size">
+                                {pattern.materials_instrument_size}
                             </div>
-                            <div className="user-difficulty">
-                                {pattern.difficulty}
+                            <div className="user-yarn_weight">
+                                {pattern.materials_yarn_weight}
                             </div>
-                            <div className="user-description">
-                                {pattern.description}
+                            <div className="user-yardage">
+                                {pattern.materials_yardage}
                             </div>
-                            <div className="user-times">
-                                <ul>Time: {pattern.time}</ul>
-                                <ul>Testing Time: {pattern.time_limit}</ul>
-                            </div>
-                            {/* <div>
-                                <PatternMaterials/>
-                            </div> */}
+
                         </div>
                     ))
                 ) : ''}
@@ -69,4 +62,4 @@ const UserPatterns = () => {
     )
 }
 
-export default UserPatterns;
+export default PatternMaterials;

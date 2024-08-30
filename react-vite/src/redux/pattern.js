@@ -12,7 +12,7 @@ export const DELETE_PATTERN = 'patterns/DELETE_PATTERN'
 const allPatterns = (patterns) => {
     return {
         type: ALL_PATTERNS,
-        patterns
+        payload: patterns
     }
 };
 
@@ -20,7 +20,7 @@ const allPatterns = (patterns) => {
 const userPatterns = (patterns) => {
     return {
         type: USER_PATTERNS,
-        patterns
+        payload: patterns
     }
 }
 
@@ -28,7 +28,7 @@ const userPatterns = (patterns) => {
 const patternDetails = (pattern) => {
     return {
         type: PATTERN_DETAILS,
-        pattern
+        payload: pattern
     }
 }
 
@@ -36,36 +36,28 @@ const patternDetails = (pattern) => {
 const viewPattern = (pattern) => {
     return {
         type: VIEW_PATTERN,
-        pattern
-    }
-}
-
-//view materials only
-const viewMaterials = (pattern) => {
-    return {
-        type: VIEW_MATERIALS,
-        pattern
+        payload: pattern
     }
 }
 
 const createPattern = (pattern) => {
     return {
         type: CREATE_PATTERN,
-        pattern
+        payload: pattern
     }
 }
 
 const updatePattern = (pattern) => {
     return {
         type: UPDATE_PATTERN,
-        pattern
+        payload: pattern
     }
 }
 
 const deletePattern = (patternId) => {
     return {
         type: DELETE_PATTERN,
-        patternId
+        payload: patternId
     }
 }
 
@@ -87,7 +79,7 @@ export const getAllPatterns = () => async (dispatch) => {
 }
 
 export const getUserPatterns = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/current/${+userId}`)
+    const response = await fetch(`/api/patterns/current/${userId}`)
 
     if (response.ok) {
         const data = await response.json()
@@ -103,23 +95,29 @@ export const getUserPatterns = (userId) => async (dispatch) => {
 //reducer
 
 const initialState = {
-    allPatterns: {},
+    allPatterns: [],
     patternById: {}
 }
 
 const patternReducer = (state = initialState, action ) => {
     switch (action.type) {
         case ALL_PATTERNS: {
-            // console.log("STATE: ", state)
-            return {...state, allPatterns: {...action.patterns}}
+            // let newState= {...state}
+            // console.log("PAYLOAD", action.payload.patterns)
+            // return newState
+            return {...state, allPatterns: action.payload.patterns}
+            // return {...state, patternById: action.payload.patterns}
         }
         case USER_PATTERNS: {
-            return {...state, allPatterns: {...action.patterns}}
+            return {...state, allPatterns: action.payload.patterns}
         }
+        case VIEW_PATTERN
         default: {
             return state
         }
     }
 }
+
+//spread the newpattern into the spread of state.allPatterns
 
 export default patternReducer;

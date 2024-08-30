@@ -1,3 +1,3 @@
 import UserPatterns from "./UserPatterns"
 
-export default UserPatterns
+export default UserPatterns;

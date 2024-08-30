@@ -15,17 +15,20 @@ const AllPatterns = () => {
 
 
     //grab all the patterns
-    const eachPattern=useSelector((state) => state.patterns.allPatterns);
-    const patterns=Object.values(eachPattern)[0]
-    // console.log("PATTERNS: ", patterns.length)
+    const patterns=useSelector((state) => state.patterns.allPatterns);
+    // const patterns=Object.values(eachPattern)[0]
+    // console.log("PATTERNS: ", patterns)
 
     useEffect(()=> {
         dispatch(patternActions.getAllPatterns())
+        // console.log("HELLO WORLD")
     }, [dispatch])
 
-    const createPattern = async () => {
-        //navigate to create a pattern page
-    }
+    // const createPattern = async () => {
+    //     //navigate to create a pattern page
+    // }
+    // console.log("GOODNIGHT")
+    // console.log("123")
 
     if (!patterns) {
         //insert button that says 'create a pattern', use createPattern
