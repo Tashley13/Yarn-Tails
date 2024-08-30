@@ -6,6 +6,7 @@ import AllPatterns from "../components/AllPatterns";
 import UserPatterns from '../components/UserPatterns';
 import ViewUserPattern from '../components/ViewUserPattern';
 import PatternDetail from '../components/PatternDetail';
+import CreatePattern from '../components/CreatePattern';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: ":patternId/pattern_only",
         element: <PatternDetail />
+      },
+      {
+        path: "pattern/new",
+        element: <CreatePattern />
       }
     ],
   },

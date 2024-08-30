@@ -70,6 +70,7 @@ export const getAllPatterns = () => async (dispatch) => {
     }
 }
 
+//get all patterns of user
 export const getUserPatterns = (userId) => async (dispatch) => {
     const response = await fetch(`/api/patterns/current/${userId}`)
 
@@ -84,6 +85,7 @@ export const getUserPatterns = (userId) => async (dispatch) => {
     }
 }
 
+//get details of pattern by id
 export const viewUserPattern = (patternId) => async (disptach) => {
     const response = await fetch(`/api/patterns/${patternId}/view_pattern`)
 
@@ -98,6 +100,27 @@ export const viewUserPattern = (patternId) => async (disptach) => {
     }
 }
 
+//create a new pattern
+export const createrUserPattern = (newPattern) => async (dispatch) => {
+    const response = await fetch("/api/patterns/new", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newPattern)
+    }
+    )
+    if (response.ok) {
+        const data = await response.json()
+
+        if (data.errors) {
+            return;
+        }
+
+        dispatch(createPattern(data))
+    }
+}
+
 //reducer
 
 const initialState = {
@@ -105,22 +128,25 @@ const initialState = {
     patternById: {}
 }
 
-const patternReducer = (state = initialState, action ) => {
+const patternReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_PATTERNS: {
             // let newState= {...state}
             // console.log("PAYLOAD", action.payload.patterns)
             // return newState
-            return {...state, allPatterns: action.payload.patterns}
+            return { ...state, allPatterns: action.payload.patterns }
             // return {...state, patternById: action.payload.patterns}
         }
         case USER_PATTERNS: {
-            return {...state, allPatterns: action.payload.patterns}
+            return { ...state, allPatterns: action.payload.patterns }
         }
         case PATTERN_DETAILS: {
             // let newState= {...state}
             // console.log("PAYLOAD: ", action.payload)
-            return {...state, patternById: action.payload}
+            return { ...state, patternById: action.payload }
+        }
+        case CREATE_PATTERN: {
+            return {...state, allPatterns: action.paylaod.patterns}
         }
 
         default: {
