@@ -4,6 +4,8 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import AllPatterns from "../components/AllPatterns";
 import UserPatterns from '../components/UserPatterns';
+import ViewUserPattern from '../components/ViewUserPattern';
+import PatternDetail from '../components/PatternDetail';
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ export const router = createBrowserRouter([
       {
         path: "patterns/:userId",
         element: <UserPatterns/>
+      },
+      {
+        path: ":patternId/view_pattern",
+        element: <ViewUserPattern />
+      },
+      {
+        path: ":patternId/pattern_only",
+        element: <PatternDetail />
       }
     ],
   },

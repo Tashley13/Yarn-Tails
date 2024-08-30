@@ -33,6 +33,7 @@ class Pattern(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
+            'tile_image' : self.tile_image,
             # 'users' : {user.id: user.to_dict() for user in self.users},
             'title': self.title,
             'difficulty': self.difficulty,

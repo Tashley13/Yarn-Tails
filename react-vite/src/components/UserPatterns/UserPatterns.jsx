@@ -51,9 +51,9 @@ const UserPatterns = () => {
                             <div className="user-difficulty">
                                 {pattern.difficulty}
                             </div>
-                            <div className="user-description">
+                            {/* <div className="user-description">
                                 {pattern.description}
-                            </div>
+                            </div> */}
                             <div className="user-times">
                                 <ul>Time: {pattern.time}</ul>
                                 <ul>Testing Time: {pattern.time_limit}</ul>

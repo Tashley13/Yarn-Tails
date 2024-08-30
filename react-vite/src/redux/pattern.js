@@ -24,18 +24,10 @@ const userPatterns = (patterns) => {
     }
 }
 
-//get detail of pattern
+//get detail of pattern including pattern itself
 const patternDetails = (pattern) => {
     return {
         type: PATTERN_DETAILS,
-        payload: pattern
-    }
-}
-
-//view pattern only
-const viewPattern = (pattern) => {
-    return {
-        type: VIEW_PATTERN,
         payload: pattern
     }
 }
@@ -92,6 +84,20 @@ export const getUserPatterns = (userId) => async (dispatch) => {
     }
 }
 
+export const viewUserPattern = (patternId) => async (disptach) => {
+    const response = await fetch(`/api/patterns/${patternId}/view_pattern`)
+
+    if (response.ok) {
+        const data = await response.json()
+        console.log("DATA: ", data)
+        if (data.errors) {
+            return;
+        }
+        disptach(patternDetails(data))
+        return data
+    }
+}
+
 //reducer
 
 const initialState = {
@@ -111,7 +117,12 @@ const patternReducer = (state = initialState, action ) => {
         case USER_PATTERNS: {
             return {...state, allPatterns: action.payload.patterns}
         }
-        case VIEW_PATTERN
+        case PATTERN_DETAILS: {
+            // let newState= {...state}
+            // console.log("PAYLOAD: ", action.payload)
+            return {...state, patternById: action.payload}
+        }
+
         default: {
             return state
         }
