@@ -37,7 +37,8 @@ class CreatePatternForm(FlaskForm):
         'inline crochet hook',
         'tapered crochet hook',
         'tunisian crochet hook',
-        'knook crochet hook'
+        'knook crochet hook',
+        'hands'
         ], validators=[InputRequired()])
     materials_instrument_size=SelectField('materials_instrument_size', choices=[
         '1.5mm', '1.75mm', '2.0mm', '2.25mm', '2.75mm', '3.0mm', '3.25mm',
