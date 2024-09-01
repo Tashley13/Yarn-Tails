@@ -121,6 +121,25 @@ export const createUserPattern = (newPattern) => async (dispatch) => {
     }
 }
 
+export const updateUserPattern = (pattern) => async (dispatch) => {
+    const response = await fetch(`api/patterns/${pattern.id}/edit`, {
+        method: "PUT",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(pattern)
+    })
+    if (response.ok) {
+        const data = await response.json()
+
+        if (data.errors) {
+            return;
+        }
+
+        dispatch(updatePattern(data))
+    }
+}
+
 //reducer
 
 const initialState = {
@@ -148,7 +167,9 @@ const patternReducer = (state = initialState, action) => {
         case CREATE_PATTERN: {
             return {...state, allPatterns: action.payload.patterns}
         }
-
+        case UPDATE_PATTERN: {
+            return { ...state, patternById: action.payload.patterns}
+        }
         default: {
             return state
         }

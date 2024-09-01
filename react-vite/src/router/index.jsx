@@ -7,6 +7,7 @@ import UserPatterns from '../components/UserPatterns';
 import ViewUserPattern from '../components/ViewUserPattern';
 import PatternDetail from '../components/PatternDetail';
 import CreatePattern from '../components/CreatePattern';
+import EditPattern from '../components/EditPattern';
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "pattern/new",
         element: <CreatePattern />
+      },
+      {
+        path: ":patternId/edit",
+        element: <EditPattern />
       }
     ],
   },
