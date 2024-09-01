@@ -101,7 +101,7 @@ export const viewUserPattern = (patternId) => async (disptach) => {
 }
 
 //create a new pattern
-export const createrUserPattern = (newPattern) => async (dispatch) => {
+export const createUserPattern = (newPattern) => async (dispatch) => {
     const response = await fetch("/api/patterns/new", {
         method: "POST",
         headers: {
@@ -146,7 +146,7 @@ const patternReducer = (state = initialState, action) => {
             return { ...state, patternById: action.payload }
         }
         case CREATE_PATTERN: {
-            return {...state, allPatterns: action.paylaod.patterns}
+            return {...state, allPatterns: action.payload.patterns}
         }
 
         default: {

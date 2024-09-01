@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 
 const CreatePattern = () => {
@@ -22,9 +22,11 @@ const CreatePattern = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
 
-    if (!loggedIn) return (
-        navigate(``)
-    )
+    useEffect(()=> {
+        if (!loggedIn) {
+            navigate('/');
+        }
+    }, [loggedIn, navigate])
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateTileImage = (e) => setTileImage(e.target.value);
@@ -77,11 +79,12 @@ const CreatePattern = () => {
             materials_yardage: yardage,
             pattern
         }
-
+        console.log("NEW PATTERN: ", newPattern)
         const createdPattern = await dispatch(patternActions.createUserPattern(newPattern))
 
+
         if (createdPattern) {
-            navigate(`${createdPattern.id}/view_pattern`)
+            navigate(`/${createdPattern.id}/view_pattern`)
         }
     }
 
@@ -107,7 +110,7 @@ const CreatePattern = () => {
                         Display Image:
                         <label>
                             <input
-                                type="file"
+                                type="url"
                                 value={tileImage}
                                 onChange={updateTileImage}
                             />
@@ -116,49 +119,51 @@ const CreatePattern = () => {
                     </div>
                     <div className="difficulty">
                         Select difficulty:
-                        <input
-                            type="radio"
-                            id="beginner"
-                            name="difficulty"
-                            value={difficulty}
-                            onChange={updateDifficulty}
-
-                        />
                         <label
                             htmlFor="beginner">
+                            <input
+                                type="radio"
+                                id="beginner"
+                                name="difficulty"
+                                value="beginner"
+                                onChange={updateDifficulty}
+
+                            />
                             beginner
                         </label>
-                        <input
-                            type="radio"
-                            id="easy"
-                            name="difficulty"
-                            value={difficulty}
-                            onChange={updateDifficulty}
-                        />
                         <label
                             htmlFor="easy">
+                            <input
+                                type="radio"
+                                id="easy"
+                                name="difficulty"
+                                value="easy"
+                                onChange={updateDifficulty}
+                            />
                             easy
                         </label>
-                        <input
-                            type="radio"
-                            id="intermediate"
-                            name="difficulty"
-                            value={difficulty}
-                            onChange={updateDifficulty}
-                        />
                         <label
                             htmlFor="intermediate">
+                            <input
+                                type="radio"
+                                id="intermediate"
+                                name="difficulty"
+                                value="intermediate"
+                                onChange={updateDifficulty}
+                            />
+
                             intermediate
                         </label>
-                        <input
-                            type="radio"
-                            id="experienced"
-                            name="difficulty"
-                            value={difficulty}
-                            onChange={updateDifficulty}
-                        />
                         <label
                             htmlFor="experienced">
+                            <input
+                                type="radio"
+                                id="experienced"
+                                name="difficulty"
+                                value="experienced"
+                                onChange={updateDifficulty}
+                            />
+
                             experienced
                         </label>
                         {errors.difficulty && <p>{errors.difficulty}</p>}
@@ -417,24 +422,29 @@ const CreatePattern = () => {
                         Approximately how many yards of yarn did you use?
                         <label>
                             <input
-                            type="number"
-                            placeholder="550"
-                            value={yardage}
-                            min="0"
-                            max="9999"
-                            onChange={updateYardage}
+                                type="number"
+                                placeholder="550"
+                                value={yardage}
+                                min="0"
+                                max="9999"
+                                onChange={updateYardage}
                             />
                         </label>
                         {errors.yardage && <p>{errors.yardage}</p>}
                     </div>
                     <div className="written-pattern">
                         <label>
-                            <input
-                            type="textarea"
-                            value={pattern}
-                            placeholder="write your pattern here!"
-                            size="100"
-                            onChange={updatePattern}
+                            {/* <input
+                                type="textarea"
+                                value={pattern}
+                                placeholder="write your pattern here!"
+                                size="100"
+                                onChange={updatePattern}
+                            /> */}
+                            <textarea
+                                value={pattern}
+                                placeholder="Bring your pattern to life!"
+                                onChange={updatePattern}
                             />
                         </label>
                         {errors.pattern && <p>{errors.pattern}</p>}
@@ -445,5 +455,7 @@ const CreatePattern = () => {
         </section>
     )
 }
+
+
 
 export default CreatePattern;
