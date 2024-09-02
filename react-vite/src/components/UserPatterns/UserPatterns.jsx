@@ -13,16 +13,18 @@ const UserPatterns = () => {
     const user_id = Number(userId)
     // console.log("USERID: ",typeof user_id)
     const loggedIn = useSelector((state) => state.session.user)
-
-    const patterns = useSelector((state) => state.patterns.allPatterns)
     // const patterns = Object.values(eachPattern)[0]
     // console.log("PATTERN", patterns)
 
+    const patterns = useSelector((state) => state.patterns.allPatterns)
+
     useEffect(() => {
-        if (!loggedIn) {
+        if (!loggedIn || !patterns) {
             navigate(``)
         }
-    }, [loggedIn, navigate])
+    }, [loggedIn, navigate, patterns])
+
+
 
     useEffect(() => {
         if (loggedIn) {
@@ -63,7 +65,7 @@ const UserPatterns = () => {
                             </div> */}
                         </div>
                     ))
-                ) : ''}
+                ) : 'You have no patterns yet!'}
             </ul>
         </div>
     )

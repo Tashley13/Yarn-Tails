@@ -36,15 +36,15 @@ const EditPattern = () => {
     useEffect(() => {
         if (editPattern) {
             setTitle(editPattern.title || "");
-            setTileImage(editPattern.tileImage || "");
+            setTileImage(editPattern.tile_image || "");
             setDifficulty(editPattern.difficulty || "");
             setTime(editPattern.time || "");
-            setTimeLimit(editPattern.timeLimit || "");
+            setTimeLimit(editPattern.time_limit || "");
             setDescription(editPattern.description || "");
-            setInstrument(editPattern.instrument || "");
-            setInstrumentSize(editPattern.instrumentSize || "");
-            setYarnWeight(editPattern.yarnWeight || "");
-            setYardage(editPattern.yardage || "");
+            setInstrument(editPattern.materials_instrument || "");
+            setInstrumentSize(editPattern.materials_instrument_size || "");
+            setYarnWeight(editPattern.materials_yarn_weight || "");
+            setYardage(editPattern.materials_yardage || "");
             setPattern(editPattern.pattern || "");
         }
     }, [editPattern]);
@@ -57,7 +57,7 @@ const EditPattern = () => {
         if (!loggedIn && (editPattern.user_id && loggedInId !== editPattern.user_id)) {
             navigate("/")
           }
-    }, [loggedIn, loggedInId, editPattern])
+    }, [loggedIn, loggedInId, editPattern, navigate])
 
     const updateTitle = (e) => setTitle(e.target.value);
     const updateTileImage = (e) => setTileImage(e.target.value);
@@ -90,16 +90,19 @@ const EditPattern = () => {
             materials_yardage: yardage,
             pattern
         }
+        // console.log("BEFORE DISPATCH: ", updatePattern)
         const editedPattern = await dispatch(patternActions.updateUserPattern(updatePattern))
+        // console.log("AFTER DISPATCH: ", editedPattern)
+
         if (editedPattern) {
             navigate(`/${editedPattern.id}/view_pattern`)
         }
     }
     return (
-        <section className="create-pattern-form">
+        <section className="edit-pattern-form">
             <div className="pattern-form-header">
                 <h1>Edit Your Pattern</h1>
-                <form className="create-pattern" onSubmit={handleSubmit}>
+                <form className="edit-pattern" onSubmit={handleSubmit}>
                     <div className="title">
                         Title:
                         <label>
@@ -262,7 +265,10 @@ const EditPattern = () => {
                             value={instrument}
                             onChange={updateInstrument}
                         >
-                            <option value="">
+                            <option value="knitting needles">
+                                knitting needles
+                            </option>
+                            <option value="straight needles">
                                 straight needles
                             </option>
                             <option value="circular needles">

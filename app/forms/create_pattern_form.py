@@ -30,6 +30,7 @@ class CreatePatternForm(FlaskForm):
         ],validators=[InputRequired()])
     description=StringField('description', validators=[InputRequired()])
     materials_instrument=SelectField('materials_instrument', choices=[
+        'knitting needles',
         'straight needles',
         'circular needles',
         'double pointed needles',

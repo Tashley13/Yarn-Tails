@@ -12,32 +12,43 @@ const ViewUserpattern = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
 
-    const pattern = useSelector((state) => state.patterns.patternById)
-    // console.log("PATTERN: ", pattern)
-
-    useEffect(() => {
-        if (!loggedIn || !pattern) {
-            navigate(``)
-        }
-    }, [loggedIn, navigate, pattern])
+    const pattern = useSelector((state) => state.patterns.patternById[pattern_id])
+    console.log("PATTERN: ", pattern)
 
     useEffect(() => {
         if (loggedIn) {
-            dispatch(patternActions.viewUserPattern(pattern_id))
-            dispatch(patternActions.getUserPatterns(pattern.user_id))
+            dispatch(patternActions.viewUserPattern(pattern_id));
+            if (pattern?.user_id) {
+                dispatch(patternActions.getUserPatterns(pattern.user_id))
+            }
         }
-    }, [dispatch, loggedIn, pattern_id, pattern.user_id])
+    }, [dispatch, loggedIn, pattern_id, pattern?.user_id])
+
+
+    useEffect(() => {
+        if (!loggedIn || !pattern) {
+            navigate(`/`)
+        }
+    }, [loggedIn, navigate, pattern])
+
+
+    const deletePatternButton = async (patternId) => {
+        dispatch(patternActions.deleteUserPattern(patternId))
+        // console.log("ID: ", patternId)
+            navigate(`/patterns/${loggedIn.id}`)
+
+
+    }
 
     //insert view pattern button, eventually check to see if part of tester checkout
 
     //format date function
     const dateFormat = (created_at) => {
-        if (created_at) {
-            return created_at.slice(0,-12)
-        }
-    }
+            return created_at ? created_at.slice(0,-12): '';
 
-    return (
+    }
+    //check if pattern exists before returning jsx
+    return pattern ? (
         <div className="pattern-details">
             <div className="pattern-title">
                 {pattern.title}
@@ -66,11 +77,19 @@ const ViewUserpattern = () => {
             <div className="pattern-description">
                 {pattern.description}
             </div>
-            <div className="materials">
+            {/* <div className="materials">
                 <PatternMaterials />
+            </div> */}
+            <div className="delete-pattern">
+                <button type="submit" onClick={()=> (
+
+                    deletePatternButton(pattern.id)
+                )}>
+                    Delete Pattern
+                </button>
             </div>
         </div>
-    )
+    ) : null
 }
 
 export default ViewUserpattern;

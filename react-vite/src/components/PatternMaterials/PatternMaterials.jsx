@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 
 import './PatternMaterials.css'
 
 const PatternMaterials = () => {
-    const { userId } = useParams();
+    // const { userId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user_id = Number(userId)
+    // const user_id = Number(userId)
     // console.log("USERID: ",typeof user_id)
     const loggedIn = useSelector((state) => state.session.user)
 
@@ -18,16 +18,16 @@ const PatternMaterials = () => {
     // console.log("PATTERN", patterns)
 
     useEffect(() => {
+        if (loggedIn && patterns?.user_id) {
+            dispatch(patternActions.getUserPatterns(patterns.user_id))
+        }
+    }, [dispatch, patterns.user_id, loggedIn])
+
+    useEffect(() => {
         if (!loggedIn) {
             navigate(``)
         }
     }, [loggedIn, navigate])
-
-    useEffect(() => {
-        if (loggedIn) {
-            dispatch(patternActions.getUserPatterns(user_id))
-        }
-    }, [dispatch, user_id, loggedIn])
 
 
     //return create a pattern button as well

@@ -86,7 +86,7 @@ export const getUserPatterns = (userId) => async (dispatch) => {
 }
 
 //get details of pattern by id
-export const viewUserPattern = (patternId) => async (disptach) => {
+export const viewUserPattern = (patternId) => async (dispatch) => {
     const response = await fetch(`/api/patterns/${patternId}/view_pattern`)
 
     if (response.ok) {
@@ -95,34 +95,35 @@ export const viewUserPattern = (patternId) => async (disptach) => {
         if (data.errors) {
             return;
         }
-        disptach(patternDetails(data))
+        dispatch(patternDetails(data))
         return data
     }
 }
 
 //create a new pattern
-export const createUserPattern = (newPattern) => async (dispatch) => {
+export const createUserPattern = (pattern) => async (dispatch) => {
     const response = await fetch("/api/patterns/new", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(newPattern)
+        body: JSON.stringify(pattern)
     }
     )
     if (response.ok) {
         const data = await response.json()
-
+        // console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
 
-        dispatch(createPattern(data))
+        dispatch(createPattern(data));
+        return data
     }
 }
 
 export const updateUserPattern = (pattern) => async (dispatch) => {
-    const response = await fetch(`api/patterns/${pattern.id}/edit`, {
+    const response = await fetch(`/api/patterns/${pattern.id}/edit`, {
         method: "PUT",
         headers: {
             "Content-Type" : "application/json"
@@ -131,13 +132,27 @@ export const updateUserPattern = (pattern) => async (dispatch) => {
     })
     if (response.ok) {
         const data = await response.json()
-
+        // console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
 
         dispatch(updatePattern(data))
+        return data
     }
+}
+
+export const deleteUserPattern = (patternId) => async (dispatch) => {
+    const response = await fetch(`/api/patterns/${patternId}/delete`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(deletePattern(patternId));
+        return data
+    }
+    return response
 }
 
 //reducer
@@ -164,11 +179,17 @@ const patternReducer = (state = initialState, action) => {
             // console.log("PAYLOAD: ", action.payload)
             return { ...state, patternById: action.payload }
         }
-        case CREATE_PATTERN: {
+        case CREATE_PATTERN: { //spread the previous patterns, add the new pattern
             return {...state, allPatterns: action.payload.patterns}
         }
         case UPDATE_PATTERN: {
-            return { ...state, patternById: action.payload.patterns}
+            return { ...state, patternById: action.payload}
+        }
+        case DELETE_PATTERN: {
+            //spread the current state, delete the selected pattern, return the state
+            const newState= {...state };
+            newState.allPatterns =  newState.allPatterns.filter(pattern=> pattern.id !== action.payload)
+            return newState
         }
         default: {
             return state

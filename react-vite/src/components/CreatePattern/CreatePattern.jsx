@@ -22,7 +22,7 @@ const CreatePattern = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
 
-    useEffect(()=> {
+    useEffect(() => {
         if (!loggedIn) {
             navigate('/');
         }
@@ -81,18 +81,17 @@ const CreatePattern = () => {
         }
         console.log("NEW PATTERN: ", newPattern)
         const createdPattern = await dispatch(patternActions.createUserPattern(newPattern))
-
+        console.log("CREATED: ", createdPattern)
 
         if (createdPattern) {
             navigate(`/${createdPattern.id}/view_pattern`)
         }
     }
 
-
     return (
         <section className="create-pattern-form">
             <div className="pattern-form-header">
-                <h1>Create New Pattern</h1>
+                <h1>Create Your Pattern</h1>
                 <form className="create-pattern" onSubmit={handleSubmit}>
                     <div className="title">
                         Title:
@@ -126,6 +125,7 @@ const CreatePattern = () => {
                                 id="beginner"
                                 name="difficulty"
                                 value="beginner"
+                                checked={difficulty === 'beginner'}
                                 onChange={updateDifficulty}
 
                             />
@@ -138,6 +138,7 @@ const CreatePattern = () => {
                                 id="easy"
                                 name="difficulty"
                                 value="easy"
+                                checked={difficulty === 'easy'}
                                 onChange={updateDifficulty}
                             />
                             easy
@@ -149,6 +150,7 @@ const CreatePattern = () => {
                                 id="intermediate"
                                 name="difficulty"
                                 value="intermediate"
+                                checked={difficulty === 'intermediate'}
                                 onChange={updateDifficulty}
                             />
 
@@ -161,6 +163,7 @@ const CreatePattern = () => {
                                 id="experienced"
                                 name="difficulty"
                                 value="experienced"
+                                checked={difficulty === 'experienced'}
                                 onChange={updateDifficulty}
                             />
 
@@ -186,49 +189,49 @@ const CreatePattern = () => {
                             value={timeLimit}
                             onChange={updateTimeLimit}
                         >
-                            <option >
+                            <option value="one day (24 hours)">
                                 one day (24 hours)
                             </option>
-                            <option >
+                            <option value="two days (48 hours)">
                                 two days (48 hours)
                             </option>
-                            <option >
+                            <option value="three days (72 hours)">
                                 three days (72 hours)
                             </option>
-                            <option >
+                            <option value="four days (96 hours)">
                                 four days (96 hours)
                             </option>
-                            <option >
+                            <option value="five days (120 hours)">
                                 five days (120 hours)
                             </option>
-                            <option >
+                            <option value=" six days (144 hours)">
                                 six days (144 hours)
                             </option>
-                            <option >
+                            <option value="one week (7 days)">
                                 one week (7 days)
                             </option>
-                            <option >
+                            <option value="two weeks (14 days)">
                                 two weeks (14 days)
                             </option>
-                            <option >
+                            <option value="three weeks (21 days)">
                                 three weeks (21 days)
                             </option>
-                            <option >
+                            <option value="four weeks (28 days)">
                                 four weeks (28 days)
                             </option>
-                            <option >
+                            <option value="five weeks (35 days)">
                                 five weeks (35 days)
                             </option>
-                            <option >
+                            <option value="six weeks (42 days)">
                                 six weeks (42 days)
                             </option>
-                            <option >
+                            <option value="one month (30 days)">
                                 one month (30 days)
                             </option>
-                            <option >
+                            <option value="two months (60 days)">
                                 two months (60 days)
                             </option>
-                            <option >
+                            <option value="three months (90 days)">
                                 three months (90 days)
                             </option>
                         </select>
@@ -252,31 +255,34 @@ const CreatePattern = () => {
                             value={instrument}
                             onChange={updateInstrument}
                         >
-                            <option>
+                            <option value="knitting needles">
+                                knitting needles
+                            </option>
+                            <option value="straight needles">
                                 straight needles
                             </option>
-                            <option>
+                            <option value="circular needles">
                                 circular needles
                             </option>
-                            <option>
+                            <option value="double pointed needles">
                                 double pointed needles
                             </option>
-                            <option>
+                            <option value="crochet hook">
                                 crochet hook
                             </option>
-                            <option>
+                            <option value="inline crochet hook">
                                 inline crochet hook
                             </option>
-                            <option>
+                            <option value="tapered crochet hook">
                                 tapered crochet hook
                             </option>
-                            <option>
+                            <option value="tunisian crochet hook">
                                 tunisian crochet hook
                             </option>
-                            <option>
+                            <option value="knook crochet hook">
                                 knook crochet hook
                             </option>
-                            <option>
+                            <option value="hands">
                                 hands
                             </option>
                         </select>
@@ -288,91 +294,91 @@ const CreatePattern = () => {
                             value={instrumentSize}
                             onChange={updateInstrumentSize}
                         >
-                            <option>
+                            <option value="1.5mm">
                                 1.5mm
                             </option>
 
-                            <option>
+                            <option value="1.75mm">
                                 1.75mm
                             </option>
 
-                            <option>
+                            <option value="2.0mm">
                                 2.0mm
                             </option>
 
-                            <option>
+                            <option value="2.25mm">
                                 2.25mm
                             </option>
 
-                            <option>
+                            <option value="2.75mm">
                                 2.75mm
                             </option>
 
-                            <option>
+                            <option value="3.0mm">
                                 3.0mm
                             </option>
 
-                            <option>
+                            <option value="3.25mm">
                                 3.25mm
                             </option>
 
-                            <option>
+                            <option value="3.5mm">
                                 3.5mm
                             </option>
 
-                            <option>
+                            <option value="3.75mm">
                                 3.75mm
                             </option>
 
-                            <option>
-                                4mm
+                            <option value="4.0mm">
+                                4.0mm
                             </option>
 
-                            <option>
+                            <option value="4.25mm">
                                 4.25mm
                             </option>
 
-                            <option>
+                            <option value="4.5mm">
                                 4.5mm
                             </option>
 
-                            <option>
+                            <option value="5.0mm">
                                 5.0mm
                             </option>
 
-                            <option>
+                            <option value="5.25mm">
                                 5.25mm
                             </option>
 
-                            <option>
+                            <option value="5.5mm">
                                 5.5mm
                             </option>
 
-                            <option>
+                            <option value="6.0mm">
                                 6.0mm
                             </option>
 
-                            <option>
+                            <option value="6.5mm">
                                 6.5mm
                             </option>
 
-                            <option>
+                            <option value="7.0mm">
                                 7.0mm
                             </option>
 
-                            <option>
+                            <option value="7.5mm">
                                 7.5mm
                             </option>
 
-                            <option>
+                            <option value="8.0mm">
                                 8.0mm
                             </option>
 
-                            <option>
+                            <option value="9.0mm">
                                 9.0mm
                             </option>
 
-                            <option>
+                            <option value="10.0mm">
                                 10.0mm
                             </option>
                         </select>
@@ -384,35 +390,35 @@ const CreatePattern = () => {
                             value={yarnWeight}
                             onChange={updateYarnWeight}
                         >
-                            <option>
+                            <option value="0">
                                 0
                             </option>
 
-                            <option>
+                            <option value="1">
                                 1
                             </option>
 
-                            <option>
+                            <option value="2">
                                 2
                             </option>
 
-                            <option>
+                            <option value="3">
                                 3
                             </option>
 
-                            <option>
+                            <option value="4">
                                 4
                             </option>
 
-                            <option>
+                            <option value="5">
                                 5
                             </option>
 
-                            <option>
+                            <option value="6">
                                 6
                             </option>
 
-                            <option>
+                            <option value="7">
                                 7
                             </option>
                         </select>
@@ -435,12 +441,12 @@ const CreatePattern = () => {
                     <div className="written-pattern">
                         <label>
                             {/* <input
-                                type="textarea"
-                                value={pattern}
-                                placeholder="write your pattern here!"
-                                size="100"
-                                onChange={updatePattern}
-                            /> */}
+                        type="textarea"
+                        value={pattern}
+                        placeholder="write your pattern here!"
+                        size="100"
+                        onChange={updatePattern}
+                    /> */}
                             <textarea
                                 value={pattern}
                                 placeholder="Bring your pattern to life!"

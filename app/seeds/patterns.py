@@ -8,12 +8,12 @@ def seed_patterns():
         tile_image='[imageurl]',
         difficulty='beginner',
         time='15 minutes',
-        time_limit='24 hours',
+        time_limit='one day (24 hours)',
         description='a fun and easy project for all of your left over scraps',
         materials_instrument='crochet hook',
-        materials_instrument_size='varies',
-        materials_yarn_weight='varies',
-        materials_yardage='< 0.5 yards',
+        materials_instrument_size='5.0mm',
+        materials_yarn_weight='4',
+        materials_yardage='1',
         pattern='''
         1) Create a slipknot
         2) Chain '#' for desired snake size:
@@ -31,12 +31,12 @@ def seed_patterns():
         tile_image='[imageurl]',
         difficulty='beginner',
         time='30 minutes',
-        time_limit='24 hours',
+        time_limit='one day (24 hours)',
         description='a fun and easy project to build a colorful square blanket!',
         materials_instrument='crochet hook',
-        materials_instrument_size='4-5mm',
-        materials_yarn_weight='DK',
-        materials_yardage='1-3 yards',
+        materials_instrument_size='4.5mm',
+        materials_yarn_weight='4',
+        materials_yardage='3',
         pattern='''
         1) Create a slipknot
         2) Chain '#' for desired square size(I'm creating a medium square):
@@ -55,12 +55,12 @@ def seed_patterns():
         tile_image='[imageurl]',
         difficulty='beginner',
         time='8 hours',
-        time_limit='48 hours',
+        time_limit='two days (48 hours)',
         description='a fun and easy project to create for your friends during the cold months!',
         materials_instrument='knitting needles',
-        materials_instrument_size='4-5mm',
-        materials_yarn_weight='Light-Medium',
-        materials_yardage='50-75 yards',
+        materials_instrument_size='5.0mm',
+        materials_yarn_weight='4',
+        materials_yardage='60',
         pattern='''
         1) Leave a tail 3x the width you'd like your scarf to be
         2) Cast on as many stitches to get your desired length
