@@ -80,7 +80,7 @@ def seed_patterns():
 
 def undo_patterns():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table{SCHEMA}.patterns RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.patterns RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM patterns"))
 
