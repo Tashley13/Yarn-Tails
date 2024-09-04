@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Pattern, db, User
+from app.models import Pattern, db, User, Tester
 # from app.forms import CreatePatternForm
 from datetime import datetime, timezone
 from sqlalchemy.orm import selectinload
@@ -148,3 +148,9 @@ def delete_pattern(id):
     db.session.delete(pattern_to_delete)
     db.session.commit()
     return jsonify({"message": "Pattern successfully deleted"})
+
+
+
+#grab all testers by patternId
+# @pattern_routes.route('<int:id>/reviews')
+# def testersByPatternId()

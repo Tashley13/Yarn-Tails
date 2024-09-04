@@ -19,13 +19,17 @@ def all_testers():
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
             'image': tester.image,
-            'review': tester.review
+            'review': tester.review,
+            'user': {
+                'id': tester.user.id,
+                'username': tester.user.username
+            } if tester.user else None #only return user if exists
         }
         for tester in testers
     ]}
 
-#get all reviews of current user
-@tester_routes.route('/current/<int:id>')
+#get review by id
+@tester_routes.route('/<int:id>')
 def user_testers(id):
     user_tests = Tester.query.filter_by(user_id=id).all()
     if not user_tests:
@@ -39,5 +43,18 @@ def user_testers(id):
             'image': tester.image,
             'review': tester.review
         }
-        for tester in testers
+        for tester in user_tests
     ]}
+
+
+#create a review based on patternId
+# @tester_routes.route('/new', methods={"POST"})
+
+# def create_tester():
+#     user_id=current_user.id
+#     data=request.get_json()
+
+#     new_tester= Tester(
+#         user_id=user_id,
+
+#     )
