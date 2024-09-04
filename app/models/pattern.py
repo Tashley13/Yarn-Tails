@@ -23,7 +23,8 @@ class Pattern(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-    user= db.relationship('User', back_populates='patterns')
+    user = db.relationship('User', back_populates='patterns')
+    testers = db.relationship('Tester', back_populates='pattern', cascade='all, delete-orphan')
     # pattern_images= db.relationship('PatternImage', back_populates='pattern')
 
     def __repr__(self):

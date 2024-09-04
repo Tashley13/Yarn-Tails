@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Pattern, db, User
-from app.forms import CreatePatternForm
+# from app.forms import CreatePatternForm
 from datetime import datetime, timezone
 from sqlalchemy.orm import selectinload
 
