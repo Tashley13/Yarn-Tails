@@ -152,5 +152,48 @@ def delete_pattern(id):
 
 
 #grab all testers by patternId
-# @pattern_routes.route('<int:id>/reviews')
-# def testersByPatternId()
+@pattern_routes.route('<int:patternId>/testers')
+def testersByPatternId(patternId):
+    # print(f"patternId: ", patternId)
+    pattern=Pattern.query.get(patternId)
+
+    if not pattern:
+        return jsonify({"message": "This pattern does not exist"})
+    tester_by_pattern_id = Tester.query.filter(Tester.pattern_id==patternId).all()
+    # print(f"TESTER: ", tester_by_pattern_id)
+    if not tester_by_pattern_id:
+        return {"message": "no tests for this pattern yet!"}
+    return {'pattern_testers' : [
+        {
+            'id' : tester.id,
+            'user_id' : tester.user_id,
+            'pattern_id' : tester.pattern_id,
+            'rating' : tester.rating,
+            'image' : tester.image,
+            'review' : tester.review
+        }
+        for tester in tester_by_pattern_id
+    ]}
+
+
+#create a test based on patternId
+@pattern_routes.route('<int:patternId>/testers', methods=["POST"])
+def create_tester(patternId):
+    user_id=current_user.id
+    # print(f"USER_ID: ", user_id)
+    pattern = Pattern.query.get(patternId)
+    if not pattern:
+        return jsonify({"message" : "no pattern to test!"})
+    data=request.get_json()
+
+    new_tester = Tester(
+        user_id=user_id,
+        pattern_id=patternId,
+        rating=data.get('rating'),
+        image=data.get('image'),
+        review=data.get('review')
+    )
+
+    db.session.add(new_tester)
+    db.session.commit()
+    return jsonify(new_tester.to_dict())

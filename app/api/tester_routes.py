@@ -47,14 +47,27 @@ def user_testers(id):
     ]}
 
 
-#create a review based on patternId
-# @tester_routes.route('/new', methods={"POST"})
+#update a test
+@tester_routes.route('/<int:testerId>', methods=["PUT"])
+def updated_tester(testerId):
+    tester_edit = Tester.query.get(testerId)
+    tester_data=request.get_json()
+    if not tester_edit or tester_edit.user_id != current_user.id:
+        return jsonify({"message" : "No pattern test to edit!"})
+    tester_edit.rating=tester_data.get('rating')
+    tester_edit.image=tester_data.get('image')
+    tester_edit.review=tester_data.get('review')
 
-# def create_tester():
-#     user_id=current_user.id
-#     data=request.get_json()
+    db.session.commit()
+    return jsonify(tester_edit.to_dict())
 
-#     new_tester= Tester(
-#         user_id=user_id,
 
-#     )
+#delete a test
+@tester_routes.route('/<int:testerId>', methods=["DELETE"])
+def delete_tester(testerId):
+    delete_tester=Tester.query.get(testerId)
+    if not delete_tester or delete_tester.user_id != current_user.id:
+        return jsonify({"message" : "No test to delete"})
+    db.session.delete(delete_tester)
+    db.session.commit()
+    return jsonify({"message" : "Tester successfully deleted"})
