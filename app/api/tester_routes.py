@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 
 tester_routes = Blueprint('testers', __name__, url_prefix="/testers")
 
-#get all pattern tests
+#get all tests
 @tester_routes.route('')
 def all_testers():
     testers=Tester.query.options(selectinload(Tester.user)).all()
@@ -28,8 +28,8 @@ def all_testers():
         for tester in testers
     ]}
 
-#get review by id
-@tester_routes.route('/<int:id>')
+#get tests by userid
+@tester_routes.route('/current/<int:id>')
 def user_testers(id):
     user_tests = Tester.query.filter_by(user_id=id).all()
     if not user_tests:
@@ -46,6 +46,14 @@ def user_testers(id):
         for tester in user_tests
     ]}
 
+
+#get single test by testId
+@tester_routes.route('/<int:testerId>')
+def single_test_by_id(testerId):
+    test = Tester.query.get(testerId)
+    if not test:
+        return {"message" : "No Test to view here!"}
+    return jsonify(test.to_dict())
 
 #update a test
 @tester_routes.route('/<int:testerId>', methods=["PUT"])

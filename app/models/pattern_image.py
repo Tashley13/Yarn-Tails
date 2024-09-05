@@ -10,7 +10,7 @@
 
 #     id=db.Column(db.Integer, primary_key=True)
 #     pattern_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
-#     urls=db.Column(db.JSON, nullable=False)
+#     urls=db.Column(db.string, nullable=False)
 #     created_at = db.Column(db.DateTime, default=datetime.now)
 #     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
