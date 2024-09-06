@@ -7,6 +7,9 @@ export const CREATE_PATTERN = 'patterns/CREATE_PATTERN'
 export const UPDATE_PATTERN = 'patterns/UPDATE_PATTERN'
 export const DELETE_PATTERN = 'patterns/DELETE_PATTERN'
 
+
+
+
 //POJO action creators
 //get all patterns
 const allPatterns = (patterns) => {
@@ -52,6 +55,10 @@ const deletePattern = (patternId) => {
         payload: patternId
     }
 }
+
+
+
+
 
 
 //thunks
@@ -155,6 +162,9 @@ export const deleteUserPattern = (patternId) => async (dispatch) => {
     return response
 }
 
+
+
+
 //reducer
 
 const initialState = {
@@ -191,6 +201,7 @@ const patternReducer = (state = initialState, action) => {
             newState.allPatterns =  newState.allPatterns.filter(pattern=> pattern.id !== action.payload)
             return newState
         }
+
         default: {
             return state
         }
