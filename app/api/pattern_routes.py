@@ -163,7 +163,7 @@ def testersByPatternId(patternId):
     # print(f"TESTER: ", tester_by_pattern_id)
     if not tester_by_pattern_id:
         return {"message": "no tests for this pattern yet!"}
-    return {'pattern_testers' : [
+    return {'testers' : [
         {
             'id' : tester.id,
             'user_id' : tester.user_id,

@@ -12,7 +12,7 @@ const ViewUserpattern = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
 
-    const pattern = useSelector((state) => state.patterns.patternById[pattern_id])
+    const pattern = useSelector((state) => state.patterns.patternById)
     console.log("PATTERN: ", pattern)
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const ViewUserpattern = () => {
 
 
     useEffect(() => {
-        if (!loggedIn || !pattern) {
+        if (!loggedIn) {
             navigate(`/`)
         }
     }, [loggedIn, navigate, pattern])

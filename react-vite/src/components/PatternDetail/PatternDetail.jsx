@@ -17,7 +17,7 @@ const PatternDetail = () => {
 
     useEffect(() => {
         if (!loggedIn || !pattern) {
-            navigate(``)
+            navigate(`/ `)
         }
     }, [loggedIn, navigate, pattern])
 

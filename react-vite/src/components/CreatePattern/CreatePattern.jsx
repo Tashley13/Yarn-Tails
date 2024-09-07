@@ -83,7 +83,7 @@ const CreatePattern = () => {
         const createdPattern = await dispatch(patternActions.createUserPattern(newPattern))
         console.log("CREATED: ", createdPattern)
 
-        if (createdPattern) {
+        if (createdPattern && createdPattern.id) {
             navigate(`/${createdPattern.id}/view_pattern`)
         }
     }

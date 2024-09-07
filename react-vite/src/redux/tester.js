@@ -24,10 +24,10 @@ const userTesters = (testers) => {
 }
 
 //view test by id
-const viewTest = (test) => {
+const viewTest = (testerId) => {
     return {
         type: VIEW_TESTER,
-        payload: test
+        payload: testerId
     }
 }
 
@@ -67,6 +67,7 @@ export const getAllTests = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
+        // console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
@@ -98,7 +99,7 @@ export const getUserTests = (userId) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-
+        // console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
@@ -108,8 +109,8 @@ export const getUserTests = (userId) => async (dispatch) => {
 }
 
 //get test by id
-export const getTestById = (test) => async (dispatch) => {
-    const response = await fetch(`/api/testers/${test.id}`)
+export const getTestById = (testerId) => async (dispatch) => {
+    const response = await fetch(`/api/testers/${testerId}`)
 
     if (response.ok) {
         const data = await response.json()
@@ -188,19 +189,19 @@ const initialState={
 const testerReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_TESTERS: {
-            return { ...state, allTests: action.payload}
+            return { ...state, allTests: action.payload.testers}
         }
         case USER_TESTERS: {
-            return { ...state, allTests: action.payload}
+            return { ...state, allTests: action.payload.testers}
         }
         case VIEW_TESTER: {
             return { ...state, testById: action.payload}
         }
         case GET_TEST: {
-            return { ...state, allTests: action.payload}
+            return { ...state, allTests: action.payload.testers}
         }
         case CREATE_TESTER: {
-            return { ...state, allTests: action.payload}
+            return { ...state, allTests: action.payload.testers}
         }
         case UPDATE_TESTER: {
             return { ...state, patternById: action.payload}
@@ -208,6 +209,10 @@ const testerReducer = (state = initialState, action) => {
         case DELETE_TESTER: {
             const newState = { ...state};
             newState.allTests = newState.allTests.filter(test=> test.id !== action.payload)
+        }
+
+        default: {
+            return state
         }
     }
 }
