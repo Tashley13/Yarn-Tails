@@ -8,11 +8,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import patternReducer from "./pattern";
 import testerReducer from "./tester";
+import patternImageReducer from "./patternImage"
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   patterns: patternReducer,
-  testers: testerReducer
+  testers: testerReducer,
+  patternImages: patternImageReducer
 });
 
 let enhancer;

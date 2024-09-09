@@ -25,7 +25,7 @@ class Pattern(db.Model):
 
     user = db.relationship('User', back_populates='patterns')
     testers = db.relationship('Tester', back_populates='pattern', cascade='all, delete-orphan')
-    # pattern_images= db.relationship('PatternImage', back_populates='pattern')
+    pattern_images= db.relationship('PatternImage', back_populates='pattern', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'Pattern {self.title}'
