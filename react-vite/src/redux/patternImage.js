@@ -28,12 +28,43 @@ export const getAllPatternImages = (patternId) => async (dispatch) => {
 
         if (data.errors) {
             return;
+        }
+        dispatch(allPatternImages(data))
+        return data
     }
-    dispatch(allPatternImages(data))
-    return data
-}
 }
 
-export const uploadPatternImage = (image) => async (dispatch) => {
+export const createPatternImage = (image) => async (dispatch) => {
+    const response = await fetch("api/pattern_images", {
+        method: "POST",
+        body: image
+    });
 
+    if (response.ok) {
+        const data = await response.json()
+        const resImage = data.image;
+        dispatch(postPatternImage(resImage))
+    } else {
+        console.error("There was an error creating your image.")
+    }
+}
+
+
+const initialState = {
+    images: [] //set as an empty array since files are stored in an array
+};
+
+const patternImageReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case ALL_IMAGES: {
+            return { ...state, images: action.payload}
+        }
+        case POST_IMAGE: {
+            return { ...state, images: [...state.images, action.payload]}
+        }
+
+    default: {
+            return state
+        }
+    }
 }
