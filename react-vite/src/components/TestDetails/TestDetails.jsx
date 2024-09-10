@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
+import OpenModalButton from "../OpenModalButton";
+import UpdateTestModal from "../UpdateTest";
 
 const TestDetails = () => {
     const { testerId } = useParams();
@@ -44,7 +46,16 @@ const TestDetails = () => {
             <div className="image">
                 {test.image}
             </div>
+            <ul className="update-test">
+                <OpenModalButton
+                    buttonText="Update your test"
+
+                    modalComponent={<UpdateTestModal test={test}/>}
+                />
+            </ul>
         </div>
+
+
     )
 }
 
