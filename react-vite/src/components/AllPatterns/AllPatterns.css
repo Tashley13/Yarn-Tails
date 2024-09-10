@@ -1,11 +1,13 @@
 .pattern-display {
-    position: relative;
-    top: 50px;
-    width: 250px;
-    height: 250px;
-    background-color: blue;
+    margin-top: 125px;
+    padding: 20px;
+    background-color: rgba(39, 39, 53, 0.685);
+    display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
 }
+
+
 
 .pattern-times {
     position: absolute;
