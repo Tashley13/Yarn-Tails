@@ -464,19 +464,20 @@ const CreatePattern = () => {
                     <button type="submit">Create Pattern</button>
                 </form>
             </div>
-            {createdPattern && (
-                <section className="addPatternImages">
-                    <div className="addImages">
-                        <AddPatternImages patternId={newPatternId} />
-                    </div>
 
-                </section>
-            )}
         </section>
 
 
     )
     //send the useState patternId through to AddPatternImages
+    // {createdPattern && (
+    //     <section className="addPatternImages">
+    //         <div className="addImages">
+    //             <AddPatternImages patternId={newPatternId} />
+    //         </div>
+
+    //     </section>
+    // )}
 }
 
 
