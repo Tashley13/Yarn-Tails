@@ -34,10 +34,10 @@ export const getAllPatternImages = (patternId) => async (dispatch) => {
     }
 }
 
-export const createPatternImage = (image) => async (dispatch) => {
+export const createPatternImage = (formData) => async (dispatch) => {
     const response = await fetch("api/pattern_images", {
         method: "POST",
-        body: image
+        body: formData
     });
 
     if (response.ok) {
@@ -68,3 +68,5 @@ const patternImageReducer = (state = initialState, action) => {
         }
     }
 }
+
+export default patternImageReducer;

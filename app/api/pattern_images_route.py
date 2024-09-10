@@ -8,17 +8,20 @@ from app.s3_helpers import (
 pattern_image_routes = Blueprint('pattern_images', __name__)
 
 
-@pattern_image_routes.route("", method=["POST"])
+@pattern_image_routes.route('', methods=["POST"])
 # @login_required
 def upload_pattern_image():
     form = PatternImageForm()
 
-    if form.validate_on_submit():
+    if not form.validate_on_submit():
+        return jsonify({
+            "errors" : form.errors
+        }), 400
 
-        image = form.data["image"]
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
-        print(upload)
+    image = form.data["image"]
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+    # print(upload)
 
     if "url" not in upload:
         return jsonify({"message" : upload }), 400
@@ -32,10 +35,5 @@ def upload_pattern_image():
         "message" : "Successfully uploaded pattern images!",
         "image" : new_image.to_dict()
     }), 201
-
-    if form.errors:
-        return jsonify({
-            "errors" : form.errors
-        }), 400
 
     return jsonify({"message" : "Invalid request"}), 400

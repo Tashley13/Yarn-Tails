@@ -9,12 +9,14 @@ class PatternImage(db.Model):
         __table_args__={"schema": SCHEMA}
 
     id=db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     image=db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     pattern= db.relationship('Pattern', back_populates='pattern_images')
+    user = db.relationship('User', back_populates='pattern_images')
 
     def __repr__(self):
         return f'PatternImage {self.id}'

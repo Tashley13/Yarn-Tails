@@ -28,6 +28,10 @@ const PatternDetail = () => {
         }
     }, [dispatch, loggedIn, pattern_id, pattern.user_id])
 
+    // const createTestOnClick = () => {
+
+    // }
+
     return (
         <div className="pattern-details">
             <div className="pattern-title">

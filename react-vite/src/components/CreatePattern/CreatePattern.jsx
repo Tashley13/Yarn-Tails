@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+import AddPatternImages from "../PatternImages";
 
 const CreatePattern = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const CreatePattern = () => {
     const [yarnWeight, setYarnWeight] = useState('');
     const [yardage, setYardage] = useState('');
     const [pattern, setPattern] = useState('');
+    const [newPatternId, setNewPatternId] = useState({}); //create a use state to store the new patterns id to pass into the pattern images
     const [errors, setErrors] = useState({});
 
     const loggedIn = useSelector((state) => state.session.user)
@@ -84,6 +86,7 @@ const CreatePattern = () => {
         console.log("CREATED: ", createdPattern)
 
         if (createdPattern && createdPattern.id) {
+            setNewPatternId(createdPattern.id) //set the new patternId as the newly created pattern id
             navigate(`/${createdPattern.id}/view_pattern`)
         }
     }
@@ -455,11 +458,23 @@ const CreatePattern = () => {
                         </label>
                         {errors.pattern && <p>{errors.pattern}</p>}
                     </div>
+
                     <button type="submit">Create Pattern</button>
                 </form>
             </div>
+            {createdPattern && (
+                <section className="addPatternImages">
+                    <div className="addImages">
+                        <AddPatternImages patternId={newPatternId} />
+                    </div>
+
+                </section>
+            )}
         </section>
+
+
     )
+    //send the useState patternId through to AddPatternImages
 }
 
 

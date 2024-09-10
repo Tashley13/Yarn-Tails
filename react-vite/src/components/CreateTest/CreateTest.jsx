@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
 
 const CreateTest = () => {
+    const { patternId } = useParams();
+    console.log("PATTERNID: ", patternId)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
