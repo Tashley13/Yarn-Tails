@@ -7,9 +7,13 @@
     overflow: hidden;
 }
 
+.pattern-display {
+    width: 1000px;
+    display: flex;
+    justify-content: center;
+}
 
-
-.pattern-times {
+/* .pattern-times {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -18,4 +22,4 @@
 
 .pattern-display:hover .pattern-times {
     opacity: 1;
-}
+} */
