@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+
 
 const CreatePattern = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
 
     const [title, setTitle] = useState('');
     const [tileImage, setTileImage] = useState('');

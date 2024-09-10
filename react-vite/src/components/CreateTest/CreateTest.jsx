@@ -1,24 +1,27 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useModal } from "../../context/Modal";
 import * as testerActions from "../../redux/tester";
 
-const CreateTest = () => {
+function CreateTestModal({patternId}) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [rating, setRating] = useState('');
     const [image, setImage] = useState('');
     const [review, setReview] = useState('');
     const [errors, setErrors] = useState({});
+    const { closeModal } = useModal();
 
     const loggedIn = useSelector((state) => state.session.user)
 
-    useEffect(() => {
-        if (!loggedIn) {
-            navigate("/")
-        }
-    }, [loggedIn, navigate])
+
+    // useEffect(() => {
+    //     if (!loggedIn) {
+    //         navigate("/")
+    //     }
+    // }, [loggedIn, navigate])
 
     const updateRating = (e) => setRating(e.target.value);
     const updateImage = (e) => setImage(e.target.value);
@@ -40,17 +43,26 @@ const CreateTest = () => {
         setErrors({})
 
         const newTest = {
+            patternId,
             rating,
             image,
             review
         }
 
-        const createdTest = await dispatch(testerActions.createTestByPatternId(newTest))
-        console.log("CREATED", createdTest)
+        return dispatch(testerActions.createTestByPatternId(patternId, newTest))
+        .then(closeModal)
+        .catch(async (res)=> {
+            const data = await res.json();
 
-        if (createdTest && createdTest.id) {
-            navigate(`/test/${createdTest.id}`)
-        }
+            if ( data && data.errors) {
+                setErrors(data.errors)
+            }
+        })
+        // console.log("CREATED", createdTest)
+
+        // if (createdTest && createdTest.id) {
+        //     navigate(`/test/${createdTest.id}`)
+        // }
 
     }
 
@@ -100,4 +112,4 @@ const CreateTest = () => {
     )
 }
 
-export default CreateTest;
+export default CreateTestModal;

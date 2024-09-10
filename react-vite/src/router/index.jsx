@@ -66,10 +66,10 @@ export const router = createBrowserRouter([
         path: "/test/:testerId",
         element: <TestDetails />
       },
-      {
-        path: '/test/new',
-        element: <CreateTest />
-      }
+      // {
+      //   path: '/test/new',
+      //   element: <CreateTest />
+      // }
     ],
   },
 ]);

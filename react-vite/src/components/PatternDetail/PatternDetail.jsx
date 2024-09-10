@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 import PatternMaterials from "../PatternMaterials/PatternMaterials";
+import CreateTestModal from "../CreateTest";
+import OpenModalButton from "../OpenModalButton";
 
 const PatternDetail = () => {
     const { patternId } = useParams();
@@ -57,6 +59,15 @@ const PatternDetail = () => {
             <div className="materials">
                 <PatternMaterials />
             </div>
+
+                <ul className="create_test">
+                    <OpenModalButton
+                        buttonText="Test this pattern?"
+
+                        modalComponent={<CreateTestModal patternId={pattern.id}/>}
+                    />
+                </ul>
+
         </div>
     )
 

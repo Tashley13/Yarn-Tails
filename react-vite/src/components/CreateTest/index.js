@@ -1,3 +1,3 @@
-import CreateTest from "./CreateTest";
+import CreateTestModal from "./CreateTest";
 
-export default CreateTest;
+export default CreateTestModal;
