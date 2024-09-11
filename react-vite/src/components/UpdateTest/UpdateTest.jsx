@@ -1,15 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
 
-function UpdateTestModal({test}) {
+const UpdateTest = () => {
+    const { testerId } = useParams();
     const dispatch = useDispatch();
-    const { closeModal } = useModal();
+    const navigate = useNavigate();
+    const test_id = Number(testerId)
+    console.log("TEST: ", testerId)
 
-    const [rating, setRating] = useState(test.rating);
-    const [image, setImage] = useState(test.image);
-    const [review, setReview] = useState(test.review);
+    const [rating, setRating] = useState('');
+    const [image, setImage] = useState('');
+    const [review, setReview] = useState('');
+
+    useEffect(()=> {
+        if (test_id) {
+            dispatch(testerActions.getTestById(test_id))
+        }
+    }, [dispatch, test_id])
+
+    const loggedIn = useSelector((state)=> state.session.user)
+
+    const test = useSelector((state)=> state.testers.testById)
+
+
+
+    useEffect(()=> {
+        if (test) {
+            setRating(test.rating || '');
+            setImage(test.image || '');
+            setReview(test.review || '');
+        }
+    }, [test])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,17 +44,16 @@ function UpdateTestModal({test}) {
             review
         }
 
-        try {
-            await dispatch(testerActions.updateUserTest(updateTest));
-            closeModal();
-        } catch (error) {
-            console.error("ERROR: ", error)
-        }
+       const editedTest = await dispatch(testerActions.updateUserTest(updateTest))
+
+       if (editedTest) {
+        navigate(`/test/${editedTest.id}`)
+       }
     }
 
     return (
         <div className="update-tester-form-header">
-            <h1>Create a test</h1>
+            <h1>Update your test</h1>
             <form className="update-test" onSubmit={handleSubmit}>
                 <div className="rating">
                     Rating:
@@ -71,4 +93,4 @@ function UpdateTestModal({test}) {
     )
 }
 
-export default UpdateTestModal;
+export default UpdateTest;

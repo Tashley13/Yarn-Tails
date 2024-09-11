@@ -1,19 +1,25 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+// import { useState } from "react";
 import * as patternActions from "../../redux/pattern";
 import PatternMaterials from "../PatternMaterials/PatternMaterials";
+import CreateTestModal from "../CreateTest";
+import OpenModalButton from "../OpenModalButton";
+// import ConfirmationModal from "./ConfirmationModal";
+
 
 const ViewUserpattern = () => {
     const { patternId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const pattern_id = Number(patternId);
+    // const [deletePopUp, setDeletePopUp] = useState(false);
 
     const loggedIn = useSelector((state) => state.session.user)
-
     const pattern = useSelector((state) => state.patterns.patternById)
-    console.log("PATTERN: ", pattern)
+    // console.log("PATTERN: ", pattern);
+
 
     useEffect(() => {
         if (loggedIn) {
@@ -32,19 +38,24 @@ const ViewUserpattern = () => {
     }, [loggedIn, navigate, pattern])
 
 
-    const deletePatternButton = async (patternId) => {
+    const deletePatternConfirm = async (patternId) => {
+        // console.log("HELLO")
+        // console.log("PATTERN: ", patternId)
         dispatch(patternActions.deleteUserPattern(patternId))
         // console.log("ID: ", patternId)
-            navigate(`/patterns/${loggedIn.id}`)
 
+        navigate(`/patterns/${loggedIn.id}`)
 
+    }
+    const editPatternButton = async () => {
+        navigate(`/${pattern_id}/edit`)
     }
 
     //insert view pattern button, eventually check to see if part of tester checkout
 
     //format date function
     const dateFormat = (created_at) => {
-            return created_at ? created_at.slice(0,-12): '';
+        return created_at ? created_at.slice(0, -12) : '';
 
     }
     //check if pattern exists before returning jsx
@@ -77,19 +88,45 @@ const ViewUserpattern = () => {
             <div className="pattern-description">
                 {pattern.description}
             </div>
+            {loggedIn.id != pattern.user_id && (
+                <ul className="create-test">
+                    <OpenModalButton
+                        buttonText="Test this pattern?"
+
+                        modalComponent={<CreateTestModal patternId={pattern.id} />}
+                    />
+                </ul>
+            )
+            }
             {/* <div className="materials">
                 <PatternMaterials />
             </div> */}
+            <div className="edit-pattern">
+                <button type="submit" onClick={() => {
+                    editPatternButton()
+                }}>
+                    Edit Pattern
+                </button>
+            </div>
             <div className="delete-pattern">
-                <button type="submit" onClick={()=> (
-
-                    deletePatternButton(pattern.id)
+                <button type="submit" onClick={() => (
+                    deletePatternConfirm(pattern.id)
                 )}>
                     Delete Pattern
                 </button>
             </div>
+
         </div>
     ) : null
 }
 
+
+
+// {deletePopUp &&  (
+//     <ConfirmationModal
+//     message="Confirm pattern deletion"
+//     onConfirm={deletePatternConfirm}
+//     onCancel={cancelDeletePattern}
+//     />
+// )}
 export default ViewUserpattern;

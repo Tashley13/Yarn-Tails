@@ -12,7 +12,8 @@ import AllTests from '../components/AllTests/AllTests';
 import UserTests from '../components/UserTests/UserTests';
 import PatternTests from '../components/PatternTests';
 import TestDetails from '../components/TestDetails/TestDetails';
-import CreateTest from '../components/CreateTest/CreateTest';
+// import CreateTest from '../components/CreateTest/CreateTest';
+import UpdateTest from '../components/UpdateTest';
 
 export const router = createBrowserRouter([
   {
@@ -66,10 +67,10 @@ export const router = createBrowserRouter([
         path: "/test/:testerId",
         element: <TestDetails />
       },
-      // {
-      //   path: '/test/new',
-      //   element: <CreateTest />
-      // }
+      {
+        path: '/test/:testerId/edit',
+        element: <UpdateTest />
+      }
     ],
   },
 ]);

@@ -198,7 +198,7 @@ const testerReducer = (state = initialState, action) => {
             return { ...state, testById: action.payload}
         }
         case GET_TEST: {
-            return { ...state, allTests: action.payload.testers}
+            return { ...state, allTests: action.payload}
         }
         case CREATE_TESTER: {
             return { ...state, allTests: action.payload.testers}

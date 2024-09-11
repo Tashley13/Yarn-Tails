@@ -4,11 +4,11 @@ from flask_login import current_user, login_required
 from app.s3_helpers import (
     upload_file_to_s3, get_unique_filename
 )
-
+from app.forms import PatternImageForm;
 pattern_image_routes = Blueprint('pattern_images', __name__)
 
 
-@pattern_image_routes.route("", method=["POST"])
+@pattern_image_routes.route("", methods=["POST"])
 # @login_required
 def upload_pattern_image():
     form = PatternImageForm()
@@ -18,7 +18,7 @@ def upload_pattern_image():
         image = form.data["image"]
         image.filename = get_unique_filename(image.filename)
         upload = upload_file_to_s3(image)
-        print(upload)
+        # print(upload)
 
     if "url" not in upload:
         return jsonify({"message" : upload }), 400

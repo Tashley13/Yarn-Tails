@@ -111,7 +111,7 @@ const CreatePattern = () => {
                         Display Image:
                         <label>
                             <input
-                                type="url"
+                                type="text"
                                 value={tileImage}
                                 onChange={updateTileImage}
                             />

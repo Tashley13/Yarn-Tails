@@ -1,3 +1,3 @@
-import UpdateTestModal from "./UpdateTestModal";
+import UpdateTest from "./UpdateTest";
 
-export default UpdateTestModal;
+export default UpdateTest;

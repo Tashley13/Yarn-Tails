@@ -10,7 +10,15 @@
 .pattern-display {
     width: 1000px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+.pattern-image {
+    border: 1px solid mediumspringgreen;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: start;
 }
 
 /* .pattern-times {

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+import { NavLink } from "react-router-dom";
 
 import './AllPatterns.css'
 
@@ -42,23 +43,27 @@ const AllPatterns = () => {
             {patterns?.length > 0 ? (
                 patterns.map((pattern, key) => (
                     <div key={key} className="pattern-display">
+                        <NavLink to={`/${pattern.id}/view_pattern`}>
                         <div className="pattern-title">
                             {pattern.title}
                         </div>
-                        <div className="pattern-image">
-                            {pattern.tile_image}
-                        </div>
+                        </NavLink>
                         <div className="pattern-difficulty">
-                            {pattern.difficulty}
+                            difficulty: {pattern.difficulty}
                         </div>
                         <div className='pattern-username'>
                             Created by: {pattern.username}
                         </div>
                         <div className="pattern-times">
                             <ul>Time: {pattern.time}</ul>
+
                             <ul>Testing Time: {pattern.time_limit}</ul>
                         </div>
+                        <div className="pattern-image">
+                            {pattern.tile_image}
+                        </div>
                     </div>
+
                 ))
             ): ''}
            </ul>

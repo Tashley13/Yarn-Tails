@@ -139,10 +139,10 @@ def update_pattern(id):
     return jsonify(pattern_to_edit.to_dict())
 
 #delete a pattern
-@pattern_routes.route('/<int:id>/delete', methods=["DELETE"])
+@pattern_routes.route('/<int:patternId>/delete', methods=["DELETE"])
 # @login_required
-def delete_pattern(id):
-    pattern_to_delete=Pattern.query.get(id)
+def delete_pattern(patternId):
+    pattern_to_delete=Pattern.query.get(patternId)
     if not pattern_to_delete or pattern_to_delete.user_id != current_user.id:
         return jsonify({"message": "No pattern to delete"})
     db.session.delete(pattern_to_delete)
