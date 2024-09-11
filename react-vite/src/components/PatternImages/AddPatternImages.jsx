@@ -8,7 +8,7 @@ const AddPatternImages = () => {
     const { patternId } = useParams();
     console.log("ID", patternId)
     const dispatch = useDispatch();
-    const [image, setImage] = useState([]);
+    const [image, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
 
     //need to be able to update the pattern images when it is time to add a new one
@@ -26,7 +26,7 @@ const AddPatternImages = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("image", image)
+        formData.append("image", image);
         console.log("FORMDATA :", formData);
         setImageLoading(true);
         await dispatch(patternImageActions.createPatternImage(formData));

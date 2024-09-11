@@ -13,14 +13,15 @@ pattern_image_routes = Blueprint('pattern_images', __name__)
 def upload_pattern_image():
     form = PatternImageForm(request.form)
 
-    if not form.validate_on_submit():
+    if request.method == "POST" and form.validate_on_submit():
+        image = form.data["image"]
+        print("IMAGE CHECK: ", image)
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+    else:
         return jsonify({
             "errors" : form.errors
         }), 400
-
-        image = form.data["image"]
-        image.filename = get_unique_filename(image.filename)
-        upload = upload_file_to_s3(image)
         # print(upload)
 
     if "url" not in upload:
