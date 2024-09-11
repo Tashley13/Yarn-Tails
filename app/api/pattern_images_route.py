@@ -11,7 +11,7 @@ pattern_image_routes = Blueprint('pattern_images', __name__)
 @pattern_image_routes.route("", methods=["POST"])
 # @login_required
 def upload_pattern_image():
-    form = PatternImageForm()
+    form = PatternImageForm(request.form)
 
     if form.validate_on_submit():
 

@@ -5,4 +5,4 @@ from app.api.aws_helpers import ALLOWED_EXTENSIONS
 
 class PatternImageForm(FlaskForm):
     image = FileField("image", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    submit = SubmitField("Create Post")
+    # submit = SubmitField("Create Post")
