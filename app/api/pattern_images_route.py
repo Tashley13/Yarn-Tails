@@ -13,7 +13,10 @@ pattern_image_routes = Blueprint('pattern_images', __name__)
 def upload_pattern_image():
     form = PatternImageForm(request.form)
 
-    if form.validate_on_submit():
+    if not form.validate_on_submit():
+        return jsonify({
+            "errors" : form.errors
+        }), 400
 
         image = form.data["image"]
         image.filename = get_unique_filename(image.filename)
@@ -32,10 +35,5 @@ def upload_pattern_image():
         "message" : "Successfully uploaded pattern images!",
         "image" : new_image.to_dict()
     }), 201
-
-    if form.errors:
-        return jsonify({
-            "errors" : form.errors
-        }), 400
 
     return jsonify({"message" : "Invalid request"}), 400

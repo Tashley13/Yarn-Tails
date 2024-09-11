@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-import { useModal } from "../../context/Modal";
+import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
 
-function CreateTestModal({patternId}) {
+const CreateTest = () => {
+    const { patternId } = useParams();
+    console.log("PATTERNID: ", patternId)
     const dispatch = useDispatch();
     // const navigate = useNavigate();
 
@@ -112,4 +113,4 @@ function CreateTestModal({patternId}) {
     )
 }
 
-export default CreateTestModal;
+export default CreateTest;

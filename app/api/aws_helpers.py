@@ -42,7 +42,7 @@ def upload_file_to_s3(file, acl="public-read"):
 
 #function to remove image from AWS S3 bucket
 def remove_file_from_s3(image_url):
-    key= iamge_url.rsplit("/",1)[1]
+    key= image_url.rsplit("/",1)[1]
     try:
         s3.delete_object(
             Bucket=BUCKET_NAME,
