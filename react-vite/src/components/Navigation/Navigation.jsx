@@ -21,11 +21,7 @@ function Navigation() {
   const navBarView = () => {
     const mainNav = document.getElementById("main-nav");
     const toggelNav = document.getElementById("toggle-nav");
-<<<<<<< HEAD
     // const openNavText = document.querySelectorAll(".nav-open-text");
-=======
-    const openNavText = document.querySelectorAll(".nav-open-text");
->>>>>>> dfdab73 (working on navigation)
     setNavBarOpen(!navBarOpen);
 
     //set some quick stylings
@@ -68,11 +64,7 @@ function Navigation() {
           <div className="nav-choices">
             <NavLink className="nav-home nav-clicks" to-='/'>
             H
-<<<<<<< HEAD
             <span className="nav-open-text">  Home</span>
-=======
-            <span className="nav-open-text">Home</span>
->>>>>>> dfdab73 (working on navigation)
           </NavLink>
           </div>
 
@@ -80,11 +72,7 @@ function Navigation() {
             <div className="nav-choices">
             <NavLink className="nav-create-pattern nav-clicks" disabled={!loggedIn} to='/pattern/new'>
               CaP
-<<<<<<< HEAD
               <span className="nav-open-text">  Create a Pattern</span>
-=======
-              <span className="nav-open-text">Create a Pattern</span>
->>>>>>> dfdab73 (working on navigation)
             </NavLink>
             </div>
           ) : (
@@ -96,11 +84,7 @@ function Navigation() {
             <div className="nav-choices">
             <NavLink className="nav-user-patterns nav-clicks" to={`/patterns/${loggedIn.id}`}>
               VP
-<<<<<<< HEAD
               <span className="nav-open-text">  View Patterns</span>
-=======
-              <span className="nav-open-text"> View Patterns</span>
->>>>>>> dfdab73 (working on navigation)
             </NavLink>
             </div>
           ) : (
@@ -112,11 +96,7 @@ function Navigation() {
             <div className="nav-choices">
             <NavLink className="nav-user-tests nav-clicks" to={`/tests/${loggedIn.id}`}>
               VT
-<<<<<<< HEAD
               <span className="nav-open-text">  View Tests</span>
-=======
-              <span className="nav-open-text"> View Tests</span>
->>>>>>> dfdab73 (working on navigation)
             </NavLink>
             </div>
           ) : (
