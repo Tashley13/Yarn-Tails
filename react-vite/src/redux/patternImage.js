@@ -60,7 +60,7 @@ const patternImageReducer = (state = initialState, action) => {
             return { ...state, images: action.payload}
         }
         case POST_IMAGE: {
-            return { ...state, images: [...state.images, action.payload]}
+            return { ...state, images: [...state.images, action.payload.images]}
         }
 
     default: {
