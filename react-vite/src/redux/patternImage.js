@@ -21,7 +21,7 @@ const postPatternImage = (image) => {
 
 //
 export const getAllPatternImages = (patternId) => async (dispatch) => {
-    const response = await fetch(`api/patterns/${patternId}/images`)
+    const response = await fetch(`/api/patterns/${patternId}/images`)
 
     if (response.ok) {
         const data = await response.json()
@@ -35,13 +35,14 @@ export const getAllPatternImages = (patternId) => async (dispatch) => {
 }
 
 export const createPatternImage = (formData) => async (dispatch) => {
-    const response = await fetch("api/pattern_images", {
+    const response = await fetch("/api/pattern_images", {
         method: "POST",
         body: formData
     });
 
     if (response.ok) {
         const data = await response.json()
+        // console.log("DATA:", data)
         const resImage = data.image;
         dispatch(postPatternImage(resImage))
     } else {

@@ -11,17 +11,6 @@ const AddPatternImages = () => {
     const [image, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
 
-    //need to be able to update the pattern images when it is time to add a new one
-    // const handleChange = (index, e) => {
-    //     const newImages = [...images] //create a variable with all the previous images
-    //     newImages[index] = e.target.files[0]; //add the newest image
-    //     setImages(newImages); //make sure this state has the newly uploaded image
-    // }
-
-    // //need to be able to add another file
-    // const addNewImage = () => {
-    //     setImages([...images, null]) //null is where the new image will go
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,7 +28,6 @@ const AddPatternImages = () => {
             onSubmit={handleSubmit}
             encType="multipart/form-data"
         >
-
                     <input
                         type="file"
                         accept="image/*"

@@ -15,10 +15,10 @@ const UserPatterns = () => {
     // console.log("USERID: ",typeof user_id)
     const loggedIn = useSelector((state) => state.session.user)
     // const patterns = Object.values(eachPattern)[0]
-    // console.log("PATTERN", patterns)
+
 
     const patterns = useSelector((state) => state.patterns.allPatterns)
-
+//  console.log("PATTERN", patterns)
     useEffect(() => {
         if (!loggedIn || !patterns) {
             navigate(``)

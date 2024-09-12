@@ -2,27 +2,36 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
+import * as patternActions from "../../redux/pattern";
 
 const CreateTest = () => {
     const { patternId } = useParams();
-    console.log("PATTERNID: ", patternId)
+    // console.log("PATTERNID: ", patternId)
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const pattern_id = Number(patternId)
 
     const [rating, setRating] = useState('');
     const [image, setImage] = useState('');
     const [review, setReview] = useState('');
     const [errors, setErrors] = useState({});
-    const { closeModal } = useModal();
+    // const { closeModal } = useModal();
 
     const loggedIn = useSelector((state) => state.session.user)
+    const pattern = useSelector((state)=> state.patterns.patternById)
+    // console.log("PATTERN: ", pattern)
 
+    useEffect(()=> {
+        if (loggedIn) {
+            dispatch(patternActions.viewUserPattern(pattern_id))
+        }
+    }, [loggedIn, dispatch, pattern_id])
 
-    // useEffect(() => {
-    //     if (!loggedIn) {
-    //         navigate("/")
-    //     }
-    // }, [loggedIn, navigate])
+    useEffect(() => {
+        if (!loggedIn) {
+            navigate("/")
+        }
+    }, [loggedIn, navigate])
 
     const updateRating = (e) => setRating(e.target.value);
     const updateImage = (e) => setImage(e.target.value);
@@ -50,24 +59,19 @@ const CreateTest = () => {
             review
         }
 
-        return dispatch(testerActions.createTestByPatternId(patternId, newTest))
-        .then(closeModal)
-        .catch(async (res)=> {
-            const data = await res.json();
+        const createdTest = await dispatch(testerActions.createTestByPatternId(patternId, newTest))
 
-            if ( data && data.errors) {
-                setErrors(data.errors)
-            }
-        })
+
         // console.log("CREATED", createdTest)
 
-        // if (createdTest && createdTest.id) {
-        //     navigate(`/test/${createdTest.id}`)
-        // }
+        if (createdTest && createdTest.id) {
+            navigate(`/test/${createdTest.id}`)
+        }
 
     }
 
     return (
+        <div>
         <section className="create-test-form">
             <div className="tester-form-header">
             <h1>Create a test</h1>
@@ -110,6 +114,10 @@ const CreateTest = () => {
             </form>
             </div>
         </section>
+        <div className="pattern-to-test">
+            {pattern.pattern}
+        </div>
+        </div>
     )
 }
 

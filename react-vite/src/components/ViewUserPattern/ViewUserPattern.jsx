@@ -51,6 +51,10 @@ const ViewUserpattern = () => {
         navigate(`/${pattern_id}/edit`)
     }
 
+    const testPatternButton = async () => {
+        navigate(`/${pattern.id}/test/new`)
+    }
+
     //insert view pattern button, eventually check to see if part of tester checkout
 
     //format date function
@@ -89,22 +93,24 @@ const ViewUserpattern = () => {
                 {pattern.description}
             </div>
             {loggedIn.id != pattern.user_id && (
-                <ul className="create-test">
-                    <OpenModalButton
-                        buttonText="Test this pattern?"
-
-                        modalComponent={<CreateTestModal patternId={pattern.id} />}
-                    />
-                </ul>
+                <div className="test-pattern">
+                <button type="submit" onClick={() => (
+                    testPatternButton(pattern.id)
+                )}>
+                    Test Pattern
+                </button>
+            </div>
             )
             }
             {/* <div className="materials">
                 <PatternMaterials />
             </div> */}
-            <div className="edit-pattern">
-                <button type="submit" onClick={() => {
-                    editPatternButton()
-                }}>
+        {loggedIn.id == pattern.user_id && (
+            <ul>
+                <div className="edit-pattern">
+                <button type="submit" onClick={() => (
+                    editPatternButton(pattern.id)
+                )}>
                     Edit Pattern
                 </button>
             </div>
@@ -115,6 +121,9 @@ const ViewUserpattern = () => {
                     Delete Pattern
                 </button>
             </div>
+            </ul>
+        )
+        }
 
         </div>
     ) : null

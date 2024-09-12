@@ -70,7 +70,7 @@ export const router = createBrowserRouter([
         element: <TestDetails />
       },
       {
-        path: '/test/new',
+        path: '/:patternId/test/new',
         element: <CreateTest />
       },
       {
