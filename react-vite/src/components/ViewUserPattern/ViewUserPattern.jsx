@@ -70,23 +70,26 @@ const ViewUserpattern = () => {
 
 
     const calculateReviews = (patternId) => {
-        if (!tests) {
-            return 'No tests to review'
+        if (!tests || tests.length === 0) {
+            return { testLength: 0, average: null, reviews: [] };
         }
         else {
             const patternTests = tests.filter(test => test.pattern_id === patternId);
             const testLength = patternTests.length
 
+            if (patternTests.length === 0) {
+                return { testLength: 0, average: null, reviews: [] }
+            }
 
             const numerator = patternTests.reduce((acc, test) => acc + test.rating, 0);
             const average = (numerator / testLength).toFixed(2)
             console.log("TESTS: ", patternTests)
-            return { testLength, average, reviews: [patternTests] }
+            return { testLength, average, reviews: patternTests }
         }
     }
 
     const { testLength, average, reviews } = calculateReviews(pattern_id)
-
+    // console.log('test length ', testLength)
     //check if pattern exists before returning jsx
     return pattern ? (
         <div className="pattern-details">
@@ -116,11 +119,19 @@ const ViewUserpattern = () => {
             </div>
             <div className="pattern-description">
                 {pattern.description}
+
             </div>
-            <div className="test-reviews">
-                Total tests: {testLength}
-                Average score: {average} / 10 skeins
-            </div>
+
+
+            {reviews.length > 0 ? (
+                <div className="test-reviews">
+                    Total tests: {testLength}
+                    Average score: {average} / 10 skeins
+                </div>
+            ) : (
+                <p>No tests for this pattern</p>
+            )}
+
             {/* {reviews.length > 0 ? (
                 reviews.map((test, index) => (
                     <div key={index} className="tests">
