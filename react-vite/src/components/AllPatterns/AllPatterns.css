@@ -7,6 +7,7 @@
     overflow: hidden;
 }
 
+<<<<<<< HEAD
 .pattern-display {
     width: 1000px;
     display: flex;
@@ -22,6 +23,11 @@
 }
 
 /* .pattern-times {
+=======
+
+
+.pattern-times {
+>>>>>>> dfdab73 (working on navigation)
     position: absolute;
     bottom: 0;
     right: 0;
