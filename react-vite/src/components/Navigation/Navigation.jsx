@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
+import createPatternIcon from "../../icons/createPatternIcon.svg";
 
 
 import "./Navigation.css";
@@ -71,12 +72,12 @@ function Navigation() {
           {loggedIn ? (
             <div className="nav-choices">
             <NavLink className="nav-create-pattern nav-clicks" disabled={!loggedIn} to='/pattern/new'>
-              CaP
+              <img src={createPatternIcon} alt='create-pattern-icon'/>
               <span className="nav-open-text">  Create a Pattern</span>
             </NavLink>
             </div>
           ) : (
-            <div>Log in or signup to create a pattern </div>
+            <div>Log in or signup to intereact with your patterns and tests </div>
           )}
 
 
@@ -88,7 +89,7 @@ function Navigation() {
             </NavLink>
             </div>
           ) : (
-            <div>log in to view your patterns</div>
+            ''
           )}
 
 
@@ -100,7 +101,7 @@ function Navigation() {
             </NavLink>
             </div>
           ) : (
-            <div>Log in to view your pattern tests</div>
+            ''
           )}
         </div>
       </ul>
