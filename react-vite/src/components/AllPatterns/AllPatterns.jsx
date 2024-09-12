@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
-import { NavLink } from "react-router-dom";
+import * as testerActions from "../../redux/tester"
+;import { NavLink } from "react-router-dom";
 
 import './AllPatterns.css'
 
@@ -18,11 +19,14 @@ const AllPatterns = () => {
 
     //grab all the patterns
     const patterns=useSelector((state) => state.patterns.allPatterns);
+
+    const allTests = useSelector((state)=> state.testers.allTests)
     // const patterns=Object.values(eachPattern)[0]
-    // console.log("PATTERNS: ", patterns)
+    console.log("PATTERNS: ", allTests)
 
     useEffect(()=> {
         dispatch(patternActions.getAllPatterns())
+        dispatch(testerActions.getAllTests())
         // console.log("HELLO WORLD")
     }, [dispatch])
 
@@ -37,12 +41,28 @@ const AllPatterns = () => {
         return <div>No Patterns Yet!</div>
     }
 
+    const calculateReviews = (patternId) => {
+        if (!allTests) {
+            return 'No tests to review'
+        }
+        const patternTests = allTests.filter(test=> test.pattern_id === patternId);
+        const testLength = patternTests.length
+
+
+        const numerator = patternTests.reduce((acc, test)=> acc + test.rating, 0);
+        const average= (numerator/testLength).toFixed(2)
+
+        return {testLength, average}
+    }
+
     return (
         <div className="patterns-display">
            <ul>
             {patterns?.length > 0 ? (
-                patterns.map((pattern, key) => (
-                    <div key={key} className="pattern-display">
+                patterns.map((pattern) => {
+                    const { average, testLength } = calculateReviews(pattern.id);
+                    return(
+                    <div key={pattern.id} className="pattern-display">
                         <NavLink to={`/${pattern.id}/view_pattern`}>
                         <div className="pattern-title">
                             {pattern.title}
@@ -62,9 +82,13 @@ const AllPatterns = () => {
                         <div className="pattern-image">
                             {pattern.tile_image}
                         </div>
+                        <div className="tests-for-pattern">
+                            Tests: {testLength}
+                            Rating: {average} / 10
+                        </div>
                     </div>
-
-                ))
+                    );
+                })
             ): ''}
            </ul>
         </div>

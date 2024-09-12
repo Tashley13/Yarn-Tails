@@ -57,13 +57,15 @@ const UserTests = () => {
                             <div className="image">
                                 {test.image}
                             </div>
-                         <div className="edit-test">
-                            <button type="submit" onClick={()=> {
-                                navigate(`/test/${test.id}/edit`)
-                            }}>
-                                Edit Test
-                            </button>
-                        </div>
+                            {loggedIn.id == test.user_id && (
+                                <div className="edit-test">
+                                <button type="submit" onClick={()=> {
+                                    navigate(`/test/${test.id}/edit`)
+                                }}>
+                                    Edit Test
+                                </button>
+                                </div>
+                            )}
                         </div>
                     ))
                 ) : 'No tests!'}

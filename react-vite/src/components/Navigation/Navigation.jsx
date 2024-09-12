@@ -4,9 +4,11 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-import * as patternActions from "../../redux/pattern";
-import * as testerActions from "../../redux/tester";
-import createPatternIcon from "../../icons/createPatternIcon.svg";
+// import * as patternActions from "../../redux/pattern";
+// import * as testerActions from "../../redux/tester";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 
 import "./Navigation.css";
@@ -64,17 +66,21 @@ function Navigation() {
         <div className="nav-selection">
           <div className="nav-choices">
             <NavLink className="nav-home nav-clicks" to-='/'>
-            H
+              <span className="material-symbols-outlined">
+                gesture
+              </span>
+            </NavLink>
             <span className="nav-open-text">  Home</span>
-          </NavLink>
           </div>
 
           {loggedIn ? (
             <div className="nav-choices">
-            <NavLink className="nav-create-pattern nav-clicks" disabled={!loggedIn} to='/pattern/new'>
-              <img src={createPatternIcon} alt='create-pattern-icon'/>
+              <NavLink className="nav-create-pattern nav-clicks" disabled={!loggedIn} to='/pattern/new'>
+                <span className="material-symbols-outlined">
+                  history_edu
+                </span>
+              </NavLink>
               <span className="nav-open-text">  Create a Pattern</span>
-            </NavLink>
             </div>
           ) : (
             <div>Log in or signup to intereact with your patterns and tests </div>
@@ -83,10 +89,12 @@ function Navigation() {
 
           {loggedIn ? (
             <div className="nav-choices">
-            <NavLink className="nav-user-patterns nav-clicks" to={`/patterns/${loggedIn.id}`}>
-              VP
+              <NavLink className="nav-user-patterns nav-clicks" to={`/patterns/${loggedIn.id}`}>
+                <span className="material-symbols-outlined">
+                  diagnosis
+                </span>
+              </NavLink>
               <span className="nav-open-text">  View Patterns</span>
-            </NavLink>
             </div>
           ) : (
             ''
@@ -95,10 +103,12 @@ function Navigation() {
 
           {loggedIn ? (
             <div className="nav-choices">
-            <NavLink className="nav-user-tests nav-clicks" to={`/tests/${loggedIn.id}`}>
-              VT
+              <NavLink className="nav-user-tests nav-clicks" to={`/tests/${loggedIn.id}`}>
+                <span className="material-symbols-outlined">
+                  reviews
+                </span>
+              </NavLink>
               <span className="nav-open-text">  View Tests</span>
-            </NavLink>
             </div>
           ) : (
             ''

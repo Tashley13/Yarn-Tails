@@ -10,7 +10,10 @@ pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 #get all patterns (limit 25?)
 @pattern_routes.route('')
 def all_patterns():
-    patterns=Pattern.query.options(selectinload(Pattern.user)).limit(25).all()
+    patterns=Pattern.query.options(
+        selectinload(Pattern.user),
+        selectinload(Pattern.testers)
+        ).limit(25).all()
     print("PATTERNS: ", patterns)
     if not patterns:
         return {"message" : "no patterns to test!"}
@@ -23,7 +26,16 @@ def all_patterns():
             'tile_image' : pattern.tile_image,
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
-            'time_limit' : pattern.time_limit
+            'time_limit' : pattern.time_limit,
+            # 'pattern_tests' : [
+            #     {
+            #         'id': tester.id,
+            #         'user_id': tester.user_id,
+            #         'pattern_id' : tester.pattern_id,
+            #         'rating' : tester.rating
+            #     }
+            #     for tester in Pattern.testers
+            # ]
         }
         for pattern in patterns
     ]

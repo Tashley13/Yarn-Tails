@@ -60,7 +60,9 @@ const TestDetails = () => {
             <div className="image">
                 {test.image}
             </div>
-            <div className="edit-test">
+            {loggedIn.id == test.user_id && (
+                <ul>
+                    <div className="edit-test">
                 <button type="submit" onClick={() => {
                     navigate(`/test/${test.id}/edit`)
                 }}>
@@ -74,6 +76,8 @@ const TestDetails = () => {
                     Delete Test
                 </button>
             </div>
+                </ul>
+            )}
         </div>
 
 
