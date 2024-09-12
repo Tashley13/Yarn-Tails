@@ -24,6 +24,7 @@ class PatternImage(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
+            'user_id': self.user_id,
             'pattern_id': self.pattern_id,
             'image': self.image,
             'created_at': self.created_at,

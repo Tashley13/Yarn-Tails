@@ -43,8 +43,8 @@ export const createPatternImage = (formData) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json()
         // console.log("DATA:", data)
-        const resImage = data.image;
-        dispatch(postPatternImage(resImage))
+        // const resImage = data.image;
+        dispatch(postPatternImage(data))
     } else {
         console.error("There was an error creating your image.")
     }

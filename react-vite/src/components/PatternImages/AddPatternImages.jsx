@@ -6,7 +6,10 @@ import { useParams } from "react-router-dom";
 
 const AddPatternImages = () => {
     const { patternId } = useParams();
-    console.log("ID", patternId)
+    // console.log("ID", patternId)
+    const pattern_id = Number(patternId);
+
+    const loggedIn = useSelector((state)=> state.session.user)
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
@@ -16,7 +19,9 @@ const AddPatternImages = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
-        console.log("FORMDATA :", formData);
+        formData.append("pattern_id", pattern_id);
+        formData.append("user_id", Number(loggedIn.id));
+        console.log("FORMDATA :", formData.entries());
         setImageLoading(true);
         await dispatch(patternImageActions.createPatternImage(formData));
     }
