@@ -7,11 +7,11 @@
     overflow: hidden;
 }
 
-<<<<<<< HEAD
 .pattern-display {
     width: 1000px;
     display: flex;
     justify-content: space-between;
+    border-radius: 55% 55% 55% 55%;
 }
 
 .pattern-image {
@@ -23,11 +23,9 @@
 }
 
 /* .pattern-times {
-=======
 
 
 .pattern-times {
->>>>>>> dfdab73 (working on navigation)
     position: absolute;
     bottom: 0;
     right: 0;

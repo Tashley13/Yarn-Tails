@@ -57,7 +57,7 @@ const UserTests = () => {
                             <div className="image">
                                 {test.image}
                             </div>
-                            {loggedIn.id == test.user_id && (
+                            {/* {loggedIn.id == test.user_id && (
                                 <div className="edit-test">
                                 <button type="submit" onClick={()=> {
                                     navigate(`/test/${test.id}/edit`)
@@ -65,7 +65,7 @@ const UserTests = () => {
                                     Edit Test
                                 </button>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     ))
                 ) : 'No tests!'}

@@ -42,7 +42,7 @@ const AllPatterns = () => {
     }
 
     const calculateReviews = (patternId) => {
-        if (!allTests) {
+        if (!Array.isArray(allTests)) {
             return 'No tests to review'
         }
         const patternTests = allTests.filter(test=> test.pattern_id === patternId);
