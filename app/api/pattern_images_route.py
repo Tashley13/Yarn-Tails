@@ -5,7 +5,8 @@ from app.s3_helpers import (
     upload_file_to_s3, get_unique_filename
 )
 from app.forms import PatternImageForm;
-pattern_image_routes = Blueprint('pattern_images', __name__)
+
+pattern_image_routes = Blueprint('pattern_images', __name__);
 
 
 @pattern_image_routes.route("", methods=["POST"])
