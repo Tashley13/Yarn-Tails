@@ -43,12 +43,12 @@ def all_patterns():
     }
 
 #get all patterns of current user
-@pattern_routes.route('/current/<int:id>')
+@pattern_routes.route('/current/<int:userId>')
 # @login_required
-def user_patterns(id):
-    user_patterns=Pattern.query.filter_by(user_id=id).all()
+def user_patterns(userId):
+    user_patterns=Pattern.query.filter_by(user_id=userId).all()
     if not user_patterns:
-        return {"message" : "There is no pattern here"}, 404
+        return jsonify({'patterns': []})
     return {'patterns' : [
         {
             'id': pattern.id,

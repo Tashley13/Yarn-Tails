@@ -35,7 +35,7 @@ export const getAllPatternImages = (patternId) => async (dispatch) => {
 }
 
 export const createPatternImage = (formData) => async (dispatch) => {
-    const response = await fetch("/api/pattern_images", {
+    const response = await fetch("/api/pimages", {
         method: "POST",
         body: formData
     });
@@ -58,10 +58,10 @@ const initialState = {
 const patternImageReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_IMAGES: {
-            return { ...state, images: action.payload}
+            return { ...state, images: action.payload.pattern_images}
         }
         case POST_IMAGE: {
-            return { ...state, images: [...state.images, action.payload.images]}
+            return { ...state, images: [...state.images, action.payload]}
         }
 
     default: {

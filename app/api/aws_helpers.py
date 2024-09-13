@@ -32,7 +32,7 @@ def upload_file_to_s3(file, acl="public-read"):
             file.filename,
             ExtraArgs={
                 "ACL":acl,
-                "Content-Type": file.content_type
+                "ContentType": file.content_type
             }
         )
     except Exception as e:

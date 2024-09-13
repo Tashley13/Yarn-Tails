@@ -21,8 +21,17 @@ const ViewUserpattern = () => {
     const pattern = useSelector((state) => state.patterns.patternById)
     const patternTests = useSelector((state) => state.testers.allTests)
     const tests = patternTests.testers
-    // console.log("PATTERN: ", pattern);
+    console.log("PATTERN: ", pattern);
     console.log("TESTS: ", tests)
+
+    // if (pattern.user_id !== loggedIn.id) {
+    //     return <div>
+    //         No patterns, create one now!
+    //         <button type="submit" onClick={(() => navigate('/'))}>
+    //             Create Pattern
+    //         </button>
+    //     </div>
+    // }
 
 
     useEffect(() => {
@@ -32,21 +41,17 @@ const ViewUserpattern = () => {
             if (pattern?.user_id) {
                 dispatch(patternActions.getUserPatterns(pattern.user_id))
             }
+        } else {
+            navigate("/")
         }
-    }, [dispatch, loggedIn, pattern_id, pattern?.user_id])
+    }, [dispatch, loggedIn, pattern_id, pattern?.user_id, navigate])
 
-
-    useEffect(() => {
-        if (!loggedIn) {
-            navigate(`/`)
-        }
-    }, [loggedIn, navigate, pattern])
 
 
     const deletePatternConfirm = async (patternId) => {
         // console.log("HELLO")
         // console.log("PATTERN: ", patternId)
-        dispatch(patternActions.deleteUserPattern(patternId))
+        await dispatch(patternActions.deleteUserPattern(patternId))
         // console.log("ID: ", patternId)
 
         navigate(`/patterns/${loggedIn.id}`)
@@ -89,6 +94,12 @@ const ViewUserpattern = () => {
     }
 
     const { testLength, average, reviews } = calculateReviews(pattern_id)
+
+    // if (!pattern) {
+    //     return <div> Loading...</div>
+    // }
+
+
     // console.log('test length ', testLength)
     //check if pattern exists before returning jsx
     return pattern ? (

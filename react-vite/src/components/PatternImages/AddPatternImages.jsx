@@ -21,9 +21,10 @@ const AddPatternImages = () => {
         formData.append("image", image);
         formData.append("pattern_id", pattern_id);
         formData.append("user_id", Number(loggedIn.id));
-        console.log("FORMDATA :", formData.entries());
+        console.log("FORMDATA :", formData.get('image'));
         setImageLoading(true);
         await dispatch(patternImageActions.createPatternImage(formData));
+        setImageLoading(false);
     }
 
 

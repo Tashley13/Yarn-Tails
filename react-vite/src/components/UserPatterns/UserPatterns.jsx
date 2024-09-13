@@ -12,15 +12,15 @@ const UserPatterns = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user_id = Number(userId)
-    // console.log("USERID: ",typeof user_id)
+    console.log("USERID: ", user_id)
     const loggedIn = useSelector((state) => state.session.user)
     // const patterns = Object.values(eachPattern)[0]
 
 
     const patterns = useSelector((state) => state.patterns.allPatterns)
-//  console.log("PATTERN", patterns)
+    // console.log("PATTERN", patterns)
     useEffect(() => {
-        if (!loggedIn || !patterns) {
+        if (!loggedIn) {
             navigate(``)
         }
     }, [loggedIn, navigate, patterns])
@@ -35,16 +35,18 @@ const UserPatterns = () => {
 
 
     //return create a pattern button as well
-    if (!patterns) {
-        return <div>You have no patterns!</div>
-    }
+   if (patterns.length === 0) {
+    return <div>You have no patterns</div>
+   }
+
+
 
     return (
         <div className='user-pattern-display'>
             <ul>
                 {patterns?.length > 0 ? (
-                    patterns.map((pattern, key) => (
-                        <div key={key} className='user-patterns'>
+                    patterns.map((pattern) => (
+                        <div key={pattern.id} className='user-patterns'>
                             <NavLink to={`/${pattern.id}/view_pattern`}>
                             <div className='user-title'>
                                 {pattern.title}
@@ -68,7 +70,16 @@ const UserPatterns = () => {
                             </div> */}
                         </div>
                     ))
-                ) : 'You have no patterns yet!'}
+                ) : <div>
+                    'You have no patterns yet!'
+                    <div>
+                    <button onClick={()=> {
+                        navigate('/pattern/new')
+                    }}>
+                        Create Pattern
+                    </button>
+                    </div>
+                    </div>}
             </ul>
         </div>
     )

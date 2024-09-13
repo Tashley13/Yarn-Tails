@@ -21,7 +21,8 @@ const CreatePattern = () => {
     const [yarnWeight, setYarnWeight] = useState('');
     const [yardage, setYardage] = useState('');
     const [pattern, setPattern] = useState('');
-    // const [newPatternId, setNewPatternId] = useState({}); //create a use state to store the new patterns id to pass into the pattern images
+    const [newPatternId, setNewPatternId] = useState(null);
+    //create a use state to store the new patterns id to pass into the pattern images
     const [errors, setErrors] = useState({});
 
     const loggedIn = useSelector((state) => state.session.user)
@@ -460,7 +461,9 @@ const CreatePattern = () => {
                         </label>
                         {errors.pattern && <p>{errors.pattern}</p>}
                     </div>
-
+                    {/* <div className="addImages">
+                        <AddPatternImages patternId={pattern.id} />
+                    </div> */}
                     <button type="submit">Create Pattern</button>
                 </form>
             </div>
@@ -469,15 +472,7 @@ const CreatePattern = () => {
 
 
     )
-    //send the useState patternId through to AddPatternImages
-    // {createdPattern && (
-    //     <section className="addPatternImages">
-    //         <div className="addImages">
-    //             <AddPatternImages patternId={newPatternId} />
-    //         </div>
-
-    //     </section>
-    // )}
+    // send the useState patternId through to AddPatternImages
 }
 
 

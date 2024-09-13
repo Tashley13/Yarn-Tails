@@ -68,7 +68,7 @@ export const getAllPatterns = () => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-        // console.log("DATA: ", data)
+
         if (data.errors) {
             return;
         }
@@ -83,7 +83,7 @@ export const getUserPatterns = (userId) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-
+        console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
@@ -183,7 +183,7 @@ const patternReducer = (state = initialState, action) => {
             // return {...state, patternById: action.payload.patterns}
         }
         case USER_PATTERNS: {
-            return { ...state, allPatterns: action.payload.patterns }
+            return { ...state, allPatterns: action.payload}
         }
         case PATTERN_DETAILS: {
             // let newState= {...state}
