@@ -101,7 +101,7 @@ const ViewUserpattern = () => {
 
     const { testLength, average, reviews } = calculateReviews(pattern_id)
 
-    const alreadyTested = tests?.some(test=> test.user_id == loggedIn.id && test.pattern_id == pattern_id )
+    const alreadyTested = tests?.some(test=> test.user_id == loggedIn?.id && test.pattern_id == pattern_id )
 
     // if (!pattern) {
     //     return <div> Loading...</div>

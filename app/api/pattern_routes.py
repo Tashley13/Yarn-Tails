@@ -139,6 +139,7 @@ def update_pattern(id):
     pattern_to_edit.title=pattern_data.get('title')
     # pattern_to_edit.tile_image=pattern_data.get('tile_image')
     pattern_to_edit.difficulty=pattern_data.get('difficulty')
+    pattern_to_edit.time_limit=pattern_data.get('time_limit')
     pattern_to_edit.time=pattern_data.get('time')
     pattern_to_edit.description=pattern_data.get('description')
     pattern_to_edit.materials_instrument=pattern_data.get('materials_instrument')

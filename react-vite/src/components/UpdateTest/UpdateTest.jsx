@@ -8,7 +8,7 @@ const UpdateTest = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const test_id = Number(testerId)
-    console.log("TEST: ", testerId)
+    // console.log("TEST: ", testerId)
 
     const [rating, setRating] = useState('');
     // const [image, setImage] = useState('');
@@ -24,7 +24,11 @@ const UpdateTest = () => {
 
     const test = useSelector((state)=> state.testers.testById)
 
-
+    useEffect(()=> {
+        if (!loggedIn) {
+            navigate("/")
+        }
+    }, [loggedIn, navigate])
 
     useEffect(()=> {
         if (test) {

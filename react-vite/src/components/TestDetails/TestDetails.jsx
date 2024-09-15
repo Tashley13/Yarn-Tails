@@ -21,9 +21,9 @@ const TestDetails = () => {
 
     useEffect(() => {
         if (!loggedIn) {
-            navigate("/")
+            navigate("/");
         }
-    }, [loggedIn, navigate])
+    }, [loggedIn, navigate]);
 
     //make sure the test is being watched for updates
     useEffect(() => {
@@ -60,7 +60,7 @@ const TestDetails = () => {
             {/* <div className="image">
                 {test.image}
             </div> */}
-            {loggedIn.id == test.user_id && (
+            {loggedIn?.id == test.user_id && (
                 <ul>
                     <div className="edit-test">
                 <button type="submit" onClick={() => {
