@@ -34,7 +34,7 @@ const CreateTest = () => {
     }, [loggedIn, navigate])
 
     const updateRating = (e) => setRating(e.target.value);
-    const updateImage = (e) => setImage(e.target.value);
+    // const updateImage = (e) => setImage(e.target.value);
     const updateReview = (e) => setReview(e.target.value);
 
     const handleSubmit = async (e) => {
@@ -44,7 +44,7 @@ const CreateTest = () => {
 
         if (!rating) errors.rating = "Rating is required";
         // if (!image) errors.image = "Image is required";
-        if (!review) errors.review = "Review is required";
+        if (review.length < 40) errors.review = "Review needs to be longer than 40 characters";
 
         if (Object.keys(errors).length) {
             setErrors(errors);
@@ -109,6 +109,7 @@ const CreateTest = () => {
                             onChange={updateReview}
                         />
                     </label>
+                    {errors.review && <p>{errors.review}</p>}
                 </div>
                 <button type="submit">Create your Test</button>
             </form>

@@ -98,10 +98,15 @@ const AllPatterns = () => {
                                         <ul>Testing Time: {pattern.time_limit}</ul>
                                     </div>
 
-                                    <div className="tests-for-pattern">
-                                        Tests: {testLength}
-                                        Rating: {average} / 10 skeins
-                                    </div>
+                                    {testLength > 0 ? (
+                                        <div className="tests-for-pattern">
+                                            Tests: {testLength}
+                                            Rating: {average} / 10 skeins
+                                        </div>
+                                    ) : (
+                                        ''
+                                    )
+                                    }
                                 </div>
 
                             </div>

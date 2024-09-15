@@ -39,7 +39,7 @@ const EditPattern = () => {
             // setTileImage(editPattern.tile_image || "");
             setDifficulty(editPattern.difficulty || "");
             setTime(editPattern.time || "");
-            setTimeLimit(editPattern.time_limit || "");
+            setTimeLimit(editPattern.time_limit.trim() || "");
             setDescription(editPattern.description || "");
             setInstrument(editPattern.materials_instrument || "");
             setInstrumentSize(editPattern.materials_instrument_size || "");
@@ -76,7 +76,7 @@ const EditPattern = () => {
         e.preventDefault();
         setErrors({})
 
-        const updatePattern = {
+        const patternUpdate = {
             ...editPattern,
             title,
             // tile_image: tileImage,
@@ -91,7 +91,7 @@ const EditPattern = () => {
             pattern
         }
         // console.log("BEFORE DISPATCH: ", updatePattern)
-        const editedPattern = await dispatch(patternActions.updateUserPattern(updatePattern))
+        const editedPattern = await dispatch(patternActions.updateUserPattern(patternUpdate))
         // console.log("AFTER DISPATCH: ", editedPattern)
 
         if (editedPattern) {
@@ -199,51 +199,23 @@ const EditPattern = () => {
                             value={timeLimit}
                             onChange={updateTimeLimit}
                         >
-                            <option value="one day (24 hours)">
-                                one day (24 hours)
-                            </option>
-                            <option value="two days (48 hours)">
-                                two days (48 hours)
-                            </option>
-                            <option value="three days (72 hours)">
-                                three days (72 hours)
-                            </option>
-                            <option value="four days (96 hours)">
-                                four days (96 hours)
-                            </option>
-                            <option value="five days (120 hours)">
-                                five days (120 hours)
-                            </option>
-                            <option value=" six days (144 hours)">
-                                six days (144 hours)
-                            </option>
-                            <option value="one week (7 days)">
-                                one week (7 days)
-                            </option>
-                            <option value="two weeks (14 days)">
-                                two weeks (14 days)
-                            </option>
-                            <option value="three weeks (21 days)">
-                                three weeks (21 days)
-                            </option>
-                            <option value="four weeks (28 days)">
-                                four weeks (28 days)
-                            </option>
-                            <option value="five weeks (35 days)">
-                                five weeks (35 days)
-                            </option>
-                            <option value="six weeks (42 days)">
-                                six weeks (42 days)
-                            </option>
-                            <option value="one month (30 days)">
-                                one month (30 days)
-                            </option>
-                            <option value="two months (60 days)">
-                                two months (60 days)
-                            </option>
-                            <option value="three months (90 days)">
-                                three months (90 days)
-                            </option>
+                            <option value="one day (24 hours)">one day (24 hours)</option>
+                            <option value="two days (48 hours)">two days (48 hours)</option>
+                            <option value="three days (72 hours)">three days (72 hours)</option>
+                            <option value="four days (96 hours)">four days (96 hours)</option>
+                            <option value="five days (120 hours)">five days (120 hours)</option>
+                            <option value=" six days (144 hours)">six days (144 hours)</option>
+                            <option value="one week (7 days)">one week (7 days)</option>
+                            <option value="two weeks (14 days)">two weeks (14 days)</option>
+                            <option value="three weeks (21 days)">three weeks (21 days)</option>
+                            <option value="four weeks (28 days)">four weeks (28 days)</option>
+                            <option value="five weeks (35 days)">five weeks (35 days)</option>
+                            <option value="six weeks (42 days)">six weeks (42 days)</option>
+                            <option value="one month (30 days)">one month (30 days)</option>
+                            <option value="two months (60 days)">two months (60 days)</option>
+                            <option value="three months (90 days)">three months (90 days)</option>
+
+
                         </select>
                         {errors.timeLimit && <p>{errors.timeLimit}</p>}
                     </div>

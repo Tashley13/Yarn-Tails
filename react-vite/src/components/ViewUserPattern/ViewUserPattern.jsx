@@ -101,6 +101,8 @@ const ViewUserpattern = () => {
 
     const { testLength, average, reviews } = calculateReviews(pattern_id)
 
+    const alreadyTested = tests?.some(test=> test.user_id == loggedIn.id && test.pattern_id == pattern_id )
+
     // if (!pattern) {
     //     return <div> Loading...</div>
     // }
@@ -138,6 +140,12 @@ const ViewUserpattern = () => {
                 {pattern.description}
 
             </div>
+            {/* <div>
+                {pattern.materials_instrument}
+                {pattern.materials_instrument_size}
+                {pattern.materials_yarn_weight}
+                {pattern.materials_yardage}
+            </div> */}
 
 
             {reviews.length > 0 ? (
@@ -157,7 +165,7 @@ const ViewUserpattern = () => {
                 ))
 
             ) : 'No tests for this pattern yet!'} */}
-            {loggedIn?.id != pattern.user_id && (
+            {loggedIn?.id !== pattern.user_id && !alreadyTested && (
                 <div className="test-pattern">
                     <button type="submit" onClick={() => (
                         testPatternButton(pattern.id)
