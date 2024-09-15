@@ -18,10 +18,11 @@ const UserPatterns = () => {
 
 
     const patterns = useSelector((state) => state.patterns.allPatterns)
-    // console.log("PATTERN", patterns)
+    console.log("PATTERN", patterns);
+
     useEffect(() => {
         if (!loggedIn) {
-            navigate(``)
+            navigate(`/`)
         }
     }, [loggedIn, navigate, patterns])
 
@@ -44,7 +45,7 @@ const UserPatterns = () => {
     return (
         <div className='user-pattern-display'>
             <ul>
-                {patterns?.length > 0 ? (
+                {patterns.length > 0 && (
                     patterns.map((pattern) => (
                         <div key={pattern.id} className='user-patterns'>
                             <NavLink to={`/${pattern.id}/view_pattern`}>
@@ -52,9 +53,9 @@ const UserPatterns = () => {
                                 {pattern.title}
                             </div>
                             </NavLink>
-                            <div className="user-image">
+                            {/* <div className="user-image">
                                 {pattern.tile_image}
-                            </div>
+                            </div> */}
                             <div className="user-difficulty">
                                 {pattern.difficulty}
                             </div>
@@ -70,16 +71,7 @@ const UserPatterns = () => {
                             </div> */}
                         </div>
                     ))
-                ) : <div>
-                    'You have no patterns yet!'
-                    <div>
-                    <button onClick={()=> {
-                        navigate('/pattern/new')
-                    }}>
-                        Create Pattern
-                    </button>
-                    </div>
-                    </div>}
+                )}
             </ul>
         </div>
     )

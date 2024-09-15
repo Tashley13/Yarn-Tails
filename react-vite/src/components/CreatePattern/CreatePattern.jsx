@@ -11,7 +11,7 @@ const CreatePattern = () => {
 
 
     const [title, setTitle] = useState('');
-    const [tileImage, setTileImage] = useState('');
+    // const [tileImage, setTileImage] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [time, setTime] = useState('');
     const [timeLimit, setTimeLimit] = useState('');
@@ -21,7 +21,7 @@ const CreatePattern = () => {
     const [yarnWeight, setYarnWeight] = useState('');
     const [yardage, setYardage] = useState('');
     const [pattern, setPattern] = useState('');
-    const [newPatternId, setNewPatternId] = useState(null);
+    // const [newPatternId, setNewPatternId] = useState(null);
     //create a use state to store the new patterns id to pass into the pattern images
     const [errors, setErrors] = useState({});
 
@@ -34,7 +34,7 @@ const CreatePattern = () => {
     }, [loggedIn, navigate])
 
     const updateTitle = (e) => setTitle(e.target.value);
-    const updateTileImage = (e) => setTileImage(e.target.value);
+    // const updateTileImage = (e) => setTileImage(e.target.value);
     const updateDifficulty = (e) => setDifficulty(e.target.value);
     const updateTime = (e) => setTime(e.target.value);
     const updateTimeLimit = (e) => setTimeLimit(e.target.value);
@@ -51,14 +51,14 @@ const CreatePattern = () => {
         const errors = {} // push errors to
         //check to make sure the fields are filled in
         if (!title) errors.title = 'Title is required';
-        if (!tileImage) errors.tileImage = 'Tile image is required';
+        // if (!tileImage) errors.tileImage = 'Tile image is required';
         if (!difficulty) errors.difficulty = 'Difficulty is required';
         if (!time) errors.time = 'Time is required';
-        if (!timeLimit) errors.timeLimit = "Time limit is required";
+        if (!timeLimit || timeLimit=='select one') errors.timeLimit = "Time limit is required";
         if (description.length < 20) errors.description = "Description needs to be greater than 20 characters";
-        if (!instrument) errors.instrument = "Instrument is required";
-        if (!instrumentSize) errors.instrumentSize = "Instrument size is required";
-        if (!yarnWeight) errors.yarnWeight = "Yarn weight is required";
+        if (!instrument || instrument=='select one') errors.instrument = "Instrument is required";
+        if (!instrumentSize || instrumentSize=='select one') errors.instrumentSize = "Instrument size is required";
+        if (!yarnWeight || yarnWeight=='select one') errors.yarnWeight = "Yarn weight is required";
         if (yardage < 0 || yardage > 9999) errors.yardage = "Yardage must be greater than 0 and less than 10,000";
         if (pattern.length < 40) errors.pattern = "Pattern needs to be more than 40 characters";
 
@@ -73,7 +73,7 @@ const CreatePattern = () => {
         //need to match backend create route
         const newPattern = {
             title,
-            tile_image: tileImage,
+            // tile_image: tileImage,
             difficulty,
             time,
             time_limit: timeLimit,
@@ -111,7 +111,7 @@ const CreatePattern = () => {
                         </label>
                         {errors.title && <p>{errors.title}</p>}
                     </div>
-                    <div className="tile_image">
+                    {/* <div className="tile_image">
                         Display Image:
                         <label>
                             <input
@@ -121,7 +121,7 @@ const CreatePattern = () => {
                             />
                             {errors.tileImage && <p>{errors.tileImage}</p>}
                         </label>
-                    </div>
+                    </div> */}
                     <div className="difficulty">
                         Select difficulty:
                         <label
@@ -195,6 +195,9 @@ const CreatePattern = () => {
                             value={timeLimit}
                             onChange={updateTimeLimit}
                         >
+                            <option>
+                                select one
+                            </option>
                             <option value="one day (24 hours)">
                                 one day (24 hours)
                             </option>
@@ -261,6 +264,9 @@ const CreatePattern = () => {
                             value={instrument}
                             onChange={updateInstrument}
                         >
+                            <option>
+                                select one
+                            </option>
                             <option value="knitting needles">
                                 knitting needles
                             </option>
@@ -300,6 +306,9 @@ const CreatePattern = () => {
                             value={instrumentSize}
                             onChange={updateInstrumentSize}
                         >
+                            <option>
+                                select one
+                            </option>
                             <option value="1.5mm">
                                 1.5mm
                             </option>
@@ -396,6 +405,9 @@ const CreatePattern = () => {
                             value={yarnWeight}
                             onChange={updateYarnWeight}
                         >
+                            <option>
+                                select one
+                            </option>
                             <option value="0">
                                 0
                             </option>

@@ -22,7 +22,7 @@ const ViewUserpattern = () => {
     const patternTests = useSelector((state) => state.testers.allTests)
     const tests = patternTests.testers
     console.log("PATTERN: ", pattern);
-    console.log("TESTS: ", tests)
+    console.log("TESTS: ", tests);
 
     // if (pattern.user_id !== loggedIn.id) {
     //     return <div>
@@ -33,6 +33,12 @@ const ViewUserpattern = () => {
     //     </div>
     // }
 
+    useEffect(()=> {
+        if (!loggedIn) {
+            navigate("/")
+        }
+    }, [loggedIn, navigate])
+
 
     useEffect(() => {
         if (loggedIn) {
@@ -41,10 +47,10 @@ const ViewUserpattern = () => {
             if (pattern?.user_id) {
                 dispatch(patternActions.getUserPatterns(pattern.user_id))
             }
-        } else {
-            navigate("/")
         }
-    }, [dispatch, loggedIn, pattern_id, pattern?.user_id, navigate])
+    }, [dispatch, loggedIn, pattern_id, pattern?.user_id])
+
+
 
 
 
@@ -107,12 +113,12 @@ const ViewUserpattern = () => {
             <div className="pattern-title">
                 {pattern.title}
             </div>
-            <div className="pattern-tile-image">
+            {/* <div className="pattern-tile-image">
                 {pattern.tile_image}
-            </div>
-            <div className="pattern-images">
+            </div> */}
+            {/* <div className="pattern-images">
                 insert images from patternimages table
-            </div>
+            </div> */}
             <div className="pattern-creation">
                 <ul>Created by: {pattern.user_id}</ul>
                 <ul>Created on: {dateFormat(pattern.created_at)}</ul>
@@ -151,7 +157,7 @@ const ViewUserpattern = () => {
                 ))
 
             ) : 'No tests for this pattern yet!'} */}
-            {loggedIn.id != pattern.user_id && (
+            {loggedIn?.id != pattern.user_id && (
                 <div className="test-pattern">
                     <button type="submit" onClick={() => (
                         testPatternButton(pattern.id)
@@ -164,7 +170,7 @@ const ViewUserpattern = () => {
             {/* <div className="materials">
                 <PatternMaterials />
             </div> */}
-            {loggedIn.id == pattern.user_id && (
+            {loggedIn?.id == pattern.user_id && (
                 <ul>
                     <div className="edit-pattern">
                         <button type="submit" onClick={() => (

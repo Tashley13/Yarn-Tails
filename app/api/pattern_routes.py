@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Pattern, db, User, Tester, PatternImage
+from app.models import Pattern, db, User, Tester
+# IMPORT PATTERNIMAGE
 # from app.forms import CreatePatternForm
 from datetime import datetime, timezone
 from sqlalchemy.orm import selectinload
@@ -23,7 +24,7 @@ def all_patterns():
             'user_id' : pattern.user_id,
             'username' : pattern.user.username,
             'title' : pattern.title,
-            'tile_image' : pattern.tile_image,
+            # 'tile_image' : pattern.tile_image,
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
@@ -54,7 +55,7 @@ def user_patterns(userId):
             'id': pattern.id,
             'user_id' : pattern.user_id,
             'title' : pattern.title,
-            'tile_image' : pattern.tile_image,
+            # 'tile_image' : pattern.tile_image,
             #eventually pull all the reviews and images of the pattern to display
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
@@ -107,7 +108,7 @@ def create_pattern():
     new_pattern= Pattern(
         user_id=user_id,
         title=data.get('title'),
-        tile_image=data.get('tile_image'),
+        # tile_image=data.get('tile_image'),
         difficulty=data.get('difficulty'),
         time=data.get('time'),
         time_limit=data.get('time_limit'),
@@ -136,7 +137,7 @@ def update_pattern(id):
     if not pattern_to_edit or pattern_to_edit.user_id != current_user.id:
         return jsonify({"message" : "No pattern to edit"})
     pattern_to_edit.title=pattern_data.get('title')
-    pattern_to_edit.tile_image=pattern_data.get('tile_image')
+    # pattern_to_edit.tile_image=pattern_data.get('tile_image')
     pattern_to_edit.difficulty=pattern_data.get('difficulty')
     pattern_to_edit.time=pattern_data.get('time')
     pattern_to_edit.description=pattern_data.get('description')
@@ -181,7 +182,7 @@ def testersByPatternId(patternId):
             'user_id' : tester.user_id,
             'pattern_id' : tester.pattern_id,
             'rating' : tester.rating,
-            'image' : tester.image,
+            # 'image' : tester.image,
             'review' : tester.review
         }
         for tester in tester_by_pattern_id
@@ -202,7 +203,7 @@ def create_tester(patternId):
         user_id=user_id,
         pattern_id=patternId,
         rating=data.get('rating'),
-        image=data.get('image'),
+        # image=data.get('image'),
         review=data.get('review')
     )
 
@@ -211,14 +212,14 @@ def create_tester(patternId):
     return jsonify(new_tester.to_dict())
 
 
-#get all images by pattern_id
-@pattern_routes.route('<int:patternId>/images')
-def get_pattern_images(patternId):
-    pattern_images = PatternImage.query.filter_by(pattern_id=patternId).order_by(PatternImage.id.desc()).all()
+# #get all images by pattern_id
+# @pattern_routes.route('<int:patternId>/images')
+# def get_pattern_images(patternId):
+#     pattern_images = PatternImage.query.filter_by(pattern_id=patternId).order_by(PatternImage.id.desc()).all()
 
-    if not pattern_images:
-        return jsonify({"message": "No images for this pattern!"})
+#     if not pattern_images:
+#         return jsonify({"message": "No images for this pattern!"})
 
-    return jsonify({
-        'pattern_images': [image.to_dict() for image in pattern_images]
-    })
+#     return jsonify({
+#         'pattern_images': [image.to_dict() for image in pattern_images]
+#     })

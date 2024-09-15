@@ -11,7 +11,7 @@ const UpdateTest = () => {
     console.log("TEST: ", testerId)
 
     const [rating, setRating] = useState('');
-    const [image, setImage] = useState('');
+    // const [image, setImage] = useState('');
     const [review, setReview] = useState('');
 
     useEffect(()=> {
@@ -29,7 +29,7 @@ const UpdateTest = () => {
     useEffect(()=> {
         if (test) {
             setRating(test.rating || '');
-            setImage(test.image || '');
+            // setImage(test.image || '');
             setReview(test.review || '');
         }
     }, [test])
@@ -40,7 +40,7 @@ const UpdateTest = () => {
         const updateTest = {
             ...test,
             rating,
-            image,
+            // image,
             review
         }
 
@@ -68,7 +68,7 @@ const UpdateTest = () => {
                     </label>
                     {/* {errors.rating && <p>{errors.rating}</p>} */}
                 </div>
-                <div className="test-image">
+                {/* <div className="test-image">
                     Image:
                     <label>
                         <input
@@ -76,9 +76,9 @@ const UpdateTest = () => {
                             value={image}
                             onChange={(e)=>setImage(e.target.value)}
                         />
-                        {/* {errors.image && <p>{errors.image}</p>} */}
+                        {errors.image && <p>{errors.image}</p>}
                     </label>
-                </div>
+                </div> */}
                 <div className="review">
                     <label>
                         <textarea

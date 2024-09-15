@@ -45,9 +45,9 @@ const AllTests = () => {
                         <div className="review">
                             {test.review}
                         </div>
-                        <div className="image">
+                        {/* <div className="image">
                             {test.image}
-                        </div>
+                        </div> */}
                         </div>
                     ))
                 ) : 'No tests!'}

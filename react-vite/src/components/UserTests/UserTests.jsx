@@ -54,9 +54,9 @@ const UserTests = () => {
                             <div className="review">
                                 {test.review}
                             </div>
-                            <div className="image">
+                            {/* <div className="image">
                                 {test.image}
-                            </div>
+                            </div> */}
                             {/* {loggedIn.id == test.user_id && (
                                 <div className="edit-test">
                                 <button type="submit" onClick={()=> {

@@ -183,7 +183,7 @@ const patternReducer = (state = initialState, action) => {
             // return {...state, patternById: action.payload.patterns}
         }
         case USER_PATTERNS: {
-            return { ...state, allPatterns: action.payload}
+            return { ...state, allPatterns: action.payload.patterns}
         }
         case PATTERN_DETAILS: {
             // let newState= {...state}

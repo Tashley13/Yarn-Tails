@@ -12,7 +12,7 @@ const CreateTest = () => {
     const pattern_id = Number(patternId)
 
     const [rating, setRating] = useState('');
-    const [image, setImage] = useState('');
+    // const [image, setImage] = useState('');
     const [review, setReview] = useState('');
     const [errors, setErrors] = useState({});
     // const { closeModal } = useModal();
@@ -43,7 +43,7 @@ const CreateTest = () => {
         const errors = {};
 
         if (!rating) errors.rating = "Rating is required";
-        if (!image) errors.image = "Image is required";
+        // if (!image) errors.image = "Image is required";
         if (!review) errors.review = "Review is required";
 
         if (Object.keys(errors).length) {
@@ -55,7 +55,7 @@ const CreateTest = () => {
         const newTest = {
             patternId,
             rating,
-            image,
+            // image,
             review
         }
 
@@ -90,7 +90,7 @@ const CreateTest = () => {
                     </label>
                     {errors.rating && <p>{errors.rating}</p>}
                 </div>
-                <div className="test-image">
+                {/* <div className="test-image">
                     Image:
                     <label>
                         <input
@@ -100,7 +100,7 @@ const CreateTest = () => {
                         />
                         {errors.image && <p>{errors.image}</p>}
                     </label>
-                </div>
+                </div> */}
                 <div className="review">
                     <label>
                         <textarea

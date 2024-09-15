@@ -11,7 +11,7 @@ class Tester(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     rating = db.Column(db.Integer, nullable=False)
-    image=db.Column(db.String, nullable=False)
+    # image=db.Column(db.String, nullable=False)
     review=db.Column(db.Text, nullable=False)
     # limit = db.Column(db.String, db.ForeignKey(add_prefix_for_prod('patterns.time_limit')), nullable=False)
     # due_at = db.Column(db.DateTime)
@@ -30,7 +30,7 @@ class Tester(db.Model):
             'user_id' : self.user_id,
             'pattern_id' : self.pattern_id,
             'rating' : self.rating,
-            'image' : self.image,
+            # 'image' : self.image,
             'review' : self.review,
             'created_at' : self.created_at,
             # 'limit' : self.limit

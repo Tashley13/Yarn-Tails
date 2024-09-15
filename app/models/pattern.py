@@ -10,7 +10,7 @@ class Pattern(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     title=db.Column(db.String(100), nullable=False)
-    tile_image=db.Column(db.String, nullable=False)
+    # tile_image=db.Column(db.String, nullable=False)
     difficulty=db.Column(db.String, nullable=False)
     time=db.Column(db.String, nullable=False)
     time_limit=db.Column(db.String, nullable=False)
@@ -25,7 +25,7 @@ class Pattern(db.Model):
 
     user = db.relationship('User', back_populates='patterns')
     testers = db.relationship('Tester', back_populates='pattern', cascade='all, delete-orphan')
-    pattern_images= db.relationship('PatternImage', back_populates='pattern', cascade='all, delete-orphan')
+    # pattern_images= db.relationship('PatternImage', back_populates='pattern', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'Pattern {self.title}'
@@ -34,7 +34,7 @@ class Pattern(db.Model):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'tile_image' : self.tile_image,
+            # 'tile_image' : self.tile_image,
             # 'users' : {user.id: user.to_dict() for user in self.users},
             'title': self.title,
             'difficulty': self.difficulty,

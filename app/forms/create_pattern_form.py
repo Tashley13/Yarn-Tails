@@ -8,7 +8,7 @@ from app.models import Pattern
 # Or handle in frontend through if conditionals?
 class CreatePatternForm(FlaskForm):
     title=StringField('title', validators=[InputRequired(), Length(100)])
-    tile_image=StringField('tile_image', validators=[InputRequired()])
+    # tile_image=StringField('tile_image', validators=[InputRequired()])
     difficulty=RadioField('difficulty', choices=['beginner', 'easy', 'intermediate', 'experienced'],validators=[InputRequired()])
     time=StringField('time', validators=[InputRequired(), Length(40)])
     time_limit=SelectField('time_limit', choices=[

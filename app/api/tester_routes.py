@@ -18,7 +18,7 @@ def all_testers():
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
-            'image': tester.image,
+            # 'image': tester.image,
             'review': tester.review,
             'user': {
                 'id': tester.user.id,
@@ -40,7 +40,7 @@ def user_testers(id):
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
-            'image': tester.image,
+            # 'image': tester.image,
             'review': tester.review
         }
         for tester in user_tests
@@ -63,7 +63,7 @@ def updated_tester(testerId):
     if not tester_edit or tester_edit.user_id != current_user.id:
         return jsonify({"message" : "No pattern test to edit!"})
     tester_edit.rating=tester_data.get('rating')
-    tester_edit.image=tester_data.get('image')
+    # tester_edit.image=tester_data.get('image')
     tester_edit.review=tester_data.get('review')
 
     db.session.commit()

@@ -39,9 +39,9 @@ const PatternDetail = () => {
             <div className="pattern-title">
                 {pattern.title}
             </div>
-            <div className="pattern-images">
+            {/* <div className="pattern-images">
                 insert images from patternimages table
-            </div>
+            </div> */}
             {/* <div className="pattern-creation">
                 <ul>Created by: {pattern.user_id}</ul>
                 <ul>Created on: {pattern.created_at.slice(0,-12)}</ul>

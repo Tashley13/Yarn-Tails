@@ -30,6 +30,12 @@ const AllPatterns = () => {
         // console.log("HELLO WORLD")
     }, [dispatch])
 
+    // useEffect(() => {
+    //     if (!loggedIn) {
+
+    //     }
+    // })
+
     // const createPattern = async () => {
     //     //navigate to create a pattern page
     // }
@@ -64,33 +70,38 @@ const AllPatterns = () => {
                         return (
                             <div key={pattern.id} className="pattern-display">
                                 <div className="left-image">
-                                    <NavLink to={`/${pattern.id}/view_pattern`}>
-                                        <div className="pattern-title">
-                                            {pattern.title}
-                                        </div>
-                                    </NavLink>
+                                    {!loggedIn && (
+                                        <div>{pattern.title}</div>
+                                    )}
+                                    {loggedIn && (
+                                        <NavLink to={`/${pattern.id}/view_pattern`}>
+
+                                            <div className="pattern-title">
+                                                {pattern.title}
+                                            </div>
+                                        </NavLink>)}
                                     <div className="pattern-difficulty">
                                         difficulty: {pattern.difficulty}
                                     </div>
                                     <div className='pattern-username'>
-                                    Created by: {pattern.username}
-                                </div>
+                                        Created by: {pattern.username}
+                                    </div>
                                 </div>
 
-                                <div className="pattern-image">
+                                {/* <div className="pattern-image">
                                     {pattern.tile_image}
-                                </div>
+                                </div> */}
                                 <div className="right-image">
-                                <div className="pattern-times">
-                                    <ul>Time: {pattern.time}</ul>
+                                    <div className="pattern-times">
+                                        <ul>Time: {pattern.time}</ul>
 
-                                    <ul>Testing Time: {pattern.time_limit}</ul>
-                                </div>
+                                        <ul>Testing Time: {pattern.time_limit}</ul>
+                                    </div>
 
-                                <div className="tests-for-pattern">
-                                    Tests: {testLength}
-                                    Rating: {average} / 10 skeins
-                                </div>
+                                    <div className="tests-for-pattern">
+                                        Tests: {testLength}
+                                        Rating: {average} / 10 skeins
+                                    </div>
                                 </div>
 
                             </div>

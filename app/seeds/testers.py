@@ -6,7 +6,7 @@ def seed_testers():
         user_id=1,
         pattern_id=2,
         rating=8,
-        image='http://www.image.com',
+        # image='http://www.image.com',
         review='simple and easy to follow, but wish there was a little more diversity and some pictures',
         # limit='one day (24 hours)'
     )
@@ -15,7 +15,7 @@ def seed_testers():
         user_id=2,
         pattern_id=3,
         rating=7,
-        image='http://www.image.com',
+        # image='http://www.image.com',
         review='simple and easy to follow but does not offer a knitting swatch. Even though instrument size and yarn weight is given, a swatch would be super beneficial.',
         # limit='two days (48 hours)'
     )
@@ -24,7 +24,7 @@ def seed_testers():
         user_id=3,
         pattern_id=1,
         rating=3,
-        image='http://www.image.com',
+        # image='http://www.image.com',
         review='simple and easy to follow but does not offer a knitting swatch. Even though instrument size and yarn weight is given, a swatch would be super beneficial.',
         # limit='one day (24 hours)'
     )

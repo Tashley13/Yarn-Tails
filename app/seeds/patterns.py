@@ -5,7 +5,7 @@ def seed_patterns():
     demos_pattern = Pattern(
         user_id=1,
         title='Crochet Snake',
-        tile_image='http://www.image.com',
+        # tile_image='http://www.image.com',
         difficulty='beginner',
         time='15 minutes',
         time_limit='one day (24 hours)',
@@ -28,7 +28,7 @@ def seed_patterns():
     marnies_pattern = Pattern(
         user_id=2,
         title='Crochet Square',
-        tile_image='http://www.image.com',
+        # tile_image='http://www.image.com',
         difficulty='beginner',
         time='30 minutes',
         time_limit='one day (24 hours)',
@@ -52,7 +52,7 @@ def seed_patterns():
     bobbies_pattern = Pattern(
         user_id=3,
         title='Scarf',
-        tile_image='http://www.image.com',
+        # tile_image='http://www.image.com',
         difficulty='beginner',
         time='8 hours',
         time_limit='two days (48 hours)',
