@@ -137,10 +137,10 @@ const ViewUserpattern = () => {
                     {pattern.difficulty}
                 </ul>
                 <ul>
-                    {pattern.time}
+                    time: {pattern.time}
                 </ul>
                 <ul>
-                    {pattern.time_limit}
+                    time limit: {pattern.time_limit}
                 </ul>
             </div>
             <div className="pattern-description">
@@ -148,15 +148,17 @@ const ViewUserpattern = () => {
 
             </div>
             <div className="Materials">
+                <h1>Materials</h1>
                 <p>Instrument: {pattern.materials_instrument}</p>
                 <p>Instrument size: {pattern.materials_instrument_size}</p>
                 <p>Yarn weight: {pattern.materials_yarn_weight}</p>
                 <p>Yardage: {pattern.materials_yardage}</p>
             </div>
-            {loggedIn.id == pattern.user_id && (
+            <h1>Pattern</h1>
+            {loggedIn?.id == pattern.user_id && (
                  <div>{pattern.pattern}</div>
             )}
-
+            <h1> Test Reviews</h1>
             <p>
                 {reviews.length > 0 ? (
                     <div className="test-reviews">
@@ -168,12 +170,12 @@ const ViewUserpattern = () => {
                 )}
             </p>
 
-            {reviews.length > 0 ? (
+            {reviews?.length > 0 ? (
                 reviews.map((test, index) => (
                     <div key={index} className="tests">
                         <p>Rating: {test.rating} / 10 skeins</p>
                         <p>{test.review}
-                            {test.user_id === loggedIn.id && (
+                            {test.user_id === loggedIn?.id && (
                                 <button onClick={() => {
                                     navigate(`/test/${test.id}/edit`)
                                 }}>Edit Test</button>
@@ -184,9 +186,9 @@ const ViewUserpattern = () => {
             ) : 'No tests for this pattern yet!'}
             {loggedIn?.id !== pattern.user_id && !alreadyTested && (
                 <div className="test-pattern">
-                    <button type="submit" onClick={() => (
+                    <button type="submit" onClick={() =>
                         testPatternButton(pattern.id)
-                    )}>
+                    }>
                         Test Pattern
                     </button>
                 </div>

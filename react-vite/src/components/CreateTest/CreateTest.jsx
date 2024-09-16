@@ -120,6 +120,7 @@ const CreateTest = () => {
             </form>
             </div>
         </section>
+        <h1>Pattern</h1>
         <div className="pattern-to-test">
             {pattern.pattern}
         </div>
