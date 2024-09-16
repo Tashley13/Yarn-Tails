@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
-import PatternMaterials from "../PatternMaterials/PatternMaterials";
-import CreateTestModal from "../CreateTest";
-import OpenModalButton from "../OpenModalButton";
+// import PatternMaterials from "../PatternMaterials/PatternMaterials";
+// import CreateTestModal from "../CreateTest";
+// import OpenModalButton from "../OpenModalButton";
 // import ConfirmationModal from "./ConfirmationModal";
 
 
@@ -147,13 +147,15 @@ const ViewUserpattern = () => {
                 {pattern.description}
 
             </div>
-            {/* <div>
-                {pattern.materials_instrument}
-                {pattern.materials_instrument_size}
-                {pattern.materials_yarn_weight}
-                {pattern.materials_yardage}
-            </div> */}
-
+            <div className="Materials">
+                <p>Instrument: {pattern.materials_instrument}</p>
+                <p>Instrument size: {pattern.materials_instrument_size}</p>
+                <p>Yarn weight: {pattern.materials_yarn_weight}</p>
+                <p>Yardage: {pattern.materials_yardage}</p>
+            </div>
+            {loggedIn.id == pattern.user_id && (
+                 <div>{pattern.pattern}</div>
+            )}
 
             <p>
                 {reviews.length > 0 ? (
@@ -170,7 +172,12 @@ const ViewUserpattern = () => {
                 reviews.map((test, index) => (
                     <div key={index} className="tests">
                         <p>Rating: {test.rating} / 10 skeins</p>
-                        <p>{test.review}</p>
+                        <p>{test.review}
+                            {test.user_id === loggedIn.id && (
+                                <button onClick={() => {
+                                    navigate(`/test/${test.id}/edit`)
+                                }}>Edit Test</button>
+                            )}   </p>
                     </div>
                 ))
 

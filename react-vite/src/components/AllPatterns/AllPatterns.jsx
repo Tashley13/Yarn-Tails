@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
 import { NavLink } from "react-router-dom";
@@ -11,7 +11,7 @@ import './AllPatterns.css'
 const AllPatterns = () => {
     // const {userId} = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     //if user clicks a pattern tile, check if they are logged in
     const loggedIn = useSelector((state) => state.session.user)

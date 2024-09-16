@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useModal } from "../../context/Modal";
+import { useSelector} from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { useModal } from "../../context/Modal";
 // import * as patternActions from "../../redux/pattern";
 // import * as testerActions from "../../redux/tester";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +14,8 @@ import { useModal } from "../../context/Modal";
 import "./Navigation.css";
 
 function Navigation() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const [navBarOpen, setNavBarOpen] = useState(true);
   const loggedIn = useSelector((state) => state.session.user)

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
-import OpenModalButton from "../OpenModalButton";
-// import UpdateTestModal from "../UpdateTest";
-import DeleteTestModal from "../DeleteTest/DeleteTestModal";
+// import OpenModalButton from "../OpenModalButton";
+// // import UpdateTestModal from "../UpdateTest";
+// import DeleteTestModal from "../DeleteTest/DeleteTestModal";
 
 const TestDetails = () => {
     const { testerId } = useParams();

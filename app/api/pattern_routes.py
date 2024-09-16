@@ -28,6 +28,7 @@ def all_patterns():
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
+            'pattern' : pattern.pattern
             # 'pattern_tests' : [
             #     {
             #         'id': tester.id,
@@ -89,6 +90,10 @@ def read_user_pattern(id):
 def create_pattern():
     user_id=current_user.id
     data=request.get_json()
+
+    existing_pattern = Pattern.query.filter_by(pattern=data.get('pattern')).first()
+    if existing_pattern:
+        return jsonify({"message":"pattern already exists"})
 
     new_pattern= Pattern(
         user_id=user_id,

@@ -52,6 +52,12 @@ const EditPattern = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
     const loggedInId= loggedIn?.id
+    const allPatterns = useSelector((state) => state.patterns.allPatterns)
+    // console.log("ALL", allPatterns)
+
+    useEffect(() => {
+        dispatch(patternActions.getAllPatterns())
+    }, [dispatch])
 
     //in order to compate id's, make sure editPattern.user_id exists first
     useEffect(()=> {
@@ -88,6 +94,15 @@ const EditPattern = () => {
         if (!yarnWeight || yarnWeight=='select one') errors.yarnWeight = "Yarn weight is required";
         if (yardage < 0 || yardage > 9999) errors.yardage = "Yardage must be greater than 0 and less than 10,000";
         if (pattern.length < 40) errors.pattern = "Pattern needs to be more than 40 characters";
+
+        const samePattern = allPatterns?.some(p => {
+            console.log("P", p)
+
+                return p.pattern == pattern;
+            })
+            // console.log("PATTERNCHECK: ",samePattern)
+
+        if (samePattern) errors.pattern = "A pattern exactly like this already exists"
 
         //look to see if errors has any length of keys, if so set errors, return, and clear errors
         if (Object.keys(errors).length) {
