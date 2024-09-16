@@ -19,11 +19,13 @@ const CreateTest = () => {
 
     const loggedIn = useSelector((state) => state.session.user)
     const pattern = useSelector((state)=> state.patterns.patternById)
+    const allTests = useSelector((state)=> state.testers.allTests)
     // console.log("PATTERN: ", pattern)
 
     useEffect(()=> {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
+            dispatch(testerActions.getAllTests())
                 // .then((response)=> {
                 //     if (!response || !response.pattern) {
                 //         navigate('/')
@@ -50,6 +52,11 @@ const CreateTest = () => {
         if (!rating) errors.rating = "Rating is required";
         // if (!image) errors.image = "Image is required";
         if (review.length < 40) errors.review = "Review needs to be longer than 40 characters";
+
+        const sameReview = allTests?.some(test=> {
+            return test.review == review;
+        })
+        if (sameReview) errors.review = "This review already exists"
 
         if (Object.keys(errors).length) {
             setErrors(errors);
