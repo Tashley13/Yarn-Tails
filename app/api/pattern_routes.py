@@ -89,22 +89,7 @@ def read_user_pattern(id):
 def create_pattern():
     user_id=current_user.id
     data=request.get_json()
-    # pattern=CreatePatternForm(request.form)
-    # if pattern.validate_on_submit():
-    #     new_pattern= Pattern(
-    #         user_id=current_user.id,
-    #         title=form.title.data,
-    #         tile_image=form.data.tile_image,
-    #         difficulty=form.data.difficulty,
-    #         time=form.data.time,
-    #         time_limit=form.data.time_limit,
-    #         description=form.data.description,
-    #         materials_instrument=form.data.materials_instrument,
-    #         materials_instrument_size=form.data.materials_instrument_size,
-    #         materials_yarn_weight=form.data.materials_yarn_weight,
-    #         materials_yardage=form.data.materials_yardage,
-    #         pattern=form.data.pattern
-    #     )
+
     new_pattern= Pattern(
         user_id=user_id,
         title=data.get('title'),

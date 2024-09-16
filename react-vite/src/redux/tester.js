@@ -208,7 +208,7 @@ const testerReducer = (state = initialState, action) => {
         }
         case DELETE_TESTER: {
             const newState = { ...state };
-            newState.allTests = newState.allTests.filter(test => test.id !== action.payload)
+            newState.allTests = newState.allTests?.filter(test => test.id !== action.payload)
             return newState
         }
 

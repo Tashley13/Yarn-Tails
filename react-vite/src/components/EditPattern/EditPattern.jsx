@@ -7,12 +7,17 @@ const EditPattern = () => {
     const { patternId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // console.log("ID: ", typeof patternId)
+    console.log("ID: ", patternId)
     const pattern_id = Number(patternId)
 
     useEffect(() => {
         dispatch(patternActions.viewUserPattern(pattern_id))
-    }, [dispatch, pattern_id])
+            .then((response) => {
+                if (!response || !response.editPattern) {
+                    navigate("/")
+                }
+            })
+    }, [dispatch, pattern_id, navigate])
 
     const editPattern = useSelector((state) => state.patterns.patternById)
     console.log("PATTERN: ", editPattern)
@@ -39,7 +44,7 @@ const EditPattern = () => {
             // setTileImage(editPattern.tile_image || "");
             setDifficulty(editPattern.difficulty || "");
             setTime(editPattern.time || "");
-            setTimeLimit(editPattern.time_limit.trim() || "");
+            setTimeLimit(editPattern.time_limit || "");
             setDescription(editPattern.description || "");
             setInstrument(editPattern.materials_instrument || "");
             setInstrumentSize(editPattern.materials_instrument_size || "");
@@ -54,10 +59,10 @@ const EditPattern = () => {
 
     //in order to compate id's, make sure editPattern.user_id exists first
     useEffect(()=> {
-        if (!loggedIn && (editPattern.user_id && loggedInId !== editPattern.user_id)) {
+        if (!loggedIn || (editPattern.user_id && loggedInId !== editPattern.user_id) || isNaN(Number(patternId))) {
             navigate("/")
           }
-    }, [loggedIn, loggedInId, editPattern, navigate])
+    }, [loggedIn, loggedInId, editPattern, navigate, patternId])
 
     const updateTitle = (e) => setTitle(e.target.value);
     // const updateTileImage = (e) => setTileImage(e.target.value);
@@ -74,6 +79,25 @@ const EditPattern = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errors = {}
+        if (!title) errors.title = 'Title is required';
+        // if (!tileImage) errors.tileImage = 'Tile image is required';
+        if (!difficulty) errors.difficulty = 'Difficulty is required';
+        if (time.length < 3) errors.time = 'Time needs to be more specific';
+        if (!timeLimit || timeLimit=='select one') errors.timeLimit = "Time limit is required";
+        if (description.length < 20) errors.description = "Description needs to be greater than 20 characters";
+        if (!instrument || instrument=='select one') errors.instrument = "Instrument is required";
+        if (!instrumentSize || instrumentSize=='select one') errors.instrumentSize = "Instrument size is required";
+        if (!yarnWeight || yarnWeight=='select one') errors.yarnWeight = "Yarn weight is required";
+        if (yardage < 0 || yardage > 9999) errors.yardage = "Yardage must be greater than 0 and less than 10,000";
+        if (pattern.length < 40) errors.pattern = "Pattern needs to be more than 40 characters";
+
+        //look to see if errors has any length of keys, if so set errors, return, and clear errors
+        if (Object.keys(errors).length) {
+            setErrors(errors);
+            return;
+        }
         setErrors({})
 
         const patternUpdate = {
@@ -186,7 +210,7 @@ const EditPattern = () => {
                         <label>
                             <input
                                 type="text"
-                                placeholder="4 hours, 2 days, 3 weeks, etc."
+                                placeholder="4 hours, 2days, 3 weeks, etc."
                                 value={time}
                                 onChange={updateTime}
                             />

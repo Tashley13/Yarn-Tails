@@ -4,6 +4,12 @@ from wtforms.validators import InputRequired, ValidationError, Length, NumberRan
 #UUID when using AWS
 from app.models import Pattern
 
+def pattern_exists(form, field):
+    pattern = field.data
+    samePattern = Pattern.query.filter(Pattern.pattern == pattern).first()
+    if samePattern:
+        raise ValidationError('Pattern already exists.')
+
 #create a function that verifies the user is logged in to pass in?
 # Or handle in frontend through if conditionals?
 class CreatePatternForm(FlaskForm):

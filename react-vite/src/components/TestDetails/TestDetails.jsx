@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as testerActions from "../../redux/tester";
@@ -13,6 +13,7 @@ const TestDetails = () => {
     // console.log("TESTID: ", tester_id)
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [showDelete, setShowDelete] = useState(false);
 
     const loggedIn = useSelector((state) => state.session.user)
 
@@ -20,27 +21,39 @@ const TestDetails = () => {
     // console.log("TEST: ", test)
 
     useEffect(() => {
-        if (!loggedIn) {
+        if (!loggedIn || isNaN(Number(testerId))) {
             navigate("/");
         }
-    }, [loggedIn, navigate]);
+    }, [loggedIn, navigate, testerId]);
 
     //make sure the test is being watched for updates
     useEffect(() => {
         if (loggedIn) {
             dispatch(testerActions.getTestById(tester_id))
+                .then((response)=> {
+                    if (!response || !response.test) {
+                        navigate('/')
+                    }
+                })
         }
-    }, [loggedIn, dispatch, tester_id])
-
-
-    const handleDeleteTest = async (testerId) => {
-        dispatch(testerActions.deleteUserTest(testerId));
-        navigate(`/tests/${loggedIn.id}`)
-
-    }
+    }, [loggedIn, dispatch, tester_id, navigate])
 
     if (!test || test.length === 0) {
         return <div>No tests to view!</div>
+    }
+
+    const handleDeleteTest = () => {
+        setShowDelete(true);
+    }
+
+    const confirmDelete = () => {
+        dispatch(testerActions.deleteUserTest(tester_id))
+        setShowDelete(false);
+        navigate(`/tests/${loggedIn?.id}`)
+    }
+
+    const cancelDelete = () => {
+        setShowDelete(false)
     }
 
     return (
@@ -63,19 +76,24 @@ const TestDetails = () => {
             {loggedIn?.id == test.user_id && (
                 <ul>
                     <div className="edit-test">
-                <button type="submit" onClick={() => {
-                    navigate(`/test/${test.id}/edit`)
-                }}>
-                    Edit Test
-                </button>
-            </div>
-            <div className="delete-test">
-                <button type="submit" onClick={() => {
-                    handleDeleteTest(test.id)
-                }}>
-                    Delete Test
-                </button>
-            </div>
+                        <button type="submit" onClick={() => {
+                            navigate(`/test/${test.id}/edit`)
+                        }}>
+                            Edit Test
+                        </button>
+                    </div>
+                    <div className="delete-test">
+                        <button type="submit" onClick={handleDeleteTest}>
+                            Delete Test
+                        </button>
+                    </div>
+                    {showDelete && (
+                        <div>
+                            <p>Do you wish to delete your test?</p>
+                            <button onClick={confirmDelete}>Yes, delete</button>
+                            <button onClick={cancelDelete}>No, do not delete</button>
+                        </div>
+                    )}
                 </ul>
             )}
         </div>

@@ -26,12 +26,17 @@ const CreatePattern = () => {
     const [errors, setErrors] = useState({});
 
     const loggedIn = useSelector((state) => state.session.user)
+    // const allPatterns = useSelector((state)=> state.patterns.allPatterns);
 
     useEffect(() => {
         if (!loggedIn) {
             navigate('/');
         }
     }, [loggedIn, navigate])
+
+    useEffect (() => {
+        dispatch(patternActions.getAllPatterns())
+    }, [dispatch])
 
     const updateTitle = (e) => setTitle(e.target.value);
     // const updateTileImage = (e) => setTileImage(e.target.value);
@@ -53,7 +58,7 @@ const CreatePattern = () => {
         if (!title) errors.title = 'Title is required';
         // if (!tileImage) errors.tileImage = 'Tile image is required';
         if (!difficulty) errors.difficulty = 'Difficulty is required';
-        if (!time) errors.time = 'Time is required';
+        if (time.length < 3) errors.time = 'Time needs to be more specifc';
         if (!timeLimit || timeLimit=='select one') errors.timeLimit = "Time limit is required";
         if (description.length < 20) errors.description = "Description needs to be greater than 20 characters";
         if (!instrument || instrument=='select one') errors.instrument = "Instrument is required";
@@ -62,6 +67,10 @@ const CreatePattern = () => {
         if (yardage < 0 || yardage > 9999) errors.yardage = "Yardage must be greater than 0 and less than 10,000";
         if (pattern.length < 40) errors.pattern = "Pattern needs to be more than 40 characters";
 
+
+        //look for same patterns, lowercased
+        // const samePattern = allPatterns.some(p => p.pattern.toLowerCase() === pattern.toLowerCase());
+        // if (samePattern) errors.pattern = "A pattern exactly like this already exists"
         //look to see if errors has any length of keys, if so set errors, return, and clear errors
         if (Object.keys(errors).length) {
             setErrors(errors);

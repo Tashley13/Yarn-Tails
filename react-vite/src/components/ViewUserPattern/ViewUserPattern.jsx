@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
@@ -15,14 +15,15 @@ const ViewUserpattern = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const pattern_id = Number(patternId);
+    const [showDelete, setShowDelete] = useState(false);
     // const [deletePopUp, setDeletePopUp] = useState(false);
 
     const loggedIn = useSelector((state) => state.session.user)
     const pattern = useSelector((state) => state.patterns.patternById)
     const patternTests = useSelector((state) => state.testers.allTests)
-    const tests = patternTests.testers
-    console.log("PATTERN: ", pattern);
-    console.log("TESTS: ", tests);
+    const tests = patternTests?.testers
+    // console.log("PATTERN: ", pattern);
+    // console.log("TESTS: ", tests);
 
     // if (pattern.user_id !== loggedIn.id) {
     //     return <div>
@@ -33,36 +34,46 @@ const ViewUserpattern = () => {
     //     </div>
     // }
 
-    useEffect(()=> {
-        if (!loggedIn) {
+    useEffect(() => {
+        if (!loggedIn || isNaN(Number(patternId))) {
             navigate("/")
         }
-    }, [loggedIn, navigate])
+    }, [loggedIn, navigate, patternId])
 
 
     useEffect(() => {
         if (loggedIn) {
-            dispatch(patternActions.viewUserPattern(pattern_id));
+            dispatch(patternActions.viewUserPattern(pattern_id))
+                .then((response)=> {
+                    if (!response || !response.pattern) {
+                        navigate("/")
+                    }
+                })
             dispatch(testerActions.getTestsByPatternId(pattern_id))
             if (pattern?.user_id) {
                 dispatch(patternActions.getUserPatterns(pattern.user_id))
             }
         }
-    }, [dispatch, loggedIn, pattern_id, pattern?.user_id])
+    }, [dispatch, loggedIn, pattern_id, pattern?.user_id, navigate])
 
 
 
-
-
-    const deletePatternConfirm = async (patternId) => {
-        // console.log("HELLO")
-        // console.log("PATTERN: ", patternId)
-        await dispatch(patternActions.deleteUserPattern(patternId))
-        // console.log("ID: ", patternId)
-
-        navigate(`/patterns/${loggedIn.id}`)
-
+    const handleDeletePattern = () => {
+        setShowDelete(true);
     }
+
+    const confirmDelete = () => {
+        dispatch(patternActions.deleteUserPattern(pattern_id))
+        setShowDelete(false);
+        navigate(`/patterns/${loggedIn?.id}`)
+    }
+
+    const cancelDelete = () => {
+        setShowDelete(false)
+    }
+
+
+
     const editPatternButton = async () => {
         navigate(`/${pattern_id}/edit`)
     }
@@ -94,14 +105,14 @@ const ViewUserpattern = () => {
 
             const numerator = patternTests.reduce((acc, test) => acc + test.rating, 0);
             const average = (numerator / testLength).toFixed(2)
-            console.log("TESTS: ", patternTests)
+            // console.log("TESTS: ", patternTests)
             return { testLength, average, reviews: patternTests }
         }
     }
 
     const { testLength, average, reviews } = calculateReviews(pattern_id)
 
-    const alreadyTested = tests?.some(test=> test.user_id == loggedIn?.id && test.pattern_id == pattern_id )
+    const alreadyTested = tests?.some(test => test.user_id == loggedIn?.id && test.pattern_id == pattern_id)
 
     // if (!pattern) {
     //     return <div> Loading...</div>
@@ -148,23 +159,26 @@ const ViewUserpattern = () => {
             </div> */}
 
 
-            {reviews.length > 0 ? (
-                <div className="test-reviews">
-                    Total tests: {testLength}
-                    Average score: {average} / 10 skeins
-                </div>
-            ) : (
-                <p>No tests for this pattern</p>
-            )}
+            <p>
+                {reviews.length > 0 ? (
+                    <div className="test-reviews">
+                        Total tests: {testLength}
+                        Average score: {average} / 10 skeins
+                    </div>
+                ) : (
+                    ''
+                )}
+            </p>
 
-            {/* {reviews.length > 0 ? (
+            {reviews.length > 0 ? (
                 reviews.map((test, index) => (
                     <div key={index} className="tests">
-                        {test.review}
+                        <p>Rating: {test.rating} / 10 skeins</p>
+                        <p>{test.review}</p>
                     </div>
                 ))
 
-            ) : 'No tests for this pattern yet!'} */}
+            ) : 'No tests for this pattern yet!'}
             {loggedIn?.id !== pattern.user_id && !alreadyTested && (
                 <div className="test-pattern">
                     <button type="submit" onClick={() => (
@@ -188,12 +202,17 @@ const ViewUserpattern = () => {
                         </button>
                     </div>
                     <div className="delete-pattern">
-                        <button type="submit" onClick={() => (
-                            deletePatternConfirm(pattern.id)
-                        )}>
+                        <button type="submit" onClick={handleDeletePattern}>
                             Delete Pattern
                         </button>
                     </div>
+                    {showDelete && (
+                        <div>
+                            <p>Do you wish to delete your pattern?</p>
+                            <button onClick={confirmDelete}>Yes, delete</button>
+                            <button onClick={cancelDelete}>No, do not delete</button>
+                        </div>
+                    )}
                 </ul>
             )
             }

@@ -17,18 +17,23 @@ const UpdateTest = () => {
     useEffect(()=> {
         if (test_id) {
             dispatch(testerActions.getTestById(test_id))
+                .then((response)=> {
+                    if (!response || !response.test) {
+                        navigate('/')
+                    }
+                })
         }
-    }, [dispatch, test_id])
+    }, [dispatch, test_id, navigate])
 
     const loggedIn = useSelector((state)=> state.session.user)
 
     const test = useSelector((state)=> state.testers.testById)
 
     useEffect(()=> {
-        if (!loggedIn) {
+        if (!loggedIn || testerId == 'undefined') {
             navigate("/")
         }
-    }, [loggedIn, navigate])
+    }, [loggedIn, navigate, testerId])
 
     useEffect(()=> {
         if (test) {
