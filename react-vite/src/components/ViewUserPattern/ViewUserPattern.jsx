@@ -35,7 +35,7 @@ const ViewUserpattern = () => {
     // }
 
     useEffect(() => {
-        if (!loggedIn || isNaN(Number(patternId))) {
+        if (!loggedIn) {
             navigate("/")
         }
     }, [loggedIn, navigate, patternId])
@@ -44,17 +44,13 @@ const ViewUserpattern = () => {
     useEffect(() => {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
-                .then((response)=> {
-                    if (!response || !response.pattern) {
-                        navigate("/")
-                    }
-                })
+
             dispatch(testerActions.getTestsByPatternId(pattern_id))
             if (pattern?.user_id) {
                 dispatch(patternActions.getUserPatterns(pattern.user_id))
             }
         }
-    }, [dispatch, loggedIn, pattern_id, pattern?.user_id, navigate])
+    }, [dispatch, loggedIn, pattern_id, pattern?.user_id])
 
 
 

@@ -18,7 +18,7 @@ const PatternDetail = () => {
     // console.log("PATTERN: ", pattern)
 
     useEffect(() => {
-        if (!loggedIn || !pattern) {
+        if (!loggedIn) {
             navigate(`/ `)
         }
     }, [loggedIn, navigate, pattern])

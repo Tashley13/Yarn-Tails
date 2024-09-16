@@ -19,7 +19,7 @@ const PatternTests = () => {
         if (!loggedIn) {
             navigate("/")
         }
-    }, [navigate, loggedIn])
+    }, [navigate, loggedIn, tests])
 
     useEffect(() => {
         if (loggedIn) {

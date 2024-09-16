@@ -8,6 +8,7 @@ tester_routes = Blueprint('testers', __name__, url_prefix="/testers")
 
 #get all tests
 @tester_routes.route('')
+@login_required
 def all_testers():
     testers=Tester.query.options(selectinload(Tester.user)).all()
     if not testers:
@@ -30,6 +31,7 @@ def all_testers():
 
 #get tests by userid
 @tester_routes.route('/current/<int:id>')
+@login_required
 def user_testers(id):
     user_tests = Tester.query.filter_by(user_id=id).all()
     if not user_tests:
@@ -49,6 +51,7 @@ def user_testers(id):
 
 #get single test by testId
 @tester_routes.route('/<int:testerId>')
+@login_required
 def single_test_by_id(testerId):
     test = Tester.query.get(testerId)
     if not test:
@@ -57,6 +60,7 @@ def single_test_by_id(testerId):
 
 #update a test
 @tester_routes.route('/<int:testerId>', methods=["PUT"])
+@login_required
 def updated_tester(testerId):
     tester_edit = Tester.query.get(testerId)
     tester_data=request.get_json()
@@ -72,6 +76,7 @@ def updated_tester(testerId):
 
 #delete a test
 @tester_routes.route('/<int:testerId>', methods=["DELETE"])
+@login_required
 def delete_tester(testerId):
     delete_tester=Tester.query.get(testerId)
     if not delete_tester or delete_tester.user_id != current_user.id:

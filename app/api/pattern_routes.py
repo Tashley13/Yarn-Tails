@@ -45,7 +45,7 @@ def all_patterns():
 
 #get all patterns of current user
 @pattern_routes.route('/current/<int:userId>')
-# @login_required
+@login_required
 def user_patterns(userId):
     user_patterns=Pattern.query.filter_by(user_id=userId).all()
     if not user_patterns:
@@ -73,7 +73,7 @@ def user_patterns(userId):
 
 #view pattern through pattern_id
 @pattern_routes.route('/<int:id>/view_pattern')
-# @login_required
+@login_required
 def read_user_pattern(id):
     view_pattern = Pattern.query.get(id)
     #look into grabbing the username through User
@@ -85,7 +85,7 @@ def read_user_pattern(id):
 
 #create a pattern
 @pattern_routes.route('/new', methods=["POST"])
-# @login_required
+@login_required
 def create_pattern():
     user_id=current_user.id
     data=request.get_json()
@@ -115,7 +115,7 @@ def create_pattern():
 
 #update a pattern
 @pattern_routes.route('/<int:id>/edit', methods=["PUT"])
-# @login_required
+@login_required
 def update_pattern(id):
     pattern_to_edit=Pattern.query.get(id)
     pattern_data=request.get_json()
@@ -139,7 +139,7 @@ def update_pattern(id):
 
 #delete a pattern
 @pattern_routes.route('/<int:patternId>/delete', methods=["DELETE"])
-# @login_required
+@login_required
 def delete_pattern(patternId):
     pattern_to_delete=Pattern.query.get(patternId)
     if not pattern_to_delete or pattern_to_delete.user_id != current_user.id:
@@ -152,6 +152,7 @@ def delete_pattern(patternId):
 
 #grab all testers by patternId
 @pattern_routes.route('<int:patternId>/testers')
+@login_required
 def testersByPatternId(patternId):
     # print(f"patternId: ", patternId)
     pattern=Pattern.query.get(patternId)
@@ -177,6 +178,7 @@ def testersByPatternId(patternId):
 
 #create a test based on patternId
 @pattern_routes.route('<int:patternId>/testers', methods=["POST"])
+@login_required
 def create_tester(patternId):
     user_id=current_user.id
     # print(f"USER_ID: ", user_id)

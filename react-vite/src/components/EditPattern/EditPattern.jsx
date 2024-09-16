@@ -12,12 +12,8 @@ const EditPattern = () => {
 
     useEffect(() => {
         dispatch(patternActions.viewUserPattern(pattern_id))
-            .then((response) => {
-                if (!response || !response.editPattern) {
-                    navigate("/")
-                }
-            })
-    }, [dispatch, pattern_id, navigate])
+
+    }, [dispatch, pattern_id])
 
     const editPattern = useSelector((state) => state.patterns.patternById)
     console.log("PATTERN: ", editPattern)
@@ -59,7 +55,7 @@ const EditPattern = () => {
 
     //in order to compate id's, make sure editPattern.user_id exists first
     useEffect(()=> {
-        if (!loggedIn || (editPattern.user_id && loggedInId !== editPattern.user_id) || isNaN(Number(patternId))) {
+        if (!loggedIn || (editPattern.user_id && loggedInId !== editPattern.user_id) || !editPattern) {
             navigate("/")
           }
     }, [loggedIn, loggedInId, editPattern, navigate, patternId])

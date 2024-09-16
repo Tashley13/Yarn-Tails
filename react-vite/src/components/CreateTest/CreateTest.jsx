@@ -24,19 +24,19 @@ const CreateTest = () => {
     useEffect(()=> {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
-                .then((response)=> {
-                    if (!response || !response.pattern) {
-                        navigate('/')
-                    }
-                })
+                // .then((response)=> {
+                //     if (!response || !response.pattern) {
+                //         navigate('/')
+                //     }
+                // })
         }
-    }, [loggedIn, dispatch, pattern_id, navigate])
+    }, [loggedIn, dispatch, pattern_id])
 
     useEffect(() => {
-        if (!loggedIn || patternId == 'undefined' ) {
+        if (!loggedIn) {
             navigate("/")
         }
-    }, [loggedIn, navigate, patternId])
+    }, [loggedIn, navigate, pattern])
 
     const updateRating = (e) => setRating(e.target.value);
     // const updateImage = (e) => setImage(e.target.value);

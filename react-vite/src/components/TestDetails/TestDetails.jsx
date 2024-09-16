@@ -21,22 +21,18 @@ const TestDetails = () => {
     // console.log("TEST: ", test)
 
     useEffect(() => {
-        if (!loggedIn || isNaN(Number(testerId))) {
+        if (!loggedIn) {
             navigate("/");
         }
-    }, [loggedIn, navigate, testerId]);
+    }, [loggedIn, navigate]);
 
     //make sure the test is being watched for updates
     useEffect(() => {
         if (loggedIn) {
             dispatch(testerActions.getTestById(tester_id))
-                .then((response)=> {
-                    if (!response || !response.test) {
-                        navigate('/')
-                    }
-                })
+
         }
-    }, [loggedIn, dispatch, tester_id, navigate])
+    }, [loggedIn, dispatch, tester_id])
 
     if (!test || test.length === 0) {
         return <div>No tests to view!</div>

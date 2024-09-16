@@ -24,7 +24,7 @@ const UserPatterns = () => {
         if (!loggedIn) {
             navigate(`/`)
         }
-    }, [loggedIn, navigate, patterns])
+    }, [loggedIn, navigate])
 
 
 
@@ -37,7 +37,12 @@ const UserPatterns = () => {
 
     //return create a pattern button as well
    if (patterns.length === 0) {
-    return <div>You have no patterns</div>
+    return <>
+    <div>You have no patterns</div>
+    <button onClick={()=> {
+        navigate('/pattern/new')
+    }}>Create Pattern</button>
+    </>
    }
 
 
