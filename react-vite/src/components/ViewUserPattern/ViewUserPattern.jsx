@@ -154,9 +154,11 @@ const ViewUserpattern = () => {
                 <p>Yarn weight: {pattern.materials_yarn_weight}</p>
                 <p>Yardage: {pattern.materials_yardage}</p>
             </div>
-            <h1>Pattern</h1>
+
             {loggedIn?.id == pattern.user_id && (
-                 <div>{pattern.pattern}</div>
+                 <div>
+                 <h1>Pattern</h1>
+                 {pattern.pattern}</div>
             )}
             <h1> Test Reviews</h1>
             <p>

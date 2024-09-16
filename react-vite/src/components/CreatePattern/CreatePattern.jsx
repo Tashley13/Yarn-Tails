@@ -68,6 +68,19 @@ const CreatePattern = () => {
         if (yardage < 1 || yardage > 9999) errors.yardage = "Yardage must be greater than 0 and less than 10,000";
         if (pattern.length < 40) errors.pattern = "Pattern needs to be more than 40 characters";
 
+
+        const sameTitle = allPatterns?.some(pattern => {
+            return pattern.title==title;
+        })
+
+        if (sameTitle) errors.title = 'This title already exists'
+
+        const sameDescripiton = allPatterns?.some(pattern => {
+            return pattern.description == description;
+        })
+
+        if (sameDescripiton) errors.description = "This description already exists"
+        //look to see if errors has any length of keys, if so set errors, return, and clear errors
         //look for same patterns, lowercased
         const samePattern = allPatterns?.some(p => {
             console.log("P", p)
@@ -77,11 +90,13 @@ const CreatePattern = () => {
             // console.log("PATTERNCHECK: ",samePattern)
 
         if (samePattern) errors.pattern = "A pattern exactly like this already exists"
-        //look to see if errors has any length of keys, if so set errors, return, and clear errors
+
+
         if (Object.keys(errors).length) {
             setErrors(errors);
             return;
         }
+
         setErrors({})
 
         //create newPattern object to dispatch
@@ -101,10 +116,10 @@ const CreatePattern = () => {
         }
         console.log("NEW PATTERN: ", newPattern)
         const createdPattern = await dispatch(patternActions.createUserPattern(newPattern))
-        console.log("CREATED: ", Object.values(createdPattern))
-        if (Object.values(createdPattern) == 'pattern already exists') {
-            errors.pattern = "This pattern already exists"
-        }
+        // console.log("CREATED: ", Object.values(createdPattern))
+        // if (Object.values(createdPattern) == 'pattern already exists') {
+        //     errors.pattern = "This pattern already exists"
+        // }
 
         if (createdPattern && createdPattern.id) {
             // setNewPatternId(createdPattern.id) //set the new patternId as the newly created pattern id

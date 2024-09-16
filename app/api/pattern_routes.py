@@ -28,6 +28,7 @@ def all_patterns():
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
+            'description' : pattern.description,
             'pattern' : pattern.pattern
             # 'pattern_tests' : [
             #     {
