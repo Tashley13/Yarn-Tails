@@ -12,6 +12,7 @@ class PatternImage(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id=db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     image=db.Column(db.String, nullable=False)
+    display_image=db.Column (db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
@@ -27,6 +28,7 @@ class PatternImage(db.Model):
             'user_id': self.user_id,
             'pattern_id': self.pattern_id,
             'image': self.image,
+            'display_image' : self.display_image,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

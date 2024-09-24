@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 568f8f1c3037
+Revision ID: 230b5ed103e9
 Revises: 
-Create Date: 2024-09-23 19:43:01.193677
+Create Date: 2024-09-24 18:22:11.696104
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '568f8f1c3037'
+revision = '230b5ed103e9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
-    sa.Column('tile_image', sa.String(), nullable=False),
     sa.Column('difficulty', sa.String(), nullable=False),
     sa.Column('time', sa.String(), nullable=False),
     sa.Column('time_limit', sa.String(), nullable=False),
@@ -51,6 +50,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('pattern_id', sa.Integer(), nullable=False),
     sa.Column('image', sa.String(), nullable=False),
+    sa.Column('display_image', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['pattern_id'], ['patterns.id'], ondelete='CASCADE'),

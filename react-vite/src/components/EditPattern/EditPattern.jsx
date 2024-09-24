@@ -22,7 +22,7 @@ const EditPattern = () => {
     // console.log("ID: ", loggedIn.id, editPattern.user_id)
 
     const [title, setTitle] = useState('');
-    const [tileImage, setTileImage] = useState('');
+    // const [tileImage, setTileImage] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [time, setTime] = useState('');
     const [timeLimit, setTimeLimit] = useState('');
@@ -37,7 +37,7 @@ const EditPattern = () => {
     useEffect(() => {
         if (editPattern) {
             setTitle(editPattern.title || "");
-            setTileImage(editPattern.tile_image || "");
+            // setTileImage(editPattern.tile_image || "");
             setDifficulty(editPattern.difficulty || "");
             setTime(editPattern.time || "");
             setTimeLimit(editPattern.time_limit || "");
@@ -67,7 +67,7 @@ const EditPattern = () => {
     }, [loggedIn, loggedInId, editPattern, navigate, patternId])
 
     const updateTitle = (e) => setTitle(e.target.value);
-    const updateTileImage = (e) => setTileImage(e.target.files[0]);
+    // const updateTileImage = (e) => setTileImage(e.target.files[0]);
     const updateDifficulty = (e) => setDifficulty(e.target.value);
     const updateTime = (e) => setTime(e.target.value);
     const updateTimeLimit = (e) => setTimeLimit(e.target.value);
@@ -84,7 +84,7 @@ const EditPattern = () => {
 
         const errors = {}
         if (!title) errors.title = 'Title is required';
-        if (!tileImage) errors.tileImage = 'Tile image is required';
+        // if (!tileImage) errors.tileImage = 'Tile image is required';
         if (!difficulty) errors.difficulty = 'Difficulty is required';
         if (time.length < 3) errors.time = 'Time needs to be more specific';
         if (!timeLimit || timeLimit=='select one') errors.timeLimit = "Time limit is required";
@@ -126,7 +126,7 @@ const EditPattern = () => {
         const patternUpdate = {
             ...editPattern,
             title,
-            tile_image: tileImage,
+            // tile_image: tileImage,
             difficulty,
             time,
             time_limit: timeLimit,
@@ -162,18 +162,18 @@ const EditPattern = () => {
                         </label>
                         {errors.title && <p>{errors.title}</p>}
                     </div>
-                    <div className="tile_image">
+                    {/* <div className="tile_image">
                         Display Image:
                         <label>
                             <input
                                 type="file"
                                 accept="image/*"
-                                // value={tileImage}
+                                value={tileImage}
                                 onChange={updateTileImage}
                             />
                             {errors.tileImage && <p>{errors.tileImage}</p>}
                         </label>
-                    </div>
+                    </div> */}
                     <div className="difficulty">
                         Select difficulty:
                         <label

@@ -27,7 +27,6 @@ def all_patterns():
             'user_id' : pattern.user_id,
             'username' : pattern.user.username,
             'title' : pattern.title,
-            'tile_image' : pattern.tile_image,
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
@@ -60,7 +59,6 @@ def user_patterns(userId):
             'id': pattern.id,
             'user_id' : pattern.user_id,
             'title' : pattern.title,
-            'tile_image' : pattern.tile_image,
             #eventually pull all the reviews and images of the pattern to display
             'difficulty' : pattern.difficulty,
             'time' : pattern.time,
@@ -90,30 +88,18 @@ def read_user_pattern(id):
 
 #create a pattern
 @pattern_routes.route('/new', methods=["POST"])
-# @login_required
+@login_required
 def create_pattern():
     user_id=current_user.id
     data=request.get_json()
-    # pattern=CreatePatternForm(request.form)
-    # if pattern.validate_on_submit():
-    #     new_pattern= Pattern(
-    #         user_id=current_user.id,
-    #         title=form.title.data,
-    #         tile_image=form.data.tile_image,
-    #         difficulty=form.data.difficulty,
-    #         time=form.data.time,
-    #         time_limit=form.data.time_limit,
-    #         description=form.data.description,
-    #         materials_instrument=form.data.materials_instrument,
-    #         materials_instrument_size=form.data.materials_instrument_size,
-    #         materials_yarn_weight=form.data.materials_yarn_weight,
-    #         materials_yardage=form.data.materials_yardage,
-    #         pattern=form.data.pattern
-    #     )
+
+    existing_pattern = Pattern.query.filter_by(pattern=data.get('pattern')).first()
+    if existing_pattern:
+        return jsonify({"message":"pattern already exists"})
+
     new_pattern= Pattern(
         user_id=user_id,
         title=data.get('title'),
-        tile_image=data.get('tile_image'),
         difficulty=data.get('difficulty'),
         time=data.get('time'),
         time_limit=data.get('time_limit'),
@@ -139,30 +125,21 @@ def create_pattern():
 @login_required
 def update_pattern(id):
     pattern_to_edit=Pattern.query.get(id)
-    # pattern_data=request.get_json()
+    pattern_data=request.get_json()
     if not pattern_to_edit or pattern_to_edit.user_id != current_user.id:
         return jsonify({"message" : "No pattern to edit"})
-    pattern_to_edit.title=request.form.get('title', pattern_to_edit.title)
-    pattern_to_edit.difficulty=request.form.get('difficulty', pattern_to_edit.difficulty)
-    pattern_to_edit.time_limit=request.form.get('time_limit', pattern_to_edit.time_limit)
-    pattern_to_edit.time=request.form.get('time', pattern_to_edit.time)
-    pattern_to_edit.description=request.form.get('description', pattern_to_edit.description)
-    pattern_to_edit.materials_instrument=request.form.get('materials_instrument', pattern_to_edit.materials_instrument)
-    pattern_to_edit.materials_instrument_size=request.form.get('materials_instrument_size', pattern_to_edit.materials_instrument_size)
-    pattern_to_edit.materials_yarn_weight=request.form.get('materials_yarn_weight', pattern_to_edit.materials_yarn_weight)
-    pattern_to_edit.materials_yardage=request.form.get('materials_yardage', pattern_to_edit.materials_yardage)
-    pattern_to_edit.pattern=request.form.get('pattern', pattern_to_edit.pattern)
+    pattern_to_edit.title=pattern_data.get('title')
+    # pattern_to_edit.tile_image=pattern_data.get('tile_image')
+    pattern_to_edit.difficulty=pattern_data.get('difficulty')
+    pattern_to_edit.time_limit=pattern_data.get('time_limit')
+    pattern_to_edit.time=pattern_data.get('time')
+    pattern_to_edit.description=pattern_data.get('description')
+    pattern_to_edit.materials_instrument=pattern_data.get('materials_instrument')
+    pattern_to_edit.materials_instrument_size=pattern_data.get('materials_instrument_size')
+    pattern_to_edit.materials_yarn_weight=pattern_data.get('materials_yarn_weight')
+    pattern_to_edit.materials_yardage=pattern_data.get('materials_yardage')
+    pattern_to_edit.pattern=pattern_data.get('pattern')
     pattern_to_edit.updated_at= datetime.utcnow()
-
-    if 'tile_image' in request.files:
-        tile_image = request.files['tile_image']
-
-        tile_image.filename=get_unique_filename(tile_image.filename)
-        upload=upload_file_to_s3(tile_image)
-
-        if pattern_to_edit.tile_image:
-            remove_file_from_s3(pattern_to_edit.tile_image)
-
 
     db.session.commit()
     return jsonify(pattern_to_edit.to_dict())
