@@ -22,7 +22,7 @@ const EditPattern = () => {
     // console.log("ID: ", loggedIn.id, editPattern.user_id)
 
     const [title, setTitle] = useState('');
-    // const [tileImage, setTileImage] = useState('');
+    const [tileImage, setTileImage] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [time, setTime] = useState('');
     const [timeLimit, setTimeLimit] = useState('');
@@ -37,7 +37,7 @@ const EditPattern = () => {
     useEffect(() => {
         if (editPattern) {
             setTitle(editPattern.title || "");
-            // setTileImage(editPattern.tile_image || "");
+            setTileImage(editPattern.tile_image || "");
             setDifficulty(editPattern.difficulty || "");
             setTime(editPattern.time || "");
             setTimeLimit(editPattern.time_limit || "");
@@ -67,7 +67,7 @@ const EditPattern = () => {
     }, [loggedIn, loggedInId, editPattern, navigate, patternId])
 
     const updateTitle = (e) => setTitle(e.target.value);
-    // const updateTileImage = (e) => setTileImage(e.target.value);
+    const updateTileImage = (e) => setTileImage(e.target.files[0]);
     const updateDifficulty = (e) => setDifficulty(e.target.value);
     const updateTime = (e) => setTime(e.target.value);
     const updateTimeLimit = (e) => setTimeLimit(e.target.value);
@@ -84,7 +84,7 @@ const EditPattern = () => {
 
         const errors = {}
         if (!title) errors.title = 'Title is required';
-        // if (!tileImage) errors.tileImage = 'Tile image is required';
+        if (!tileImage) errors.tileImage = 'Tile image is required';
         if (!difficulty) errors.difficulty = 'Difficulty is required';
         if (time.length < 3) errors.time = 'Time needs to be more specific';
         if (!timeLimit || timeLimit=='select one') errors.timeLimit = "Time limit is required";
@@ -111,10 +111,22 @@ const EditPattern = () => {
         }
         setErrors({})
 
+        // const formData = new FormData();
+        // formData.append('title', title);
+        // if (tileImage) formData.append('tile_image', tileImage);
+        // formData.append('difficulty', difficulty);
+        // formData.append('time', time);
+        // formData.append('time_limit', timeLimit);
+        // formData.append('description', description);
+        // formData.append('materials_instrument', instrument);
+        // formData.append('materials_instrument_size', instrumentSize);
+        // formData.append('materials_yarn_weight', yarnWeight);
+        // formData.append('materials_yardage', yardage);
+        // formData.append('pattern', pattern);
         const patternUpdate = {
             ...editPattern,
             title,
-            // tile_image: tileImage,
+            tile_image: tileImage,
             difficulty,
             time,
             time_limit: timeLimit,
@@ -127,7 +139,7 @@ const EditPattern = () => {
         }
         // console.log("BEFORE DISPATCH: ", updatePattern)
         const editedPattern = await dispatch(patternActions.updateUserPattern(patternUpdate))
-        // console.log("AFTER DISPATCH: ", editedPattern)
+        console.log("AFTER DISPATCH: ", editedPattern)
 
         if (editedPattern) {
             navigate(`/${editedPattern.id}/view_pattern`)
@@ -150,17 +162,18 @@ const EditPattern = () => {
                         </label>
                         {errors.title && <p>{errors.title}</p>}
                     </div>
-                    {/* <div className="tile_image">
+                    <div className="tile_image">
                         Display Image:
                         <label>
                             <input
-                                type="url"
-                                value={tileImage}
+                                type="file"
+                                accept="image/*"
+                                // value={tileImage}
                                 onChange={updateTileImage}
                             />
                             {errors.tileImage && <p>{errors.tileImage}</p>}
                         </label>
-                    </div> */}
+                    </div>
                     <div className="difficulty">
                         Select difficulty:
                         <label

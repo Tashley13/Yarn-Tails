@@ -108,18 +108,18 @@ export const viewUserPattern = (patternId) => async (dispatch) => {
 }
 
 //create a new pattern
-export const createUserPattern = (pattern) => async (dispatch) => {
+export const createUserPattern = (formData) => async (dispatch) => {
     const response = await fetch("/api/patterns/new", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(pattern)
+        // headers: {
+        //     "Content-Type": "application/json"
+        // },
+        body: formData
     }
     )
     if (response.ok) {
         const data = await response.json()
-        // console.log("DATA: ", data)
+        console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
@@ -132,9 +132,9 @@ export const createUserPattern = (pattern) => async (dispatch) => {
 export const updateUserPattern = (pattern) => async (dispatch) => {
     const response = await fetch(`/api/patterns/${pattern.id}/edit`, {
         method: "PUT",
-        headers: {
-            "Content-Type" : "application/json"
-        },
+        // headers: {
+        //     "Content-Type" : "application/json"
+        // },
         body: JSON.stringify(pattern)
     })
     if (response.ok) {

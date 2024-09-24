@@ -122,9 +122,9 @@ const ViewUserpattern = () => {
             <div className="pattern-title">
                 {pattern.title}
             </div>
-            {/* <div className="pattern-tile-image">
-                {pattern.tile_image}
-            </div> */}
+            <div className="pattern-tile-image">
+                <img src={pattern.tile_image}/>
+            </div>
             {/* <div className="pattern-images">
                 insert images from patternimages table
             </div> */}

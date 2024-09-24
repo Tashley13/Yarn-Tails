@@ -5,6 +5,7 @@ import * as patternActions from "../../redux/pattern";
 import PatternMaterials from "../PatternMaterials/PatternMaterials";
 import CreateTestModal from "../CreateTest";
 import OpenModalButton from "../OpenModalButton";
+import './PatternDetail.css'
 
 const PatternDetail = () => {
     const { patternId } = useParams();
@@ -39,6 +40,9 @@ const PatternDetail = () => {
             <div className="pattern-title">
                 {pattern.title}
             </div>
+            <div className="pattern-tile-image">
+                <img src={pattern.tile_image} />
+            </div>
             {/* <div className="pattern-images">
                 insert images from patternimages table
             </div> */}
@@ -64,13 +68,15 @@ const PatternDetail = () => {
                 <PatternMaterials />
             </div>
 
-                <ul className="create_test">
+            {loggedIn?.id !== pattern.user_id && (
+                    <ul className="create_test">
                     <OpenModalButton
                         buttonText="Test this pattern?"
 
                         modalComponent={<CreateTestModal patternId={pattern.id}/>}
                     />
                 </ul>
+            )}
 
         </div>
     )

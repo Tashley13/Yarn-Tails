@@ -11,7 +11,7 @@ const CreatePattern = () => {
 
 
     const [title, setTitle] = useState('');
-    // const [tileImage, setTileImage] = useState('');
+    const [tileImage, setTileImage] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [time, setTime] = useState('');
     const [timeLimit, setTimeLimit] = useState('');
@@ -40,7 +40,7 @@ const CreatePattern = () => {
     }, [dispatch])
 
     const updateTitle = (e) => setTitle(e.target.value);
-    // const updateTileImage = (e) => setTileImage(e.target.value);
+    const updateTileImage = (e) => setTileImage(e.target.files[0]);
     const updateDifficulty = (e) => setDifficulty(e.target.value);
     const updateTime = (e) => setTime(e.target.value);
     const updateTimeLimit = (e) => setTimeLimit(e.target.value);
@@ -57,7 +57,7 @@ const CreatePattern = () => {
         const errors = {} // push errors to
         //check to make sure the fields are filled in
         if (!title) errors.title = 'Title is required';
-        // if (!tileImage) errors.tileImage = 'Tile image is required';
+        if (!tileImage) errors.tileImage = 'Tile image is required';
         if (!difficulty) errors.difficulty = 'Difficulty is required';
         if (time.length < 3) errors.time = 'Time needs to be more specifc';
         if (!timeLimit || timeLimit == 'select one') errors.timeLimit = "Time limit is required";
@@ -103,7 +103,7 @@ const CreatePattern = () => {
         //need to match backend create route
         const newPattern = {
             title,
-            // tile_image: tileImage,
+            tile_image: tileImage,
             difficulty,
             time,
             time_limit: timeLimit,
@@ -144,17 +144,18 @@ const CreatePattern = () => {
                         </label>
                         {errors.title && <p>{errors.title}</p>}
                     </div>
-                    {/* <div className="tile_image">
+                    <div className="tile_image">
                         Display Image:
                         <label>
                             <input
-                                type="text"
-                                value={tileImage}
+                                type="file"
+                                accept="image/*"
+                                // value={tileImage}
                                 onChange={updateTileImage}
                             />
                             {errors.tileImage && <p>{errors.tileImage}</p>}
                         </label>
-                    </div> */}
+                    </div>
                     <div className="difficulty">
                         Select difficulty:
                         <label

@@ -88,9 +88,9 @@ const AllPatterns = () => {
                                     </div>
                                 </div>
 
-                                {/* <div className="pattern-image">
-                                    {pattern.tile_image}
-                                </div> */}
+                                <div className="pattern-image">
+                                    <img src={pattern.tile_image} />
+                                </div>
                                 <div className="right-image">
                                     <div className="pattern-times">
                                         <ul>Time: {pattern.time}</ul>
