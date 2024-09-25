@@ -43,7 +43,7 @@ class Pattern(db.Model):
             'materials_instrument_size': self.materials_instrument_size,
             'materials_yarn_weight': self.materials_yarn_weight,
             'materials_yardage': self.materials_yardage,
-            'pattern_images': {image.id: image.to_dict() for image in self.pattern_images},
+            'pattern_images': [image.to_dict() for image in self.pattern_images],
             'pattern': self.pattern,
             'created_at': self.created_at,
             'updated_at': self.updated_at

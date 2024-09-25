@@ -21,6 +21,7 @@ def upload_pattern_image():
     upload=upload_file_to_s3(file)
 
     image_url=upload.get('url')
+    display_image = request.form.get('display_image').lower() == 'true'
     # form = PatternImageForm()
 
     # if request.method == "POST" or form.validate_on_submit():
@@ -38,7 +39,8 @@ def upload_pattern_image():
     new_image= PatternImage(
         user_id=current_user.id,
         pattern_id=request.form.get('pattern_id'),
-        image=image_url
+        image=image_url,
+        display_image=display_image
     )
     db.session.add(new_image)
     db.session.commit()

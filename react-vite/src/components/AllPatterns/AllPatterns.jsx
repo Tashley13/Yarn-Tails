@@ -22,7 +22,7 @@ const AllPatterns = () => {
 
     const allTests = useSelector((state) => state.testers.allTests)
     // const patterns=Object.values(eachPattern)[0]
-    console.log("PATTERNS: ", allTests)
+    // console.log("PATTERNS: ", patterns)
 
     useEffect(() => {
         dispatch(patternActions.getAllPatterns())
@@ -67,7 +67,9 @@ const AllPatterns = () => {
                 {patterns?.length > 0 ? (
                     patterns.map((pattern) => {
                         const { average, testLength } = calculateReviews(pattern.id);
-                        return (
+
+                        const displayImage= pattern.pattern_images.find(image => image.display_image)
+                            return (
                             <div key={pattern.id} className="pattern-display">
                                 <div className="left-image">
                                     {!loggedIn && (
@@ -89,7 +91,9 @@ const AllPatterns = () => {
                                 </div>
 
                                 <div className="pattern-image">
-                                    <img src={pattern.tile_image} />
+                                    {displayImage ? (
+                                        <img src ={displayImage.image} />
+                                    ) : ('')}
                                 </div>
                                 <div className="right-image">
                                     <div className="pattern-times">

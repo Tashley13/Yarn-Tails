@@ -15,6 +15,7 @@ pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 @pattern_routes.route('')
 def all_patterns():
     patterns=Pattern.query.options(
+        selectinload(Pattern.pattern_images),
         selectinload(Pattern.user),
         selectinload(Pattern.testers)
         ).limit(25).all()
@@ -31,7 +32,8 @@ def all_patterns():
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
             'description' : pattern.description,
-            'pattern' : pattern.pattern
+            'pattern' : pattern.pattern,
+            'pattern_images' : [image.to_dict() for image in pattern.pattern_images]
             # 'pattern_tests' : [
             #     {
             #         'id': tester.id,
