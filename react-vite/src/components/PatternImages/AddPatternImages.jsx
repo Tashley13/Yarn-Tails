@@ -14,6 +14,7 @@ const AddPatternImages = () => {
     const [images, setImages] = useState([{ image: null, isDisplay: false }]);
     const [imageLoading, setImageLoading] = useState(false);
 
+    //map through images, match the index since there can be multiple images, and the image is correctly updated once an image is uploaded
     const handleImageChange = (index, field, val) => {
         const updatedImages = images.map((image, i) =>
             i === index ? { ...image, [field]: val } : image
@@ -21,6 +22,7 @@ const AddPatternImages = () => {
         setImages(updatedImages)
     }
 
+    //map through images and match the index, set image with correct display info
     const handleDisplayChange = (index) => {
         const updatedImages = images.map((image, i) =>
             i === index ? { ...image, isDisplay: true } : { ...image, isDisplay: false }
@@ -28,6 +30,7 @@ const AddPatternImages = () => {
         setImages(updatedImages)
     }
 
+    //create a blank section to add image
     const addImage = () => {
         setImages([...images, { image: null, isDisplay: false }])
     }
