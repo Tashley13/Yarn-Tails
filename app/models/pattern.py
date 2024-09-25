@@ -1,8 +1,26 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from .checkouts import Checkout
+
+checkout_pattern = db.Table(
+    'checkout_pattern',
+    db.Model.metadata,
+    db.Column(
+        "checkout_id",
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod('checkouts.id')),
+        primary_key = True
+    ),
+    db.Column(
+        "pattern_id".
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod('patterns.id')),
+        primary_key = True
+    )
+)
 
 class Pattern(db.Model):
-    __tablename__="patterns"
+    __tablename__ = "patterns"
 
     if environment == "production":
         __table_args__= {'schema' : SCHEMA}

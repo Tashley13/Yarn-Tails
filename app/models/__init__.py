@@ -4,3 +4,4 @@ from .db import environment, SCHEMA
 from .pattern import Pattern
 from .tester import Tester
 from .pattern_image import PatternImage
+from .checkout import Checkout

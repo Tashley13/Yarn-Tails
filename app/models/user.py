@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     patterns=db.relationship('Pattern', back_populates='user', cascade='all, delete-orphan')
     testers= db.relationship('Tester', back_populates='user', cascade='all, delete-orphan')
     pattern_images = db.relationship('PatternImage', back_populates='user', cascade='all, delete-orphan')
+    checkouts = db.relationship('Checkout', back_populates='user', cascade='all, delete-orphan')
 
     @property
     def password(self):
