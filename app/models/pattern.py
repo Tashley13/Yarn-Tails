@@ -1,6 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from .checkouts import Checkout
+from .checkout import Checkout
 
 checkout_pattern = db.Table(
     'checkout_pattern',
@@ -12,7 +12,7 @@ checkout_pattern = db.Table(
         primary_key = True
     ),
     db.Column(
-        "pattern_id".
+        "pattern_id",
         db.Integer,
         db.ForeignKey(add_prefix_for_prod('patterns.id')),
         primary_key = True
@@ -43,6 +43,7 @@ class Pattern(db.Model):
     user = db.relationship('User', back_populates='patterns')
     testers = db.relationship('Tester', back_populates='pattern', cascade='all, delete-orphan')
     pattern_images= db.relationship('PatternImage', back_populates='pattern', cascade='all, delete-orphan')
+    checkouts = db.relationship('Checkout', secondary='checkout_pattern', back_populates='patterns')
 
     def __repr__(self):
         return f'Pattern {self.title}'

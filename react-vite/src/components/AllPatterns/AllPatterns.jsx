@@ -68,7 +68,7 @@ const AllPatterns = () => {
                     patterns.map((pattern) => {
                         const { average, testLength } = calculateReviews(pattern.id);
 
-                        const displayImage= pattern.pattern_images.find(image => image.display_image)
+                        const displayImage= pattern.pattern_images?.find(image => image.display_image)
                             return (
                             <div key={pattern.id} className="pattern-display">
                                 <div className="left-image">

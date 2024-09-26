@@ -9,12 +9,14 @@ import sessionReducer from "./session";
 import patternReducer from "./pattern";
 import testerReducer from "./tester";
 import patternImageReducer from "./patternImage"
+import checkoutReducer from "./checkout";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   patterns: patternReducer,
   testers: testerReducer,
-  patternImages: patternImageReducer
+  patternImages: patternImageReducer,
+  checkout: checkoutReducer
 });
 
 let enhancer;

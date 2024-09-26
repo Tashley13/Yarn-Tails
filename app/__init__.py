@@ -4,12 +4,13 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Pattern
+from .models import db, User, Pattern, Tester, PatternImage, Checkout
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.pattern_routes import pattern_routes
 from .api.tester_routes import tester_routes
 from .api.pattern_image_routes import pattern_image_routes
+from .api.checkout_routes import checkout_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -34,6 +35,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(pattern_routes, url_prefix='/api/patterns')
 app.register_blueprint(tester_routes, url_prefix='/api/testers')
 app.register_blueprint(pattern_image_routes, url_prefix='/api/pimages')
+app.register_blueprint(checkout_routes, url_prefix='/api/checkout')
 db.init_app(app)
 Migrate(app, db)
 

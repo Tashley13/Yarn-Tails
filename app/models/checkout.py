@@ -8,13 +8,16 @@ class Checkout(db.Model):
         __table_args__ = {'schema' : SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE', nullable=False))
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     test_due= db.Column(db.Date, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.now)
 
     user = db.relationship('User', back_populates='checkouts')
     patterns = db.relationship('Pattern', secondary='checkout_pattern', back_populates='checkouts')
+
+    def __repr__(self):
+        return f'Checkout {self.id}'
 
     def to_dict(self):
         return {

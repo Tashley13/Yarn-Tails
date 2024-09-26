@@ -218,3 +218,27 @@ def get_pattern_images(patternId):
     return jsonify({
         'pattern_images': [image.to_dict() for image in pattern_images]
     })
+
+#add pattern to checkout
+@pattern_routes.route('<int:pattern_id>/checkout')
+def test_pattern(pattern_id):
+    user_id=current_user.id
+    #check for pattern
+    pattern = Pattern.query.get(pattern_id)
+    if not pattern:
+        return jsonify({"message" : "no pattern to test"})
+    data=request.get_json()
+
+    #does this checkout already exist:
+    existing_checkout=Checkout.query.filter_by(user_id=user_id, pattern_id=pattern_id).first()
+    if existing_checkout:
+        return jsonify({"message": "You have already checked out this pattern."})
+    checkout_pattern = Checkout(
+        user_id=user_id,
+        pattern_id=pattern_id,
+        test_due=data.get('test_due')
+    )
+
+    db.session.add(checkout_pattern)
+    db.session.commit()
+    return jsonify(checkout_pattern.to_dict())

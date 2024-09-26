@@ -3,6 +3,7 @@ from .users import seed_users, undo_users
 from .patterns import seed_patterns, undo_patterns
 from .testers import seed_testers, undo_testers
 # from .pattern_images import seed_pattern_images, undo_pattern_images
+from .checkouts import seed_checkouts, undo_checkouts
 
 from app.models.db import db, environment, SCHEMA
 
@@ -20,6 +21,7 @@ def seed():
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
         # undo_pattern_images()
+        undo_checkouts()
         undo_testers()
         undo_patterns()
         undo_users()
@@ -27,6 +29,7 @@ def seed():
     seed_users()
     seed_patterns()
     seed_testers()
+    seed_checkouts()
     # seed_pattern_images()
     # Add other seed functions here
 
@@ -35,6 +38,7 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     # undo_pattern_images()
+    undo_checkouts()
     undo_testers()
     undo_patterns()
     undo_users()
