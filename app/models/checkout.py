@@ -11,6 +11,7 @@ class Checkout(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     test_due= db.Column(db.Date, nullable=False)
+    test_posted = db.Column(db.String, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.now)
 
     user = db.relationship('User', back_populates='checkouts')
@@ -26,4 +27,5 @@ class Checkout(db.Model):
             'pattern_id' : self.pattern_id,
             'test_due' : self.test_due,
             'created_at' : self.created_at
+            # 'patterns' : [pattern.to_dict() for pattern in self.patterns]
         }

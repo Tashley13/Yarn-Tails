@@ -32,7 +32,7 @@ export const getAllCheckouts = (userId) => async(dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-
+        console.log("DATA: ", data)
         if (data.errors) {
             return;
         }
@@ -56,7 +56,7 @@ export const createCheckout = (patternId, checkout) => async (dispatch) => {
         if (data.errors) {
             return;
         }
-        dispatch(createCheckout(data))
+        dispatch(addCheckout(data))
         return data
     }
 }
@@ -74,20 +74,20 @@ export const removePatternfromCheckout = (checkoutId) => async (dispatch) => {
 }
 
 const initialState = {
-    checkouts: []
+    allCheckouts: []
 }
 
 const checkoutReducer = (state = initialState, action) => {
     switch(action.type) {
         case ALL_CHECKOUTS: {
-            return {...state, checkouts: action.payload}
+            return {...state, allCheckouts: action.payload.checkouts}
         }
         case ADD_CHECKOUT : {
-            return {...state, checkouts: [...state.checkouts, action.payload]}
+            return {...state, checkouts: [...state.checkout, action.payload]}
         }
         case REMOVE_CHECKOUT: {
             const newState = {...state};
-            newState.checkouts = newState.checkouts.filter(checkout => checkout.id !== action.payload)
+            newState.checkout = newState.checkout.filter(checkout => checkout.id !== action.payload)
             return newState
         }
         default: {

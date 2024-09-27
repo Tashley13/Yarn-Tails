@@ -17,7 +17,7 @@ def user_checkout_patterns(user_id):
         return jsonify({'pattern_tests': []})
 
     patterns_data = [checkout.to_dict() for checkout in checkouts]
-    return jsonify({'patterns': pattern_data})
+    return jsonify({'checkouts': patterns_data})
 
 
 #remove pattern from checkout manually

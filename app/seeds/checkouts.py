@@ -3,26 +3,55 @@ from sqlalchemy.sql import text
 from datetime import date, timedelta
 
 def seed_checkouts():
+
     demos_checkout = Checkout(
         user_id=1,
         pattern_id=3,
-        test_due=date.today() + timedelta(days=3)
+        test_due=date.today() + timedelta(days=3),
+        test_posted= 'InProgress'
     )
+
+    demos_checkout2 = Checkout(
+        user_id=1,
+        pattern_id=2,
+        test_due=date(2024, 9, 2),
+        test_posted='Complete'
+    )
+
     marnies_checkout = Checkout(
         user_id=2,
         pattern_id=1,
-        test_due=date.today() + timedelta(days=5)
+        test_due=date.today() + timedelta(days=5),
+        test_posted= 'InProgress'
+    )
+
+    marnies_checkout2 = Checkout(
+        user_id=2,
+        pattern_id=3,
+        test_due=date(2024, 8, 2),
+        test_posted='Complete'
     )
 
     bobbies_checkout = Checkout(
         user_id=3,
         pattern_id=4,
-        test_due=date.today()+timedelta(days=1)
+        test_due=date.today()+timedelta(days=1),
+        test_posted= 'InProgress'
+    )
+
+    bobbies_checkout2 = Checkout(
+        user_id=3,
+        pattern_id=1,
+        test_due=date(2024, 9, 13),
+        test_posted='Complete'
     )
 
     db.session.add(demos_checkout)
+    db.session.add(demos_checkout2)
     db.session.add(marnies_checkout)
+    db.session.add(marnies_checkout2)
     db.session.add(bobbies_checkout)
+    db.session.add(bobbies_checkout2)
     db.session.commit()
 
 def undo_checkouts():
