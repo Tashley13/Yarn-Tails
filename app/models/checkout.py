@@ -26,6 +26,6 @@ class Checkout(db.Model):
             'user_id' : self.user_id,
             'pattern_id' : self.pattern_id,
             'test_due' : self.test_due,
+            'test_posted' : self.test_posted,
             'created_at' : self.created_at
-            # 'patterns' : [pattern.to_dict() for pattern in self.patterns]
         }

@@ -113,6 +113,17 @@ function Navigation() {
           ) : (
             ''
           )}
+
+          {loggedIn ? (
+            <div className="nav-choices">
+              <NavLink className="nav-user-tests nav-clicks" to={`/checkouts/${loggedIn.id}`}>
+              <p>PL</p>
+              </NavLink>
+              <span className="nav-open-text"> Pattern Library</span>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </ul>
       <button id="toggle-nav" onClick={navBarView}>

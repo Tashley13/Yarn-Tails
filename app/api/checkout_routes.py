@@ -10,14 +10,20 @@ checkout_routes = Blueprint('checkouts', __name__, url_prefix="/checkout")
 @checkout_routes.route('/<int:user_id>')
 @login_required
 def user_checkout_patterns(user_id):
-    checkouts=Checkout.query.filter_by(user_id=current_user.id).options(
-        selectinload(Checkout.patterns)
-    ).all()
+    checkouts=Checkout.query.filter_by(user_id=user_id).all()
     if not checkouts:
-        return jsonify({'pattern_tests': []})
+        return jsonify({'checkouts': []})
 
-    patterns_data = [checkout.to_dict() for checkout in checkouts]
-    return jsonify({'checkouts': patterns_data})
+    checkout_data=[] # create empty list to append
+    for checkout in checkouts: #find pattern_id for each checkout
+        pattern=Pattern.query.get(checkout.pattern_id)
+
+        checkout_data.append({
+            'checkout' : checkout.to_dict(),
+            'pattern' : pattern.to_dict() if pattern else None
+        })
+
+    return jsonify({'checkouts': checkout_data})
 
 
 #remove pattern from checkout manually

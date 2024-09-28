@@ -1,0 +1,11 @@
+.checkedout-patterns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+}
+
+.inProgress, complete {
+
+    padding: 15px;
+
+}
