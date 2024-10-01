@@ -11,7 +11,7 @@ class Checkout(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), ondelete='CASCADE'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('patterns.id'), ondelete='CASCADE'), nullable=False)
     test_due= db.Column(db.Date, nullable=False)
-    test_posted = db.Column(db.String, nullable=False)
+    test_posted = db.Column(db.String, nullable=False, default="InProgress")
     created_at=db.Column(db.DateTime, default=datetime.now)
 
     user = db.relationship('User', back_populates='checkouts')

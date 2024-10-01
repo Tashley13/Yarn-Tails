@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as checkoutActions from "../../redux/checkout";
-import * as patternActions from "../../redux/pattern";
+import * as testerActions from "../../redux/tester";
+// import * as patternActions from "../../redux/pattern";
 
 import './PatternLibrary.css'
 
@@ -11,21 +12,37 @@ const PatternLibrary = () => {
     const dispatch = useDispatch();
     const { userId } = useParams();
     const user_id = Number(userId)
+    const navigate = useNavigate();
     console.log("ID: ", userId)
     const loggedIn = useSelector((state) => state.session.user);
 
 
     const checkedOut = useSelector((state) => state.checkout.allCheckouts)
-    console.log("CHECKOUTS: ", checkedOut)
+    const tests = useSelector((state)=> state.testers.allTests)
+    console.log("TESTS: ", tests)
+
+    useEffect(()=> {
+        if (!loggedIn) {
+            navigate('/')
+        }
+    }, [loggedIn, navigate])
 
 
     useEffect(() => {
         dispatch(checkoutActions.getAllCheckouts(user_id))
-
+        dispatch(testerActions.getUserTests(user_id))
     }, [dispatch, user_id])
 
-    if (!checkedOut) {
-        return <div>You have no tests completed or in progress</div>
+    // if (!checkedOut) {
+    //     return <div>You have no tests completed or in progress</div>
+    // }
+
+    const onComplete = (patternId) => {
+        navigate(`/${patternId}/pattern_only`)
+    }
+
+    const inProgress = (testerId) => {
+        navigate(`/test/${testerId}/edit`)
     }
 
     return (
@@ -35,7 +52,13 @@ const PatternLibrary = () => {
                 {checkedOut?.length > 0 ? (
                     checkedOut.map(({ checkout, pattern }) => (
                         checkout.test_posted === "InProgress" && pattern && (
-                            <div key={checkout.id}>
+                            <div key={checkout.id}
+                            onClick={()=> {
+                                const tester = tests.find(test => test.pattern_id === pattern.id);
+                                if (tester) inProgress(tester.id)
+
+                            }}
+                            style={{cursor: 'pointer'}}>
                                 <div>{pattern.title}</div>
                                 <div>{checkout.test_due}</div>
                             </div>
@@ -50,7 +73,9 @@ const PatternLibrary = () => {
                 {checkedOut?.length > 0 ? (
                     checkedOut.map(({ checkout, pattern }) => (
                         checkout.test_posted === "Complete" && pattern && (
-                            <div key={checkout.id}>
+                            <div key={checkout.id}
+                            onClick={()=>onComplete(pattern.id)}
+                            style={{cursor: 'pointer'}}>
                                 <div>{pattern.title}</div>
                                 <div>{checkout.test_due}</div>
                             </div>

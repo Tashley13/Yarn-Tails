@@ -148,8 +148,11 @@ def seed_patterns():
     )
 
     db.session.add(demos_pattern)
+    db.session.add(demos_pattern2)
     db.session.add(marnies_pattern)
+    db.session.add(marnies_pattern2)
     db.session.add(bobbies_pattern)
+    db.session.add(bobbies_pattern2)
     db.session.commit()
 
 

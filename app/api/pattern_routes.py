@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Pattern, db, User, Tester, PatternImage
+from app.models import Pattern, db, User, Tester, PatternImage, Checkout
 from .aws_helpers import (
     upload_file_to_s3, get_unique_filename, remove_file_from_s3
 )
@@ -178,7 +178,8 @@ def testersByPatternId(patternId):
             'user_id' : tester.user_id,
             'pattern_id' : tester.pattern_id,
             'rating' : tester.rating,
-            'review' : tester.review
+            'review' : tester.review,
+            'complete' : tester.complete
         }
         for tester in tester_by_pattern_id
     ]}
@@ -220,7 +221,7 @@ def get_pattern_images(patternId):
     })
 
 #add pattern to checkout
-@pattern_routes.route('<int:pattern_id>/checkout')
+@pattern_routes.route('<int:pattern_id>/checkout', methods=["POST"])
 def test_pattern(pattern_id):
     user_id=current_user.id
     #check for pattern
@@ -233,10 +234,15 @@ def test_pattern(pattern_id):
     existing_checkout=Checkout.query.filter_by(user_id=user_id, pattern_id=pattern_id).first()
     if existing_checkout:
         return jsonify({"message": "You have already checked out this pattern."})
+
+    date_string=data.get('test_due')
+    test_due= datetime.strptime(date_string, "%Y-%m-%d").date()
+
     checkout_pattern = Checkout(
         user_id=user_id,
         pattern_id=pattern_id,
-        test_due=data.get('test_due')
+        test_due=test_due,
+        test_posted=data.get('test_posted')
     )
 
     db.session.add(checkout_pattern)

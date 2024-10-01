@@ -16,7 +16,7 @@ const PatternDetail = () => {
     const loggedIn = useSelector((state) => state.session.user)
 
     const pattern = useSelector((state) => state.patterns.patternById)
-    // console.log("PATTERN: ", pattern)
+    console.log("PATTERN: ", pattern)
 
     useEffect(() => {
         if (!loggedIn) {

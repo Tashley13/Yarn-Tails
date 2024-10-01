@@ -19,6 +19,7 @@ def all_testers():
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
+            'complete' : tester.complete,
             # 'image': tester.image,
             'review': tester.review,
             'user': {
@@ -42,6 +43,7 @@ def user_testers(id):
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
+            'complete' : tester.complete,
             # 'image': tester.image,
             'review': tester.review
         }

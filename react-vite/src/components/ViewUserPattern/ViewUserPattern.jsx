@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
+import * as checkoutActions from "../../redux/checkout";
 // import PatternMaterials from "../PatternMaterials/PatternMaterials";
 // import CreateTestModal from "../CreateTest";
 // import OpenModalButton from "../OpenModalButton";
@@ -16,6 +17,7 @@ const ViewUserpattern = () => {
     const dispatch = useDispatch();
     const pattern_id = Number(patternId);
     const [showDelete, setShowDelete] = useState(false);
+    const [showCheckout, setShowCheckout] = useState(false);
     // const [deletePopUp, setDeletePopUp] = useState(false);
 
     const loggedIn = useSelector((state) => state.session.user)
@@ -68,15 +70,52 @@ const ViewUserpattern = () => {
         setShowDelete(false)
     }
 
+    const handleCheckoutPattern = () => {
+        setShowCheckout(true);
+    }
+
+    const todayDate = new Date();
+    const oneWeek = new Date(todayDate);
+    oneWeek.setDate(todayDate.getDate() + 7);
+    const test_due = oneWeek.toISOString().split('T')[0];
+
+
+    const confirmCheckout = () => {
+
+        const blankTest = {
+            review: '',
+            rating: 0,
+            user_id: loggedIn?.id,
+            pattern_id: pattern_id
+        };
+
+        const checkoutPattern = {
+            user_id: loggedIn?.id,
+            pattern_id: pattern_id,
+            test_due: test_due,
+            test_posted: 'InProgress'
+        }
+
+        dispatch(testerActions.createTestByPatternId(pattern_id, blankTest))
+        dispatch(checkoutActions.createCheckout(pattern_id, checkoutPattern))
+        setShowCheckout(false);
+        navigate(`/patterns/${loggedIn?.id}`)
+        navigate(`/${pattern_id}/test/new`)
+    }
+
+    const cancelCheckout = () => {
+        setShowCheckout(false)
+    }
+
 
 
     const editPatternButton = async () => {
         navigate(`/${pattern_id}/edit`)
     }
 
-    const testPatternButton = async () => {
-        navigate(`/${pattern.id}/test/new`)
-    }
+    // const testPatternButton = async () => {
+    //     navigate(`/${pattern.id}/test/new`)
+    // }
 
     //insert view pattern button, eventually check to see if part of tester checkout
 
@@ -123,7 +162,7 @@ const ViewUserpattern = () => {
                 {pattern.title}
             </div>
             <div className="pattern-tile-image">
-                <img src={pattern.tile_image}/>
+                <img src={pattern.tile_image} />
             </div>
             {/* <div className="pattern-images">
                 insert images from patternimages table
@@ -156,9 +195,9 @@ const ViewUserpattern = () => {
             </div>
 
             {loggedIn?.id == pattern.user_id && (
-                 <div>
-                 <h1>Pattern</h1>
-                 {pattern.pattern}</div>
+                <div>
+                    <h1>Pattern</h1>
+                    {pattern.pattern}</div>
             )}
             <h1> Test Reviews</h1>
             <p>
@@ -188,12 +227,22 @@ const ViewUserpattern = () => {
             ) : 'No tests for this pattern yet!'}
             {loggedIn?.id !== pattern.user_id && !alreadyTested && (
                 <div className="test-pattern">
-                    <button type="submit" onClick={() =>
-                        testPatternButton(pattern.id)
-                    }>
-                        Test Pattern
+                    <button type="submit" onClick={handleCheckoutPattern}>
+                        Checkout Pattern
                     </button>
+                    {showCheckout && (
+                        <div>
+                            <div className="test_due_date">
+                                <p>Do you wish to checkout this pattern?</p>
+
+                                <p>This pattern will be due on: </p>
+                            </div>
+                            <button onClick={confirmCheckout}>Yes, checkout</button>
+                            <button onClick={cancelCheckout}>No, do not checkout</button>
+                        </div>
+                    )}
                 </div>
+
             )
             }
             {/* <div className="materials">
