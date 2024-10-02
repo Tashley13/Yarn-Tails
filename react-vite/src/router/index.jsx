@@ -13,10 +13,9 @@ import UserTests from '../components/UserTests/UserTests';
 import PatternTests from '../components/PatternTests';
 import TestDetails from '../components/TestDetails/TestDetails';
 import CreateTest from '../components/CreateTest/CreateTest';
-// import AddPatternImages from '../components/PatternImages';
-// import CreateTest from '../components/CreateTest/CreateTest';
+import AddPatternImages from '../components/PatternImages';
 import UpdateTest from '../components/UpdateTest';
-// import ImagesbyPattern from '../components/PatternImages/GetPatternImages';
+import ImagesbyPattern from '../components/PatternImages/GetPatternImages';
 
 export const router = createBrowserRouter([
   {
@@ -74,14 +73,14 @@ export const router = createBrowserRouter([
         path: '/:patternId/test/new',
         element: <CreateTest />
       },
-      // {
-      //   path: '/pimages/:patternId/newImages',
-      //   element: <AddPatternImages/>
-      // },
-      // {
-      //   path: `/pimages/:patternId/images`,
-      //   element: <ImagesbyPattern/>
-      // },
+      {
+        path: '/pimages/:patternId/newImages',
+        element: <AddPatternImages/>
+      },
+      {
+        path: `/pimages/:patternId/images`,
+        element: <ImagesbyPattern/>
+      },
       {
         path: '/test/:testerId/edit',
         element: <UpdateTest />

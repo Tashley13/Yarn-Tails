@@ -175,6 +175,8 @@ def testersByPatternId(patternId):
             'user_id' : tester.user_id,
             'pattern_id' : tester.pattern_id,
             'rating' : tester.rating,
+            'test_due' : tester.test_due,
+            'test_progress': tester.test_progress,
             # 'image' : tester.image,
             'review' : tester.review
         }
@@ -197,6 +199,8 @@ def create_tester(patternId):
         user_id=user_id,
         pattern_id=patternId,
         rating=data.get('rating'),
+        test_due=data.get('test_due'),
+        test_progress=data.get('test_progress'),
         # image=data.get('image'),
         review=data.get('review')
     )
@@ -206,14 +210,14 @@ def create_tester(patternId):
     return jsonify(new_tester.to_dict())
 
 
-# #get all images by pattern_id
-# @pattern_routes.route('<int:patternId>/images')
-# def get_pattern_images(patternId):
-#     pattern_images = PatternImage.query.filter_by(pattern_id=patternId).order_by(PatternImage.id.desc()).all()
+#get all images by pattern_id
+@pattern_routes.route('<int:patternId>/images')
+def get_pattern_images(patternId):
+    pattern_images = PatternImage.query.filter_by(pattern_id=patternId).order_by(PatternImage.id.desc()).all()
 
-#     if not pattern_images:
-#         return jsonify({"message": "No images for this pattern!"})
+    if not pattern_images:
+        return jsonify({"message": "No images for this pattern!"})
 
-#     return jsonify({
-#         'pattern_images': [image.to_dict() for image in pattern_images]
-#     })
+    return jsonify({
+        'pattern_images': [image.to_dict() for image in pattern_images]
+    })

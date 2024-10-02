@@ -17,7 +17,7 @@ const UserTests = () => {
     const loggedIn = useSelector((state) => state.session.user)
 
     const userTests = useSelector((state) => state.testers.allTests)
-    // console.log("TESTS: ", userTests)
+    console.log("TESTS: ", userTests)
 
     useEffect(() => {
         if (!loggedIn) {

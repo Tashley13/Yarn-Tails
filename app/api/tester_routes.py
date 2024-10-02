@@ -21,6 +21,8 @@ def all_testers():
             'rating': tester.rating,
             # 'image': tester.image,
             'review': tester.review,
+            'test_due' : tester.test_due,
+            'test_progress' : tester.test_progress,
             'user': {
                 'id': tester.user.id,
                 'username': tester.user.username
@@ -42,6 +44,8 @@ def user_testers(id):
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'rating': tester.rating,
+            'test_due' : tester.test_due,
+            'test_progress' : tester.test_progress,
             # 'image': tester.image,
             'review': tester.review
         }

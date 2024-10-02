@@ -22,7 +22,7 @@ const AllPatterns = () => {
 
     const allTests = useSelector((state) => state.testers.allTests)
     // const patterns=Object.values(eachPattern)[0]
-    console.log("PATTERNS: ", allTests)
+    console.log("TESTS: ", allTests)
 
     useEffect(() => {
         dispatch(patternActions.getAllPatterns())
