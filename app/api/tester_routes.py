@@ -35,7 +35,7 @@ def all_testers():
 @tester_routes.route('/current/<int:id>')
 @login_required
 def user_testers(id):
-    user_tests = Tester.query.filter_by(user_id=id).all()
+    user_tests = Tester.query.filter_by(user_id=id).options(selectinload(Tester.pattern)).all()
     if not user_tests:
         return {"message" : "You have no patterns to test!"}
     return {'testers': [
@@ -43,6 +43,7 @@ def user_testers(id):
             'id': tester.id,
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
+            'pattern_title' : tester.pattern.title,
             'rating': tester.rating,
             'test_due' : tester.test_due,
             'test_progress' : tester.test_progress,

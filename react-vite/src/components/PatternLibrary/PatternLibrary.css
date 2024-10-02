@@ -1,0 +1,13 @@
+.pattern_library {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.inProgress, .complete {
+    flex:1;
+    margin: 0 15px;
+    padding: 10px;
+    border-radius: 5px;
+
+}

@@ -16,6 +16,7 @@ import CreateTest from '../components/CreateTest/CreateTest';
 import AddPatternImages from '../components/PatternImages';
 import UpdateTest from '../components/UpdateTest';
 import ImagesbyPattern from '../components/PatternImages/GetPatternImages';
+import PatternLibrary from '../components/PatternLibrary';
 
 export const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ export const router = createBrowserRouter([
       {
         path: '/test/:testerId/edit',
         element: <UpdateTest />
+      },
+      {
+        path: `/:userId/checkout`,
+        element: <PatternLibrary />
       }
     ],
   },

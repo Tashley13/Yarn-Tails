@@ -99,7 +99,7 @@ export const getUserTests = (userId) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json()
-        // console.log("DATA: ", data)
+        console.log("DATA: ", data)
         if (data.errors) {
             return;
         }

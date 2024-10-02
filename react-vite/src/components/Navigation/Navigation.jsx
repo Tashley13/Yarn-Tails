@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import { useState } from "react";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 // import { useModal } from "../../context/Modal";
 // import * as patternActions from "../../redux/pattern";
@@ -100,7 +100,6 @@ function Navigation() {
             ''
           )}
 
-
           {loggedIn ? (
             <div className="nav-choices">
               <NavLink className="nav-user-tests nav-clicks" to={`/tests/${loggedIn.id}`}>
@@ -109,6 +108,18 @@ function Navigation() {
                 </span>
               </NavLink>
               <span className="nav-open-text">  View Tests</span>
+            </div>
+          ) : (
+            ''
+          )}
+          {loggedIn ? (
+            <div className="nav-choices">
+              <NavLink className="nav-user-checkout nav-clicks" to={`/${loggedIn.id}/checkout`}>
+                <span className="material-symbols-outlined">
+                  collections_bookmark
+                </span>
+              </NavLink>
+              <span className="nav-open-text">  Pattern Library </span>
             </div>
           ) : (
             ''
