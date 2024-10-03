@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
-import * as pImagesActions from "../../redux/patternImage";
+// import * as pImagesActions from "../../redux/patternImage";
 import { NavLink } from "react-router-dom";
 
 import './AllPatterns.css'

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.models import db, PatternImage
 from flask_login import current_user, login_required
 from .aws_helpers import (
-    upload_file_to_s3, get_unique_filename
+    upload_file_to_s3, get_unique_filename, remove_file_from_s3
 )
 from app.forms import PatternImageForm;
 
@@ -50,3 +50,25 @@ def upload_pattern_image():
     )
 
     return jsonify({"message" : "Invalid request"}), 400
+
+
+
+#delete pattern images by pattern_id
+@pattern_image_routes.route('/image/<int:imageId>', methods=["DELETE"])
+@login_required
+def delete_pattern_images(imageId):
+
+    pattern_image = PatternImage.query.get(imageId)
+
+    if not pattern_image:
+        return jsonify({"errors": "Image(s) not found"}), 404
+
+    remove_image = remove_file_from_s3(pattern_image.image)
+    #input imageurl into helper function
+
+    # if isinstance(remove_image, dict) and "errors" in remove_image:
+    #     return jsonify(remove_image), 400
+
+    db.session.delete(pattern_image)
+    db.session.commit()
+    return jsonify({"message": "Image successfully deleted"}), 200

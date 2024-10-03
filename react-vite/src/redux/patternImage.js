@@ -58,17 +58,17 @@ export const createPatternImage = (formData) => async (dispatch) => {
     }
 }
 
-export const deletePatternImage = (patternId, imageId) => async (dispatch) => {
-    const response = await fetch(`/api/patterns/${patternId}/image/${imageId}`, {
+export const deletePatternImage = (imageId) => async (dispatch) => {
+    const response = await fetch(`/api/pimages/image/${imageId}`, {
         method: "DELETE"
     });
 
     if (response.ok) {
-        const data = await response.json();
+        // const data = await response.json();
         dispatch(removePatternImage(imageId))
-        return data
+
     }
-    return response
+
 }
 
 
@@ -86,10 +86,11 @@ const patternImageReducer = (state = initialState, action) => {
         }
         case DELETE_IMAGE: {
             const newState = {...state}
-            newState.images = newState.images.filter(image.id !=action.payload)
+            newState.images = newState.images.filter(image =>image.id !=action.payload)
+            return newState
         }
 
-    default: {
+        default: {
             return state
         }
     }

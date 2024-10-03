@@ -233,27 +233,3 @@ def get_pattern_images(patternId):
     return jsonify({
         'pattern_images': [image.to_dict() for image in pattern_images]
     })
-
-
-#delete pattern images by pattern_id
-@pattern_routes.route('/<int:patternId>/image/<int:imageId>', methods=["DELETE"])
-@login_required
-def delete_pattern_images(pattern_id, image_id):
-    pattern = Pattern.query.get(pattern_id)
-
-    if pattern.user_id != current_user.id:
-        return jsonify({"errors" : "This pattern cannot be found"}), 404
-
-    pattern_image = PatternImage.query.get(image_id)
-
-    if not pattern_image or pattern_image.pattern_id != pattern_id:
-        return jsonify({"errors": "Image(s) not found"}), 404
-
-    remove_image = remove_file_from_s3(pattern_image.image) #input imageurl into helper function
-
-    if isinstance(remove_image, dict) and "errors" in remove_image:
-        return jsonify(remove_image), 400
-
-    db.session.delete(pattern_image)
-    db.session.commit()
-    return jsonify({"message": "Image successfully deleted"})

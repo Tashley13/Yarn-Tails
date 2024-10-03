@@ -19,7 +19,7 @@ const ImagesbyPattern = () => {
     }, [dispatch, pattern_id])
 
     const handleDeleteImage = (imageId) => {
-        dispatch(pImageActions.deletePatternImage(patternId, imageId))
+        dispatch(pImageActions.deletePatternImage(imageId))
     }
 
     return (
