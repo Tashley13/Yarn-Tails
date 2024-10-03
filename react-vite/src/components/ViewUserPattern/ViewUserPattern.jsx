@@ -4,10 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 // import { useState } from "react";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
+import * as pImageActions from "../../redux/patternImage";
 // import PatternMaterials from "../PatternMaterials/PatternMaterials";
 // import CreateTestModal from "../CreateTest";
 // import OpenModalButton from "../OpenModalButton";
 // import ConfirmationModal from "./ConfirmationModal";
+
+import './ViewUserPattern.css'
 
 
 const ViewUserpattern = () => {
@@ -21,6 +24,8 @@ const ViewUserpattern = () => {
     const loggedIn = useSelector((state) => state.session.user)
     const pattern = useSelector((state) => state.patterns.patternById)
     const patternTests = useSelector((state) => state.testers.allTests)
+    const patternImages = useSelector((state) => state.patternImages.images)
+    console.log("IMAGES: ", patternImages)
     const tests = patternTests?.testers
     // console.log("PATTERN: ", pattern);
     // console.log("TESTS: ", tests);
@@ -44,7 +49,7 @@ const ViewUserpattern = () => {
     useEffect(() => {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
-
+            dispatch(pImageActions.getAllPatternImages(pattern_id))
             dispatch(testerActions.getTestsByPatternId(pattern_id))
             if (pattern?.user_id) {
                 dispatch(patternActions.getUserPatterns(pattern.user_id))
@@ -74,7 +79,7 @@ const ViewUserpattern = () => {
     }
 
     const confirmPatternTest = () => {
-        const newTest= {
+        const newTest = {
             rating: '',
             review: '',
             test_progress: 'InProgress'
@@ -136,12 +141,16 @@ const ViewUserpattern = () => {
             <div className="pattern-title">
                 <h1>{pattern.title}</h1>
             </div>
-            {/* <div className="pattern-tile-image">
-                {pattern.tile_image}
-            </div> */}
-            {/* <div className="pattern-images">
-                insert images from patternimages table
-            </div> */}
+            <div className="pattern-images">
+                {patternImages && patternImages.length > 0 ? (
+                    patternImages.map((image, index) => (
+                        <div key={index} className="image">
+                            <img src={image.image}/>
+                        </div>
+                    ))
+
+                ): ''}
+            </div>
             <div className="pattern-creation">
                 <ul>Created by: {pattern.user_id}</ul>
                 <ul>Created on: {dateFormat(pattern.created_at)}</ul>
@@ -170,21 +179,21 @@ const ViewUserpattern = () => {
             </div>
 
             {loggedIn?.id == pattern.user_id && (
-                 <div>
-                 <h1>Pattern</h1>
-                 {pattern.pattern}</div>
+                <div>
+                    <h1>Pattern</h1>
+                    {pattern.pattern}</div>
             )}
             <h1> Test Reviews</h1>
-            <p>
-                {reviews.length > 0 ? (
-                    <div className="test-reviews">
-                        Total tests: {testLength}
-                        Average score: {average} / 10 skeins
-                    </div>
-                ) : (
-                    ''
-                )}
-            </p>
+
+            {reviews.length > 0 ? (
+                <div className="test-reviews">
+                    Total tests: {testLength}
+                    Average score: {average} / 10 skeins
+                </div>
+            ) : (
+                ''
+            )}
+
 
             {reviews?.length > 0 ? (
                 reviews.map((test, index) => (
@@ -203,17 +212,17 @@ const ViewUserpattern = () => {
             {loggedIn?.id !== pattern.user_id && !alreadyTested && (
                 <ul>
                     <div className="test-pattern">
-                    <button type="submit" onClick={handleTestPattern}>
-                        Test Pattern
-                    </button>
-                </div>
-                {showTest && (
-                    <div>
-                        <p>Do you wish to test this pattern?</p>
-                        <button onClick={confirmPatternTest}>Yes, create Test</button>
-                        <button onClick={handleNoTest}>No, I do not want to test this pattern</button>
+                        <button type="submit" onClick={handleTestPattern}>
+                            Test Pattern
+                        </button>
                     </div>
-                )}
+                    {showTest && (
+                        <div>
+                            <p>Do you wish to test this pattern?</p>
+                            <button onClick={confirmPatternTest}>Yes, create Test</button>
+                            <button onClick={handleNoTest}>No, I do not want to test this pattern</button>
+                        </div>
+                    )}
                 </ul>
             )
             }

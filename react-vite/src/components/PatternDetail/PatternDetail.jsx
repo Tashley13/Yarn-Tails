@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
+import * as pImageActions from "../../redux/patternImage";
 import PatternMaterials from "../PatternMaterials/PatternMaterials";
 import CreateTestModal from "../CreateTest";
 import OpenModalButton from "../OpenModalButton";
@@ -15,7 +16,8 @@ const PatternDetail = () => {
     const loggedIn = useSelector((state) => state.session.user)
 
     const pattern = useSelector((state) => state.patterns.patternById)
-    // console.log("PATTERN: ", pattern)
+    const patternImages = useSelector((state) => state.patternImages.images)
+    console.log("PATTERN: ", pattern)
 
     useEffect(() => {
         if (!loggedIn) {
@@ -26,6 +28,7 @@ const PatternDetail = () => {
     useEffect(() => {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
+            dispatch(pImageActions.getAllPatternImages(pattern_id))
             // dispatch(patternActions.getUserPatterns(pattern.user_id))
         }
     }, [dispatch, loggedIn, pattern_id])
@@ -37,11 +40,18 @@ const PatternDetail = () => {
     return (
         <div className="pattern-details">
             <div className="pattern-title">
-                {pattern.title}
+                <h1>{pattern.title}</h1>
             </div>
-            {/* <div className="pattern-images">
-                insert images from patternimages table
-            </div> */}
+            <div className="pattern-images">
+                {patternImages && patternImages.length > 0 ? (
+                    patternImages.map((image, index) => (
+                        <div key={index} className="image">
+                            <img src={image.image}/>
+                        </div>
+                    ))
+
+                ): ''}
+            </div>
             {/* <div className="pattern-creation">
                 <ul>Created by: {pattern.user_id}</ul>
                 <ul>Created on: {pattern.created_at.slice(0,-12)}</ul>

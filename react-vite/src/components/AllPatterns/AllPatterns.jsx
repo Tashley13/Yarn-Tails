@@ -92,7 +92,11 @@ const AllPatterns = () => {
                                 </div>
 
                                 <div className="pattern-image">
-                                    <img src={pattern.display.image}/>
+                                    {pattern.display && pattern.display.image ? (
+                                        <img src={pattern.display.image}/>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="right-image">
                                     <div className="pattern-times">
