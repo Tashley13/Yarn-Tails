@@ -198,7 +198,7 @@ def create_tester(patternId):
 
     days_limit = time_limit_conversion(pattern.time_limit)
     print("LIMIT: ", days_limit)
-    test_is_due = datetime.now() + timedelta(days=days_limit)
+    test_is_due = datetime.now() + timedelta(days=days_limit+1)
 
     new_tester = Tester(
         user_id=user_id,

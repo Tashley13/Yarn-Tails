@@ -50,3 +50,7 @@ def upload_pattern_image():
     )
 
     return jsonify({"message" : "Invalid request"}), 400
+
+#delete pattern images
+# def delete_pattern_image(image_id):
+#     pattern_image = PatternImage.query

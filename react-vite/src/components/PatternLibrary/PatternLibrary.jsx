@@ -31,7 +31,15 @@ const PatternLibrary = () => {
     const completeTests = Array.isArray(tests) ? tests.filter(test => test.test_progress == 'Complete') : [];
 
     const dateFormat = (date) => {
-        return date ? date.slice(0,-12) : '';
+        return date ? date.slice(0, -12) : '';
+    }
+
+    const onComplete = (patternId) => {
+        navigate(`/${patternId}/pattern_only`)
+    }
+
+    const inProgress = (testerId) => {
+        navigate(`/test/${testerId}/edit`)
     }
 
     return (
@@ -40,21 +48,32 @@ const PatternLibrary = () => {
                 <h2>In Progress</h2>
                 {inProgressTests?.length > 0 ? (
                     inProgressTests.map(test => (
-                        <div key={test.id} className="progress-tests">
-                            <p>Pattern: {test.pattern_title}</p>
+                        <div key={test.id}
+                            className="progress-tests"
+                        >
+                            <p
+                                onClick={() => inProgress(test.id)}
+                                style={{ cursor: 'pointer' }}>
+                                Pattern: {test.pattern_title}
+                            </p>
                             <p>Due: {dateFormat(test.test_due)} </p>
                         </div>
                     ))
                 ) : (
                     <p>No tests in progress.</p>
                 )}
+
             </div>
             <div className="complete">
                 <h2>Complete</h2>
                 {completeTests?.length > 0 ? (
                     completeTests.map(test => (
                         <div key={test.id} className="complete-tests">
-                            <p>Pattern: {test.pattern_title}</p>
+                            <p
+                                onClick={() => onComplete(test.pattern_id)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                Pattern: {test.pattern_title}</p>
                         </div>
                     ))
                 ) : (

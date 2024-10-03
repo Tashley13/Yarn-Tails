@@ -81,7 +81,7 @@ const ViewUserpattern = () => {
         };
         dispatch(testerActions.createTestByPatternId(pattern_id, newTest))
         setShowTest(false);
-        navigate(`/`)
+        navigate(`/${loggedIn.id}/checkout`)
     }
 
     const handleNoTest = () => {

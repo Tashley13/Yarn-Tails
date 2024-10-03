@@ -26,9 +26,9 @@ const PatternDetail = () => {
     useEffect(() => {
         if (loggedIn) {
             dispatch(patternActions.viewUserPattern(pattern_id))
-            dispatch(patternActions.getUserPatterns(pattern.user_id))
+            // dispatch(patternActions.getUserPatterns(pattern.user_id))
         }
-    }, [dispatch, loggedIn, pattern_id, pattern.user_id])
+    }, [dispatch, loggedIn, pattern_id])
 
     // const createTestOnClick = () => {
 
@@ -57,20 +57,28 @@ const PatternDetail = () => {
                     {pattern.time_limit}
                 </ul>
             </div>
+            <div className="materials">
+                <h3>Materials:</h3>
+                <p>Instrument: {pattern.materials_instrument}</p>
+                <p>Size: {pattern.materials_instrument_size}</p>
+                <p>Yardage: {pattern.materials_yardage}</p>
+                <p>Yarn weight: {pattern.materials_yarn_weight}</p>
+            </div>
             <div className="pattern-only">
+                <h3>Pattern:</h3>
                 {pattern.pattern}
             </div>
-            <div className="materials">
+            {/* <div className="materials">
                 <PatternMaterials />
-            </div>
+            </div> */}
 
-                <ul className="create_test">
+                {/* <ul className="create_test">
                     <OpenModalButton
                         buttonText="Test this pattern?"
 
                         modalComponent={<CreateTestModal patternId={pattern.id}/>}
                     />
-                </ul>
+                </ul> */}
 
         </div>
     )
