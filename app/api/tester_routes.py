@@ -8,7 +8,7 @@ tester_routes = Blueprint('testers', __name__, url_prefix="/testers")
 
 #get all tests
 @tester_routes.route('')
-@login_required
+# @login_required
 def all_testers():
     testers=Tester.query.options(selectinload(Tester.user)).all()
     if not testers:

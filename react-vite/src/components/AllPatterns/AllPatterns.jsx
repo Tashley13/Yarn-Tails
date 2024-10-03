@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import * as patternActions from "../../redux/pattern";
 import * as testerActions from "../../redux/tester";
+import * as pImagesActions from "../../redux/patternImage";
 import { NavLink } from "react-router-dom";
 
 import './AllPatterns.css'
@@ -19,14 +20,16 @@ const AllPatterns = () => {
 
     //grab all the patterns
     const patterns = useSelector((state) => state.patterns.allPatterns);
+    console.log("PATTERNS: ", patterns)
 
     const allTests = useSelector((state) => state.testers.allTests)
     // const patterns=Object.values(eachPattern)[0]
-    console.log("TESTS: ", allTests)
+    // console.log("TESTS: ", allTests)
 
     useEffect(() => {
         dispatch(patternActions.getAllPatterns())
         dispatch(testerActions.getAllTests())
+
         // console.log("HELLO WORLD")
     }, [dispatch])
 
@@ -88,9 +91,9 @@ const AllPatterns = () => {
                                     </div>
                                 </div>
 
-                                {/* <div className="pattern-image">
-                                    {pattern.tile_image}
-                                </div> */}
+                                <div className="pattern-image">
+                                    <img src={pattern.display.image}/>
+                                </div>
                                 <div className="right-image">
                                     <div className="pattern-times">
                                         <ul>Time: {pattern.time}</ul>

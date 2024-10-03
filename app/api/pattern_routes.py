@@ -1,11 +1,13 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Pattern, db, User, Tester
-# IMPORT PATTERNIMAGE
+from app.models import Pattern, db, User, Tester, PatternImage
 # from app.forms import CreatePatternForm
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import selectinload
 from .helper_routes import time_limit_conversion
+from .aws_helpers import (
+    upload_file_to_s3, get_unique_filename, remove_file_from_s3
+)
 
 pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 
@@ -14,7 +16,8 @@ pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 def all_patterns():
     patterns=Pattern.query.options(
         selectinload(Pattern.user),
-        selectinload(Pattern.testers)
+        # selectinload(Pattern.testers),
+        selectinload(Pattern.pattern_images)
         ).limit(25).all()
     print("PATTERNS: ", patterns)
     if not patterns:
@@ -30,7 +33,11 @@ def all_patterns():
             'time' : pattern.time,
             'time_limit' : pattern.time_limit,
             'description' : pattern.description,
-            'pattern' : pattern.pattern
+            'pattern' : pattern.pattern,
+            'display' : {
+                'image' : pattern.pattern_images[0].image if pattern.pattern_images else None,
+                'display_image' : pattern.pattern_images[0].display_image if pattern.pattern_images else None
+            }
             # 'pattern_tests' : [
             #     {
             #         'id': tester.id,
@@ -226,3 +233,27 @@ def get_pattern_images(patternId):
     return jsonify({
         'pattern_images': [image.to_dict() for image in pattern_images]
     })
+
+
+#delete pattern images by pattern_id
+@pattern_routes.route('/<int:patternId>/image/<int:imageId>', methods=["DELETE"])
+@login_required
+def delete_pattern_images(pattern_id, image_id):
+    pattern = Pattern.query.get(pattern_id)
+
+    if pattern.user_id != current_user.id:
+        return jsonify({"errors" : "This pattern cannot be found"}), 404
+
+    pattern_image = PatternImage.query.get(image_id)
+
+    if not pattern_image or pattern_image.pattern_id != pattern_id:
+        return jsonify({"errors": "Image(s) not found"}), 404
+
+    remove_image = remove_file_from_s3(pattern_image.image) #input imageurl into helper function
+
+    if isinstance(remove_image, dict) and "errors" in remove_image:
+        return jsonify(remove_image), 400
+
+    db.session.delete(pattern_image)
+    db.session.commit()
+    return jsonify({"message": "Image successfully deleted"})

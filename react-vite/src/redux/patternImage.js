@@ -1,5 +1,6 @@
 export const ALL_IMAGES = 'pattern_images/ALL_IMAGES'
 export const POST_IMAGE = 'pattern_images/POST_IMAGE'
+export const DELETE_IMAGE = 'pattern_images/DELETE_IMAGE'
 
 //POJO action creators
 
@@ -13,6 +14,13 @@ const allPatternImages = (images) => {
 const postPatternImage = (image) => {
     return {
         type: POST_IMAGE,
+        payload: image
+    }
+}
+
+const removePatternImage = (image) => {
+    return {
+        type: DELETE_IMAGE,
         payload: image
     }
 }
@@ -50,6 +58,19 @@ export const createPatternImage = (formData) => async (dispatch) => {
     }
 }
 
+export const deletePatternImage = (patternId, imageId) => async (dispatch) => {
+    const response = await fetch(`/api/patterns/${patternId}/image/${imageId}`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(removePatternImage(imageId))
+        return data
+    }
+    return response
+}
+
 
 const initialState = {
     images: [] //set as an empty array since files are stored in an array
@@ -62,6 +83,10 @@ const patternImageReducer = (state = initialState, action) => {
         }
         case POST_IMAGE: {
             return { ...state, images: [...state.images, action.payload]}
+        }
+        case DELETE_IMAGE: {
+            const newState = {...state}
+            newState.images = newState.images.filter(image.id !=action.payload)
         }
 
     default: {

@@ -18,12 +18,22 @@ const ImagesbyPattern = () => {
         dispatch(pImageActions.getAllPatternImages(pattern_id))
     }, [dispatch, pattern_id])
 
+    const handleDeleteImage = (imageId) => {
+        dispatch(pImageActions.deletePatternImage(patternId, imageId))
+    }
+
     return (
         <div className="pattern-images">
             {patternImages && patternImages.length > 0 ? (
                 patternImages.map((image, key)=> (
                     <div key={key} className="image">
                         <img src={image.image} />
+                        {loggedIn && (
+                            <button
+                            onClick={()=> handleDeleteImage(image.id)}>
+                                Delete Image
+                            </button>
+                        )}
                     </div>
                 ))
             ): 'no images'}

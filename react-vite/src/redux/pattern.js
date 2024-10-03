@@ -156,9 +156,8 @@ export const deleteUserPattern = (patternId) => async (dispatch) => {
 
     if (response.ok) {
         const data = await response.json();
-        console.log("DATA: ", data);
+        // console.log("DATA: ", data);
         dispatch(deletePattern(patternId));
-
     }
 
 }

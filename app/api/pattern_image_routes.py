@@ -21,7 +21,7 @@ def upload_pattern_image():
     upload=upload_file_to_s3(file)
 
     image_url=upload.get('url')
-    display_image = request.form.get('display_image').lower() == 'true'
+    display_image = request.form.get('display_image') == 'True'
     # form = PatternImageForm()
 
     # if request.method == "POST" or form.validate_on_submit():
@@ -50,7 +50,3 @@ def upload_pattern_image():
     )
 
     return jsonify({"message" : "Invalid request"}), 400
-
-#delete pattern images
-# def delete_pattern_image(image_id):
-#     pattern_image = PatternImage.query
