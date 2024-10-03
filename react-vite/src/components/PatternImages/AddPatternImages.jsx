@@ -2,12 +2,14 @@ import { useState } from "react";
 import * as patternImageActions from "../../redux/patternImage";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 
 const AddPatternImages = () => {
     const { patternId } = useParams();
     // console.log("ID", patternId)
     const pattern_id = Number(patternId);
+    const navigate = useNavigate();
 
     const loggedIn = useSelector((state) => state.session.user)
     const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const AddPatternImages = () => {
             await dispatch(patternImageActions.createPatternImage(formData));
         }
         setImageLoading(false);
+        navigate(`/${pattern_id}/view_pattern`)
     }
 
 

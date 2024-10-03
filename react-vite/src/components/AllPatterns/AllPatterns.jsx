@@ -68,7 +68,7 @@ const AllPatterns = () => {
         <div className="patterns-display">
             <ul>
                 {patterns?.length > 0 ? (
-                    patterns.map((pattern) => {
+                    patterns?.map((pattern) => {
                         const { average, testLength } = calculateReviews(pattern.id);
                         return (
                             <div key={pattern.id} className="pattern-display">

@@ -50,7 +50,7 @@ const UserPatterns = () => {
     return (
         <div className='user-pattern-display'>
             <ul>
-                {patterns.length > 0 && (
+                {patterns?.length > 0 && (
                     patterns.map((pattern) => (
                         <div key={pattern.id} className='user-patterns'>
                             <NavLink to={`/${pattern.id}/view_pattern`}>

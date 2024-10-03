@@ -134,7 +134,7 @@ const ViewUserpattern = () => {
     return pattern ? (
         <div className="pattern-details">
             <div className="pattern-title">
-                {pattern.title}
+                <h1>{pattern.title}</h1>
             </div>
             {/* <div className="pattern-tile-image">
                 {pattern.tile_image}

@@ -21,6 +21,7 @@ const CreatePattern = () => {
     const [yarnWeight, setYarnWeight] = useState('');
     const [yardage, setYardage] = useState('');
     const [pattern, setPattern] = useState('');
+    const [confirmPattern, setConfirmPattern] = useState(false);
     // const [newPatternId, setNewPatternId] = useState(null);
     //create a use state to store the new patterns id to pass into the pattern images
     const [errors, setErrors] = useState({});
@@ -50,6 +51,14 @@ const CreatePattern = () => {
     const updateYarnWeight = (e) => setYarnWeight(e.target.value);
     const updateYardage = (e) => setYardage(e.target.value);
     const updatePattern = (e) => setPattern(e.target.value);
+
+    const handleAddImages = () => {
+        setConfirmPattern(true);
+    }
+
+    const continueEditingPattern = () => {
+        setConfirmPattern(false);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -115,7 +124,8 @@ const CreatePattern = () => {
             pattern
         }
         console.log("NEW PATTERN: ", newPattern)
-        const createdPattern = await dispatch(patternActions.createUserPattern(newPattern))
+        const createdPattern = await dispatch(patternActions.createUserPattern(newPattern));
+        setConfirmPattern(false);
         // console.log("CREATED: ", Object.values(createdPattern))
         // if (Object.values(createdPattern) == 'pattern already exists') {
         //     errors.pattern = "This pattern already exists"
@@ -123,7 +133,7 @@ const CreatePattern = () => {
 
         if (createdPattern && createdPattern.id) {
             // setNewPatternId(createdPattern.id) //set the new patternId as the newly created pattern id
-            navigate(`/${createdPattern.id}/view_pattern`)
+            navigate(`/pimages/${createdPattern.id}/newImages`)
         }
     }
 
@@ -509,7 +519,14 @@ const CreatePattern = () => {
                     {/* <div className="addImages">
                         <AddPatternImages patternId={pattern.id} />
                     </div> */}
-                    <button type="submit">Create Pattern</button>
+                    <button onClick={()=>handleAddImages}>Add Images</button>
+                    {confirmPattern && Object.keys(errors).length == 0 && (
+                        <div>
+                            <p>Does your pattern look correct?</p>
+                            <button onClick={handleSubmit}>Yes, time to add images</button>
+                            <button onClick={continueEditingPattern}>No, I need to change something</button>
+                        </div>
+                    )}
                 </form>
             </div>
 

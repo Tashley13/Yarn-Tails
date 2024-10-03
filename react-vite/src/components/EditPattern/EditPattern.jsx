@@ -133,6 +133,15 @@ const EditPattern = () => {
             navigate(`/${editedPattern.id}/view_pattern`)
         }
     }
+
+    const removeImages = () => {
+        navigate(`/pimages/${pattern_id}/images`)
+    }
+
+    const addImages = () => {
+        navigate(`/pimages/${pattern_id}/newImages`)
+    }
+
     return (
         <section className="edit-pattern-form">
             <div className="pattern-form-header">
@@ -472,7 +481,10 @@ const EditPattern = () => {
                         </label>
                         {errors.pattern && <p>{errors.pattern}</p>}
                     </div>
+                    <button onClick={removeImages}>Remove Images</button>
+                    <button onClick={addImages}>Add Images</button>
                     <button type="submit">Edit Pattern</button>
+
                 </form>
             </div>
         </section>
