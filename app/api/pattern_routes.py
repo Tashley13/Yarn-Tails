@@ -3,8 +3,9 @@ from flask_login import login_required, current_user
 from app.models import Pattern, db, User, Tester
 # IMPORT PATTERNIMAGE
 # from app.forms import CreatePatternForm
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import selectinload
+from .helper_routes import time_limit_conversion
 
 pattern_routes = Blueprint('patterns', __name__,url_prefix="/patterns")
 
@@ -195,11 +196,15 @@ def create_tester(patternId):
         return jsonify({"message" : "no pattern to test!"})
     data=request.get_json()
 
+    days_limit = time_limit_conversion(pattern.time_limit)
+    print("LIMIT: ", days_limit)
+    test_is_due = datetime.now() + timedelta(days=days_limit)
+
     new_tester = Tester(
         user_id=user_id,
         pattern_id=patternId,
         rating=data.get('rating'),
-        test_due=data.get('test_due'),
+        test_due=test_is_due,
         test_progress=data.get('test_progress'),
         # image=data.get('image'),
         review=data.get('review')

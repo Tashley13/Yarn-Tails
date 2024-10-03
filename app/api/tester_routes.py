@@ -44,11 +44,13 @@ def user_testers(id):
             'user_id': tester.user_id,
             'pattern_id': tester.pattern_id,
             'pattern_title' : tester.pattern.title,
+            'time_limit' : tester.pattern.time_limit,
             'rating': tester.rating,
             'test_due' : tester.test_due,
             'test_progress' : tester.test_progress,
             # 'image': tester.image,
-            'review': tester.review
+            'review': tester.review,
+            'created_at' : tester.created_at
         }
         for tester in user_tests
     ]}

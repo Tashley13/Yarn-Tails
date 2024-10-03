@@ -16,7 +16,7 @@ const ViewUserpattern = () => {
     const dispatch = useDispatch();
     const pattern_id = Number(patternId);
     const [showDelete, setShowDelete] = useState(false);
-    // const [deletePopUp, setDeletePopUp] = useState(false);
+    const [showTest, setShowTest] = useState(false);
 
     const loggedIn = useSelector((state) => state.session.user)
     const pattern = useSelector((state) => state.patterns.patternById)
@@ -58,6 +58,7 @@ const ViewUserpattern = () => {
         setShowDelete(true);
     }
 
+
     const confirmDelete = () => {
         dispatch(patternActions.deleteUserPattern(pattern_id))
         setShowDelete(false);
@@ -68,14 +69,27 @@ const ViewUserpattern = () => {
         setShowDelete(false)
     }
 
+    const handleTestPattern = () => {
+        setShowTest(true);
+    }
 
+    const confirmPatternTest = () => {
+        const newTest= {
+            rating: '',
+            review: '',
+            test_progress: 'InProgress'
+        };
+        dispatch(testerActions.createTestByPatternId(pattern_id, newTest))
+        setShowTest(false);
+        navigate(`/`)
+    }
+
+    const handleNoTest = () => {
+        setShowTest(false);
+    }
 
     const editPatternButton = async () => {
         navigate(`/${pattern_id}/edit`)
-    }
-
-    const testPatternButton = async () => {
-        navigate(`/${pattern.id}/test/new`)
     }
 
     //insert view pattern button, eventually check to see if part of tester checkout
@@ -187,13 +201,20 @@ const ViewUserpattern = () => {
 
             ) : 'No tests for this pattern yet!'}
             {loggedIn?.id !== pattern.user_id && !alreadyTested && (
-                <div className="test-pattern">
-                    <button type="submit" onClick={() =>
-                        testPatternButton(pattern.id)
-                    }>
+                <ul>
+                    <div className="test-pattern">
+                    <button type="submit" onClick={handleTestPattern}>
                         Test Pattern
                     </button>
                 </div>
+                {showTest && (
+                    <div>
+                        <p>Do you wish to test this pattern?</p>
+                        <button onClick={confirmPatternTest}>Yes, create Test</button>
+                        <button onClick={handleNoTest}>No, I do not want to test this pattern</button>
+                    </div>
+                )}
+                </ul>
             )
             }
             {/* <div className="materials">

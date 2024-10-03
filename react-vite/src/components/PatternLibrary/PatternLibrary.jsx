@@ -27,8 +27,12 @@ const PatternLibrary = () => {
     }, [loggedIn, navigate])
 
     //since all tests are already pulled, separate them into two variables
-    const inProgressTests = tests.filter(test => test.test_progress == 'InProgress');
-    const completeTests = tests.filter(test => test.test_progress == 'Complete');
+    const inProgressTests = Array.isArray(tests) ? tests.filter(test => test.test_progress == 'InProgress') : [];
+    const completeTests = Array.isArray(tests) ? tests.filter(test => test.test_progress == 'Complete') : [];
+
+    const dateFormat = (date) => {
+        return date ? date.slice(0,-12) : '';
+    }
 
     return (
         <div className="pattern-library">
@@ -38,6 +42,7 @@ const PatternLibrary = () => {
                     inProgressTests.map(test => (
                         <div key={test.id} className="progress-tests">
                             <p>Pattern: {test.pattern_title}</p>
+                            <p>Due: {dateFormat(test.test_due)} </p>
                         </div>
                     ))
                 ) : (

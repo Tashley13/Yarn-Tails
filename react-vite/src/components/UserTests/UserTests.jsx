@@ -45,7 +45,7 @@ const UserTests = () => {
                         <div key={key} className="user-tests">
                             <NavLink to={`/test/${test.id}`}>
                             <div className="pattern_id">
-                                Pattern: {test.pattern_id}
+                                Pattern: {test.pattern_title}
                             </div>
                             </NavLink>
                             <div className="rating">
