@@ -6,6 +6,10 @@
     flex-wrap: wrap;
     overflow: hidden;
     color: white;
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50%;
 }
 
 .left-image {
@@ -21,12 +25,7 @@
     justify-content: center;
     padding-right: 75px;
 }
-.pattern-display {
-    width: 1000px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 50%;
-}
+
 
 .pattern-image {
     border: 1px solid mediumspringgreen;
@@ -38,20 +37,3 @@
     margin-left: 30px;
     overflow: hidden;
 }
-
-
-
-
-/* .pattern-times {
-
-
-.pattern-times {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
-}
-
-.pattern-display:hover .pattern-times {
-    opacity: 1;
-} */

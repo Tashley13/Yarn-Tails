@@ -20,7 +20,7 @@ const AllPatterns = () => {
 
     //grab all the patterns
     const patterns = useSelector((state) => state.patterns.allPatterns);
-    console.log("PATTERNS: ", patterns)
+    // console.log("PATTERNS: ", patterns[0].display.image)
 
     const allTests = useSelector((state) => state.testers.allTests)
     // const patterns=Object.values(eachPattern)[0]
@@ -65,7 +65,7 @@ const AllPatterns = () => {
     }
 
     return (
-        <div className="patterns-display">
+        <div className="patterns">
             <ul>
                 {patterns?.length > 0 ? (
                     patterns?.map((pattern) => {
@@ -92,7 +92,7 @@ const AllPatterns = () => {
                                 </div>
 
                                 <div className="pattern-image">
-                                    {pattern.display && pattern.display.image ? (
+                                    {pattern.display?.image ? (
                                         <img src={pattern.display.image}/>
                                     ) : (
                                         ''

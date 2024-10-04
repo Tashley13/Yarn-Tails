@@ -57,7 +57,7 @@ def all_patterns():
 @pattern_routes.route('/current/<int:userId>')
 @login_required
 def user_patterns(userId):
-    user_patterns=Pattern.query.filter_by(user_id=userId).all()
+    user_patterns=Pattern.query.options(selectinload(Pattern.pattern_images)).filter_by(user_id=userId).all()
     if not user_patterns:
         return jsonify({'patterns': []})
     return {'patterns' : [
@@ -74,7 +74,11 @@ def user_patterns(userId):
             'materials_instrument' : pattern.materials_instrument,
             'materials_instrument_size' : pattern.materials_instrument_size,
             'materials_yarn_weight' : pattern.materials_yarn_weight,
-            'materials_yardage' : pattern.materials_yardage
+            'materials_yardage' : pattern.materials_yardage,
+            'display' : {
+                'image' : pattern.pattern_images[0].image if pattern.pattern_images else None,
+                'display_image' : pattern.pattern_images[0].display_image if pattern.pattern_images else None
+            }
         }
         for pattern in user_patterns
     ]

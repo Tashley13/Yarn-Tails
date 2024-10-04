@@ -48,36 +48,35 @@ const UserPatterns = () => {
 
 
     return (
-        <div className='user-pattern-display'>
-            <ul>
+        <div className='user_display'>
                 {patterns?.length > 0 && (
                     patterns.map((pattern) => (
-                        <div key={pattern.id} className='user-patterns'>
+                        <div key={pattern.id} className='user_patterns'>
                             <NavLink to={`/${pattern.id}/view_pattern`}>
-                            <div className='user-title'>
+                            <div className='user_title'>
                                 {pattern.title}
                             </div>
                             </NavLink>
-                            {/* <div className="user-image">
-                                {pattern.tile_image}
-                            </div> */}
-                            <div className="user-difficulty">
+
+                            <div className="user_difficulty">
                                 {pattern.difficulty}
                             </div>
-                            {/* <div className="user-description">
-                                {pattern.description}
-                            </div> */}
-                            <div className="user-times">
+
+                            <div className="user_times">
                                 <ul>Time: {pattern.time}</ul>
                                 <ul>Testing Time: {pattern.time_limit}</ul>
                             </div>
-                            {/* <div>
-                                <PatternMaterials/>
-                            </div> */}
+                            <div className="user_image">
+                                    {pattern.display?.image ? (
+                                        <img src={pattern.display.image}/>
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
                         </div>
                     ))
                 )}
-            </ul>
+
         </div>
     )
 }

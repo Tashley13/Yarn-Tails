@@ -5,7 +5,7 @@ def seed_pattern_images():
     demos_images = PatternImage(
         user_id = 1,
         pattern_id=1,
-        image = 'https://yarn-tails-image-bucket.s3.amazonaws.com/Axolotl.jpg',
+        image = "https://yarn-tails-image-bucket.s3.amazonaws.com/2089f16a68b5429494db57a62ea04268.jfif",
         display_image = True
     )
 
@@ -26,7 +26,7 @@ def seed_pattern_images():
     db.session.add(demos_images)
 #     db.session.add(marnies_images)
 #     db.session.add(bobbies_images)
-#     db.session.commit()
+    db.session.commit()
 
 def undo_pattern_images():
     if environment== "production":
